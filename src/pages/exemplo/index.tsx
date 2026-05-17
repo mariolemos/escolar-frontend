@@ -22,8 +22,8 @@ export default function Exemplo() {
                 buttonList={[
                     {
                         nome: "novo",
-                        onChange: () => console.log("Teste"),
-                        icon: <AddIcon sx={{ marginRight: 1 }} />
+                        icon: <AddIcon sx={{ marginRight: 1 }} />,
+                        redirect: "/exemplo/form"
                     },
                 ]}
             />

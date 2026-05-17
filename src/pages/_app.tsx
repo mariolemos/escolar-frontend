@@ -6,7 +6,7 @@ import type { AppProps } from "next/app";
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
-      <Head />      
+      <Head />
       <Component {...pageProps} />
       <Footer />
     </>

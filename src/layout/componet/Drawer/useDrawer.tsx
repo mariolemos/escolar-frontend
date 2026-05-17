@@ -19,7 +19,7 @@ export default function Drawer() {
     };
 
     const menuList: DrawerComponetProps['menuList'] = [
-        { text: 'Inbox', icon: <InboxIcon />, href: "exemplo" },
+        { text: 'Inbox', icon: <InboxIcon />, href: "/" },
         { text: 'Starred', icon: <MailIcon />, href: "exemplo" },
         { text: 'Send email', icon: <InboxIcon />, href: "exemplo" },
     ]

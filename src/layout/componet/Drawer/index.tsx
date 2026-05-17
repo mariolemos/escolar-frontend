@@ -7,7 +7,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import { useState } from 'react';
+import ArticleIcon from '@mui/icons-material/Article';
 import useDrawer from './useDrawer';
 import Link from 'next/link';
 
@@ -46,7 +46,7 @@ export default function DrawerComponet() {
     );
     return (
         <div>
-            <Button onClick={toggleDrawer(true)}>Open drawer</Button>
+            <Button onClick={toggleDrawer(true)}><ArticleIcon sx={{ color: '#ffffffcc' }} fontSize='large' /></Button>
             <Drawer open={open} onClose={toggleDrawer(false)}>
                 {DrawerList}
             </Drawer>
