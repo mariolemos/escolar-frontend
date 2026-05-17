@@ -22,7 +22,8 @@ type DataTableProps<T> = {
 	titulo?: string;
 	buttonList?: Array<{
 		nome: string;
-		onChange: () => void
+		onChange: () => void;
+		icon?: React.ReactNode;
 	}>;
 	containerProps?: React.ComponentProps<typeof TableContainer>;
 };
@@ -53,11 +54,13 @@ export function DataTable<T extends object>({ columns, data, className, titulo =
 							backgroundColor: "#233294c9",
 							color: "#fff",
 							borderRadius: 2,
-							marginRight: 1
+							marginRight: 1,
+							paddingRight: "16px",
 						}}
 						key={button.nome}
 						onClick={button.onChange}
 					>
+						{button.icon ?? <>{button.icon}</>}
 						{button.nome}
 					</Button>
 				))}

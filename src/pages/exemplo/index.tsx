@@ -1,5 +1,6 @@
 import DataTable from "@/layout/componet/DataTable";
 import useExemplo from "./useExemplo";
+import AddIcon from '@mui/icons-material/Add';
 
 export default function Exemplo() {
     const {
@@ -21,7 +22,8 @@ export default function Exemplo() {
                 buttonList={[
                     {
                         nome: "novo",
-                        onChange: () => console.log("Teste")
+                        onChange: () => console.log("Teste"),
+                        icon: <AddIcon sx={{ marginRight: 1 }} />
                     },
                 ]}
             />
