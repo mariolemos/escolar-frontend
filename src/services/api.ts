@@ -1,7 +1,7 @@
 // src/services/api.ts
 // Estrutura base para integração com uma API REST usando fetch
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || process.env.BASE_URL || '';
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || '';
 
 function buildUrl(path: string): string {
   if (/^https?:\/\//.test(path)) return path;

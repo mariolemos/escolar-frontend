@@ -9,8 +9,10 @@ import {
 	Paper,
 	Button,
 	Box,
+	CircularProgress,
 } from "@mui/material";
 import Link from "next/link";
+import Loading from "@/components/Loading";
 type DataTableProps<T> = {
 	columns: Array<{
 		key: keyof T;
@@ -26,9 +28,10 @@ type DataTableProps<T> = {
 		icon?: React.ReactNode;
 		redirect?: string;
 	}>;
+	loading?: boolean;
 	containerProps?: React.ComponentProps<typeof TableContainer>;
 };
-export function DataTable<T extends object>({ columns, data, className, titulo = "", buttonList, containerProps }: DataTableProps<T>) {
+export function DataTable<T extends object>({ columns, data, className, titulo = "", buttonList, loading, containerProps }: DataTableProps<T>) {
 	return (
 		<TableContainer
 			component={Paper}
@@ -94,6 +97,7 @@ export function DataTable<T extends object>({ columns, data, className, titulo =
 					</TableBody>
 				</Table>
 			</Box>
+			<Loading isLoading={loading} />
 		</TableContainer>
 	);
 }

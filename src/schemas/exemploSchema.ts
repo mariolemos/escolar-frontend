@@ -6,9 +6,10 @@ export const exemploFormSchema = z.object({
     .min(1, "Nome é obrigatório")
     .max(100, "Nome deve ter no máximo 100 caracteres"),
   nascimento: z.string()
-    .min(1, "Nascimento é obrigatório")
+  .optional()
     .refine(
       (val) => {
+        if (!val) return true;
         if (!/^\d{4}-\d{2}-\d{2}$/.test(val)) return false;
         const date = new Date(val);
         if (isNaN(date.getTime())) return false;
