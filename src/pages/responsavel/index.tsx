@@ -14,12 +14,12 @@ export default function Responsavel() {
         <DataTable
         data={listResponsavel}
         columns={[
-            { key: "id", label: "Id"},
-            { key: "nome", label: "nome"},
-            { key: "cpf", label: " Cpf"}
+            { key: "id", label: "ID"},
+            { key: "nome", label: "NOME"},
+            { key: "cpf", label: " CPF"},
+            { key: "parentesco", label: "Parentesco"}
         ]}
-        />        
-            <h1>Responsavel</h1>            
+        />                          
         </>
     )
 }

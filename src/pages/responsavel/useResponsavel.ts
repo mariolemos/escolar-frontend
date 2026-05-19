@@ -1,8 +1,7 @@
 import { apiGet } from "@/services/api";
 import { useEffect, useState } from "react"
 
-const useResponsavel = () => {
-    
+const useResponsavel = () => {    
 
     const [listResponsavel, setListResponsavel] = useState([]);
 
