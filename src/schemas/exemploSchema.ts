@@ -5,20 +5,19 @@ export const exemploFormSchema = z.object({
   nome: z.string()
     .min(1, "Nome é obrigatório")
     .max(100, "Nome deve ter no máximo 100 caracteres"),
-  nascimento: z.string()
-  .optional()
+  nascimento: z.date().optional()
+    .refine((val) => val !== undefined && val !== null, {
+      message: "Nascimento é obrigatório",
+    })
     .refine(
       (val) => {
         if (!val) return true;
-        if (!/^\d{4}-\d{2}-\d{2}$/.test(val)) return false;
-        const date = new Date(val);
-        if (isNaN(date.getTime())) return false;
         const today = new Date();
         today.setHours(0,0,0,0);
-        return date <= today;
+        return val <= today;
       },
       {
-        message: "Nascimento deve ser uma data válida e não pode ser maior que hoje (YYYY-MM-DD)",
+        message: "Nascimento deve ser uma data válida e não pode ser maior que hoje",
       }
     ),
   cpf: z.string()
@@ -33,7 +32,6 @@ export type ExemploFormSchema = z.infer<typeof exemploFormSchema>;
 
 export const exemploFormDefaultValues: ExemploFormSchema = {
   nome: "",
-  nascimento: "",
   cpf: "",
   rg: "",
 };

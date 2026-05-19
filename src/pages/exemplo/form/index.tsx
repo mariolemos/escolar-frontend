@@ -54,8 +54,8 @@ export default function Form() {
                                         label="Nascimento"
                                         error={!!errors.nascimento}
                                         helperText={errors.nascimento?.message}
-                                        value={field.value ? new Date(field.value) : null}
-                                        onChange={field.onChange}
+                                        value={field.value ?? null}
+                                        onChange={(date: Date | null) => field.onChange(date ?? undefined)}
                                     />
                                 )}
                             />

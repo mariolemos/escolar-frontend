@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { exemploFormSchema, exemploFormDefaultValues, ExemploFormSchema } from "../../../schemas/exemploSchema";
+import { useToast } from "@/components/Toast";
 
 
 export default function useFormExempo() {
@@ -14,8 +15,25 @@ export default function useFormExempo() {
         defaultValues: exemploFormDefaultValues,
     });
 
+    const { showToast } = useToast();
+
+
+    // Função para garantir que nascimento seja Date
+    const parseNascimento = (data: ExemploFormSchema) => {
+        return {
+            ...data,
+            nascimento: data.nascimento
+                ? (data.nascimento instanceof Date
+                    ? data.nascimento
+                    : new Date(data.nascimento))
+                : undefined,
+        };
+    };
+
     const salvar = (data: ExemploFormSchema) => {
-        console.log("Dados do formulário:", data);
+        const parsedData = parseNascimento(data);
+        console.log("Dados do formulário:", parsedData);
+        showToast("Formulário salvo com sucesso!", "success");
     };
 
     return {
