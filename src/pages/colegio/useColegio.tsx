@@ -1,9 +1,10 @@
 import { apiGet } from "@/services/api";
 import { useEffect, useState } from "react";
 
-export const useColegio = () => {
+ const useColegio = () => {
 
     const [listColegio, setListCoelgio] = useState([]);
+    const [buscarColegio, setBuscrColegio] = useState([])
 
     useEffect(() => {
         buscarColegios();
@@ -15,13 +16,20 @@ export const useColegio = () => {
        setListCoelgio(response)
     }
 
+    const buscarColegioPorId = async () => {
+        const response = await apiGet<[]>('/colegio/id')
+        console.log(response)
+        setBuscrColegio(response)
+    }
+
     return {
         action: {
-
+            buscarColegioPorId,
+            buscarColegios,
         },
         data: {
             listColegio,
-
+            buscarColegio,
         }
     }
 }

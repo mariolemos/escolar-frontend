@@ -4,18 +4,22 @@ import AddIcon from '@mui/icons-material/Add';
 
 export default function Colegio() {
   const {
-    action: {},
-    data: { listColegio },
+    action: {
+      
+    },
+    data: {      
+      listColegio 
+    },
   } = useColegio();
   return (
     <>      
       <DataTable
-      titulo="Lista de Colégios"
+      titulo="Lis de Colégios"
       buttonList={[
                     {
                         nome: "novo",
                         icon: <AddIcon sx={{ marginRight: 1 }} />,
-                        redirect: "/exemplo/form"
+                        redirect: "/colegio/formColegio"
                     },                    
                 ]}
         data={listColegio}
