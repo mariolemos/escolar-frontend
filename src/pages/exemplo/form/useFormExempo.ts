@@ -20,10 +20,25 @@ export default function useFormExempo() {
         defaultValues: exemploFormDefaultValues,
     });
 
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const { showToast } = useToast();
+    const { query } = useRouter();
+
+
+    // Função para garantir que nascimento seja Date
+    const parseNascimento = (data: ExemploFormSchema) => {
+        return {
+            ...data,
+            nascimento: data.nascimento
+                ? (data.nascimento instanceof Date
+                    ? data.nascimento
+                    : new Date(data.nascimento))
+                : undefined,
+        };
+    };
+
     const [loading, setLoading] = useState<boolean>(false);
 
-    const { query } = useRouter();
-    const { showToast } = useToast();
 
     const buscar = async (id: number) => {
         setLoading(true);
@@ -49,7 +64,17 @@ export default function useFormExempo() {
     }, [query.id]);
 
     const salvar = (data: ExemploFormSchema) => {
-        console.log("Dados do formulário:", data);
+        setIsSubmitting(true);
+        try {
+            const parsedData = parseNascimento(data);
+            console.log("Dados do formulário:", parsedData);
+            showToast("Formulário salvo com sucesso!", "success");
+        } catch (error) {
+            console.error("Erro ao salvar formulário:", error);
+            showToast("Erro ao salvar formulário. Tente novamente.", "error");
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     return {
@@ -60,7 +85,8 @@ export default function useFormExempo() {
             register,
             errors,
             control,
-            loading
+            loading,
+            isSubmitting
         }
     }
 }
