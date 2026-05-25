@@ -14,6 +14,7 @@ export default function Form() {
             register,
             errors,
             control,
+            loading
         }
     } = useForm();
     return (
@@ -37,11 +38,11 @@ export default function Form() {
                             error={!!errors.nome}
                             helperText={errors.nome?.message}
                             id="outlined-error"
-                            label="Nome"
+                            label={control._formValues.nome ? "" : "Nome completo"}
                             placeholder="Nome completo"
-                            defaultValue=""
                             fullWidth
                             {...register("nome")}
+                            variant="standard"
                         />
                     </Box>
                     <Box sx={{ display: 'flex', gap: 2, width: '100%' }}>
@@ -56,6 +57,7 @@ export default function Form() {
                                         helperText={errors.nascimento?.message}
                                         value={field.value ? new Date(field.value) : null}
                                         onChange={field.onChange}
+                                        fullWidth
                                     />
                                 )}
                             />
@@ -73,6 +75,7 @@ export default function Form() {
                                         label="CPF"
                                         placeholder="000.000.000-00"
                                         fullWidth
+                                        variant="standard"
                                         mask="999.999.999-99"
                                     />
                                 )}
@@ -80,6 +83,7 @@ export default function Form() {
                         </Box>
                         <Box sx={{ flex: 1 }}>
                             <TextField
+                                variant="standard"
                                 error={!!errors.rg}
                                 helperText={errors.rg?.message}
                                 id="outlined-error-helper-text"
