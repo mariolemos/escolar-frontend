@@ -1,22 +1,24 @@
 import DataTable from "@/layout/componets/DataTable";
-import useExemplo from "./useExemplo";
+import useExemplo, { IExemplo } from "./useExemplo";
 import AddIcon from '@mui/icons-material/Add';
 
 export default function Exemplo() {
     const {
         action: {
-
+            del,
+            status,
+            edit
         },
         data: {
             list,
             columns,
-            loading
+            loading,
         }
     } = useExemplo();
 
     return (
         <>
-            <DataTable
+            <DataTable<IExemplo>
                 titulo="Lista de exemplo"
                 columns={columns}
                 data={list}
@@ -33,6 +35,18 @@ export default function Exemplo() {
                         redirect: "/exemplo/form"
                     },
                 ]}
+                action={{
+                    edit: {
+                        onChange: (t: IExemplo) => edit(t)
+                    },
+                    status: {
+                        onChange: (t: IExemplo) => status(t),
+                        checked: (t: IExemplo) => t.ativo
+                    },
+                    delete: {
+                        onChange: (t: IExemplo) => del(t)
+                    },
+                }}
             />
         </>
     )
