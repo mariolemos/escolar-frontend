@@ -1,5 +1,6 @@
 import React from 'react';
 import DrawerComponet from '../Drawer';
+import { Divider } from '@mui/material';
 
 
 const HEADER_HEIGHT = 60;
@@ -35,6 +36,7 @@ const Head: React.FC = () => {
             </header>
             {/* Spacer para empurrar o conteúdo para baixo do header fixo */}
             <div style={{ height: HEADER_HEIGHT }} />
+            <Divider sx={{ margin: '0.1rem 0' }} />
         </>
     );
 };
