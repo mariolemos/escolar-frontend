@@ -74,7 +74,7 @@ const useExemplo = () => {
     const buscarLista = async () => {
         setLoading(true);
         try {
-            const response = await apiGet<any[]>("/users");
+            const response = await apiGet<any[]>("https://jsonplaceholder.typicode.com/users");
             const newResponse = response.map((item: any) => {
                 return {
                     ...item,
