@@ -22,6 +22,15 @@ const useAluno = () => {
             setLoad(false)
         }              
     }
+
+    const columns = [        
+            { key: "id", label: "Id"},
+            { key: "nome", label: "nome" },
+            { key: "turno", label: "Turno"},
+            { key: "turma", label: "Turma" },
+            { key: "serie", label: "Série"},
+            { key: "ativo", label: "Status" },        
+    ]
     return {
     action: {
 
@@ -29,6 +38,7 @@ const useAluno = () => {
     data: {
        listarAluno,
        load,
+       columns,
         
     }}
 }

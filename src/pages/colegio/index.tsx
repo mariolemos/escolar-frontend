@@ -8,7 +8,9 @@ export default function Colegio() {
       
     },
     data: {      
-      listColegio 
+      listColegio,
+      columns,
+      buscarColegio, 
     },
   } = useColegio();
   return (
@@ -22,11 +24,9 @@ export default function Colegio() {
                         redirect: "/colegio/formColegio"
                     },                    
                 ]}
-        data={listColegio}
-        columns={[
-          { key: "nome", label: "nome" },
-          { key: "horario", label: "horario" },          
-        ]}
+        // data={listColegio}
+        data={buscarColegio}
+        columns={columns}
       />
     </>
   );

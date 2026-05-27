@@ -1,4 +1,5 @@
 import { apiGet } from "@/services/api";
+import { Key, Label } from "@mui/icons-material";
 import { useEffect, useState } from "react";
 
  const useColegio = () => {
@@ -10,17 +11,27 @@ import { useEffect, useState } from "react";
         buscarColegios();
     }, [])
 
+    useEffect(() => {
+        buscarColegioPorId();
+    })
+
     const buscarColegios = async () => {
        const response = await apiGet<[]>("/colegio")
        console.log(response)
        setListCoelgio(response)
     }
 
-    const buscarColegioPorId = async () => {
-        const response = await apiGet<[]>('/colegio/id')
+    const buscarColegioPorId = async () => {                     
+        const response = await apiGet<[]>("/colegio")
         console.log(response)
         setBuscrColegio(response)
     }
+
+    const columns = [   
+
+          { key: "nome", label: "nome" },
+          { key: "horario", label: "horario" },          
+    ]
 
     return {
         action: {
@@ -30,6 +41,7 @@ import { useEffect, useState } from "react";
         data: {
             listColegio,
             buscarColegio,
+            columns,
         }
     }
 }

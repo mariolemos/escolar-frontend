@@ -5,7 +5,7 @@ import AddIcon from '@mui/icons-material/Add';
 export default function Aluno() {
     const {
         action: {},
-        data: {listarAluno, load}
+        data: {listarAluno, load, columns}
     } = useAluno ();
 
     return (
@@ -16,19 +16,12 @@ export default function Aluno() {
                     {
                         nome: "novo",
                         icon: <AddIcon sx={{ marginRight: 1 }} />,
-                        redirect: "/exemplo/form"
+                        redirect: "/aluno/form"
                     },                    
                 ]}
         titulo="Lista de Alunos"
         data={listarAluno}
-        columns={[
-            { key: "id", label: "Id"},
-            { key: "nome", label: "nome" },
-            { key: "turno", label: "Turno"},
-            { key: "turma", label: "Turma" },
-            { key: "serie", label: "Série"},
-            { key: "ativo", label: "Status" },
-        ]}/>        
+        columns={columns}/>        
         </>
     )
 }

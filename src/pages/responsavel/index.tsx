@@ -6,7 +6,8 @@ export default function Responsavel() {
 
     const {
             action: {},
-            data: {listResponsavel},
+            data: {listResponsavel, columns},
+
         } = useResponsavel();
 
     return (               
@@ -16,17 +17,12 @@ export default function Responsavel() {
                     {
                         nome: "novo",
                         icon: <AddIcon sx={{ marginRight: 1 }} />,
-                        redirect: "/exemplo/form"
+                        redirect: "/responsavel/formResponsavel"
                     },                    
                 ]}
                 titulo="Lista de Responsáveis"
         data={listResponsavel}
-        columns={[
-            { key: "id", label: "ID"},
-            { key: "nome", label: "NOME"},
-            { key: "cpf", label: " CPF"},
-            { key: "parentesco", label: "Parentesco"}
-        ]}
+        columns={columns}
         />                          
         </>
     )

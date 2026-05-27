@@ -33,5 +33,5 @@ export type ExemploFormSchema = z.infer<typeof exemploFormSchema>;
 export const exemploFormDefaultValues: ExemploFormSchema = {
   nome: "",
   cpf: "",
-  rg: "",
+  rg: "",  
 };
