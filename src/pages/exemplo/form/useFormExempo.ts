@@ -43,7 +43,7 @@ export default function useFormExempo() {
     const buscar = async (id: number) => {
         setLoading(true);
         try {
-            const response = await apiGet<IExemplo>(`/users/${id}`);
+            const response = await apiGet<IExemplo>(`https://jsonplaceholder.typicode.com/users/${id}`);
             setValue("nome", response.name);
             console.log(response);
         } catch (error) {
