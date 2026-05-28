@@ -14,110 +14,99 @@ export default function FormResponsavel() {
     data: { isSubmitting, errors, control, loading, register },
   } = useFormResponsavel();
 
-  //   function salvar(): void {
-  //     throw new Error("Function not implemented.");
-  //   }
-
   return (
     <>
       <FormComponent
         onSubmit={salvar}
         titulo="Formulário de Cadastro Responsável"
-        isSubmitting={isSubmitting}        
+        isSubmitting={isSubmitting}
       >
         <Box
           sx={{
-            width: "100%",
-            "& .MuiTextField-root": { m: 1, width: "100%" },
+            width: "50%",
+            m: 1,
+            display: "flex",
+            flexWrap: "wrap",
           }}
         >
-          <Box sx={{ display: "flex", gap: 2, width: "100%" }}>
-            <TextField
-              error={!!errors.nome}
-              helperText={errors.nome?.message}
-              id="outlined-error"
-              label="Nome"
-              placeholder="Nome completo"
-              defaultValue=""
-              fullWidth
-              {...register("nome")}
+          <TextField
+            sx={{ width: "50%", display: "flex", m: 1 }}
+            error={!!errors.nome}
+            helperText={errors.nome?.message}
+            id="outlined-error"
+            label="Nome"
+            placeholder="Nome completo"
+            defaultValue=""
+            fullWidth
+            {...register("nome")}
+          />
+          <Box sx={{ flex: 1, width: "40%", m: 1 }}>
+            <Controller
+              name="nascimento"
+              control={control}
+              render={({ field }) => (
+                <DatePickerField
+                  label="Nascimento"
+                  error={!!errors.nascimento}
+                  helperText={errors.nascimento?.message}
+                  value={field.value ?? null}
+                  onChange={(date: Date | null) =>
+                    field.onChange(date ?? undefined)
+                  }
+                />
+              )}
             />
-          {/* </Box> */}
-          {/* <Box sx={{ display: "flex", gap: 2, width: "100%" }}> */}
-            <Box sx={{ flex: 1 }}>
-              <Controller
-                name="nascimento"
-                control={control}
-                render={({ field }) => (
-                  <DatePickerField
-                    label="Nascimento"
-                    error={!!errors.nascimento}
-                    helperText={errors.nascimento?.message}
-                    value={field.value ?? null}
-                    onChange={(date: Date | null) =>
-                      field.onChange(date ?? undefined)
-                    }
-                  />
-                )}
-              />
-            </Box>
-            <Box sx={{ flex: 1 }}>
-              <Controller
-                name="cpf"
-                control={control}
-                render={({ field }) => (
-                  <TextFieldMask
-                    {...field}
-                    error={!!errors.cpf}
-                    helperText={errors.cpf?.message}
-                    id="outlined-error-helper-text"
-                    label="CPF"
-                    placeholder="000.000.000-00"
-                    fullWidth
-                    mask="999.999.999-99"
-                  />
-                )}
-              />
-            </Box>
-            <Box sx={{ flex: 1 }}>
-              <TextField
-                error={!!errors.rg}
-                helperText={errors.rg?.message}
-                id="outlined-error-helper-text"
-                label="RG"
-                placeholder="00.000.000-0"
-                defaultValue=""
-                fullWidth
-                {...register("rg")}
-              />
-            </Box>
-            <Box>
-              <TextField
-                error={!!errors.parentesco}
-                helperText={errors.parentesco?.message}
-                id="outlined-error"
-                label="Parentesco"
-                placeholder="Nome completo"
-                defaultValue=""
-                fullWidth
-                {...register("parentesco")}
-              />
-            </Box>
           </Box>
-          <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-            <Link href="/exemplo" passHref>
-              <Button
-                variant="contained"
-                color="inherit"
-                sx={{ marginRight: 2 }}
-              >
-                Voltar
-              </Button>
-            </Link>
-            <Button variant="contained" color="primary" type="submit">
-              Salvar
+          <Box sx={{ flex: 1, m: 1 }}>
+            <Controller
+              name="cpf"
+              control={control}
+              render={({ field }) => (
+                <TextFieldMask
+                  {...field}
+                  error={!!errors.cpf}
+                  helperText={errors.cpf?.message}
+                  id="outlined-error-helper-text"
+                  label="CPF"
+                  placeholder="000.000.000-00"
+                  fullWidth
+                  mask="999.999.999-99"
+                />
+              )}
+            />
+          </Box>
+          <TextField
+            sx={{ width: "100%", m: 1 }}
+            error={!!errors.rg}
+            helperText={errors.rg?.message}
+            id="outlined-error-helper-text"
+            label="RG"
+            placeholder="00.000.000-0"
+            defaultValue=""
+            fullWidth
+            {...register("rg")}
+          />
+          <TextField
+            sx={{ width: "100%", m: 1 }}
+            error={!!errors.parentesco}
+            helperText={errors.parentesco?.message}
+            id="outlined-error"
+            label="Parentesco"
+            placeholder="Nome completo"
+            defaultValue=""
+            fullWidth
+            {...register("parentesco")}
+          />
+        </Box>
+        <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+          <Link href="/exemplo" passHref>
+            <Button variant="contained" color="inherit" sx={{ marginRight: 2 }}>
+              Voltar
             </Button>
-          </Box>
+          </Link>
+          <Button variant="contained" color="primary" type="submit">
+            Salvar
+          </Button>
         </Box>
       </FormComponent>
     </>

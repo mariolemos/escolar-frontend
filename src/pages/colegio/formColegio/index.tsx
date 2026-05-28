@@ -46,7 +46,7 @@ export default function FormColegio() {
             // error={!!errors.rg}
             // helperText={errors.rg?.message}
             id="outlined-error-helper-text"
-            label="RG"
+            label="Horário"
             placeholder="00.000.000-0"
             defaultValue=""
             fullWidth

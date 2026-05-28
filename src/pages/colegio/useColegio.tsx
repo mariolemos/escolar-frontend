@@ -5,7 +5,8 @@ import { useEffect, useState } from "react";
  const useColegio = () => {
 
     const [listColegio, setListCoelgio] = useState([]);
-    const [buscarColegio, setBuscrColegio] = useState([])
+    const [buscarColegio, setBuscrColegio] = useState([]);
+    const [loading, setLoading] = useState<boolean>(false)
 
     useEffect(() => {
         buscarColegios();
@@ -42,6 +43,7 @@ import { useEffect, useState } from "react";
             listColegio,
             buscarColegio,
             columns,
+            loading
         }
     }
 }

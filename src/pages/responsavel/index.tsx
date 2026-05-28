@@ -6,7 +6,9 @@ export default function Responsavel() {
 
     const {
             action: {},
-            data: {listResponsavel, columns},
+            data: {listResponsavel,
+                 columns,
+                loading},
 
         } = useResponsavel();
 
@@ -23,6 +25,7 @@ export default function Responsavel() {
                 titulo="Lista de Responsáveis"
         data={listResponsavel}
         columns={columns}
+        loading={loading}
         />                          
         </>
     )

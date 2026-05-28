@@ -1,37 +1,36 @@
 import { useState } from "react";
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
+import InboxIcon from "@mui/icons-material/MoveToInbox";
+import MailIcon from "@mui/icons-material/Mail";
 
 export interface DrawerComponetProps {
-    menuList: Array<{
-        text: string;
-        icon: React.ReactNode;
-        href?: string;
-    }>;
+  menuList: Array<{
+    text: string;
+    icon: React.ReactNode;
+    href?: string;
+  }>;
 }
 
 export default function Drawer() {
+  const [open, setOpen] = useState(false);
 
-    const [open, setOpen] = useState(false);
+  const toggleDrawer = (newOpen: boolean) => () => {
+    setOpen(newOpen);
+  };
 
-    const toggleDrawer = (newOpen: boolean) => () => {
-        setOpen(newOpen);
-    };
+  const menuList: DrawerComponetProps["menuList"] = [
+    { text: "Inbox", icon: <InboxIcon />, href: "/" },
+    { text: "Aluno", icon: <MailIcon />, href: "aluno" },
+    { text: "Responsável", icon: <InboxIcon />, href: "responsavel" },
+    { text: "Colégio", icon: <InboxIcon />, href: "colegio" },
+  ];
 
-    const menuList: DrawerComponetProps['menuList'] = [
-        { text: 'Inbox', icon: <InboxIcon />, href: "/" },
-        { text: 'Aluno', icon: <MailIcon />, href: "aluno" },
-        { text: 'Responsável', icon: <InboxIcon />, href: "responsavel" },
-         { text: 'Colégio', icon: <InboxIcon />, href: "colegio" },
-    ]
-
-    return {
-        action: {
-            toggleDrawer
-        },
-        data: {
-            open,
-            menuList
-        }
-    }
+  return {
+    action: {
+      toggleDrawer,
+    },
+    data: {
+      open,
+      menuList,
+    },
+  };
 }

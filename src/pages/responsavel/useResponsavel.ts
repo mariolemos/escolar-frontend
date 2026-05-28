@@ -2,7 +2,9 @@ import { apiGet } from "@/services/api";
 import { useEffect, useState } from "react";
 
 const useResponsavel = () => {
+
   const [listResponsavel, setListResponsavel] = useState([]);
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     buscarResponsaveis();
@@ -26,6 +28,7 @@ const useResponsavel = () => {
     data: {
       listResponsavel,
       columns,
+      loading,
     },
   };
 };

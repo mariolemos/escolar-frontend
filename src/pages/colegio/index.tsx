@@ -10,7 +10,8 @@ export default function Colegio() {
     data: {      
       listColegio,
       columns,
-      buscarColegio, 
+      buscarColegio,
+      loading, 
     },
   } = useColegio();
   return (
@@ -26,6 +27,7 @@ export default function Colegio() {
                 ]}
         // data={listColegio}
         data={buscarColegio}
+        loading={loading}
         columns={columns}
       />
     </>
