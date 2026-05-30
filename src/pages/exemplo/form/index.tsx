@@ -5,17 +5,20 @@ import useForm from "./useFormExempo";
 import { Controller } from "react-hook-form";
 import Link from "next/link";
 import FormComponent from "@/components/FormComponent";
+import Modal from "@/components/Modal";
 
 export default function Form() {
     const {
         action: {
             salvar,
+            setOpen
         },
         data: {
             register,
             errors,
             control,
-            isSubmitting
+            isSubmitting,
+            open
         }
     } = useForm();
     return (
@@ -87,6 +90,17 @@ export default function Form() {
                     </Box>
                 </Box>
                 <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+                    <Button variant="outlined" onClick={() => setOpen(true)}>
+                        Abrir modal
+                    </Button>
+                    <Modal
+                        titulo="titulo"
+                        open={open}
+                        setOpen={setOpen}
+                        buttonAcao={() => alert("Função para execultar alguma ação")}
+                    >
+                        <>Conteudo</>
+                    </Modal>
                     <Link href="/exemplo" passHref>
                         <Button variant="contained" color="inherit" sx={{ marginRight: 2 }}>
                             Voltar
