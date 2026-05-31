@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
 	Table,
 	TableBody,
@@ -9,12 +9,13 @@ import {
 	Paper,
 	Button,
 	Box,
-	CircularProgress,
 	Switch,
 } from "@mui/material";
 import Link from "next/link";
 import Loading from "@/components/Loading";
+import ConfirmModal from '@/components/ConfirmModal';
 import { Delete, Edit } from "@mui/icons-material";
+
 type DataTableProps<T> = {
 	columns: Array<{
 		key: string | keyof T;
@@ -37,6 +38,12 @@ type DataTableProps<T> = {
 		}
 		delete?: {
 			onChange: (t: T) => void;
+			confirmDelete?: boolean | {
+				title?: string;
+				description?: (row: T) => React.ReactNode;
+				confirmText?: string;
+				cancelText?: string;
+			}
 		}
 		status?: {
 			onChange: (t: T) => void;
@@ -45,7 +52,32 @@ type DataTableProps<T> = {
 	}
 	containerProps?: React.ComponentProps<typeof TableContainer>;
 };
+
 export function DataTable<T extends object>({ columns, data, className, titulo = "", buttonList, loading = false, action, containerProps }: DataTableProps<T>) {
+	const [confirmOpen, setConfirmOpen] = useState(false);
+	const [selectedRow, setSelectedRow] = useState<T | null>(null);
+	const handleDeleteClick = (row: T) => {
+		const confirmSetting = action?.delete?.confirmDelete;
+		if (confirmSetting) {
+			setSelectedRow(row);
+			setConfirmOpen(true);
+			return;
+		}
+		action?.delete?.onChange(row);
+	}
+
+	const handleConfirm = () => {
+		if (selectedRow) {
+			action?.delete?.onChange(selectedRow);
+			setSelectedRow(null);
+		}
+		setConfirmOpen(false);
+	}
+
+	const modalTitle = typeof action?.delete?.confirmDelete === 'object' && action!.delete!.confirmDelete!.title ? action!.delete!.confirmDelete!.title : 'Confirmar exclusão';
+	const modalConfirmText = typeof action?.delete?.confirmDelete === 'object' && action!.delete!.confirmDelete!.confirmText ? action!.delete!.confirmDelete!.confirmText : 'Excluir';
+	const modalCancelText = typeof action?.delete?.confirmDelete === 'object' && action!.delete!.confirmDelete!.cancelText ? action!.delete!.confirmDelete!.cancelText : 'Cancelar';
+
 	return (
 		<TableContainer
 			component={Paper}
@@ -117,12 +149,10 @@ export function DataTable<T extends object>({ columns, data, className, titulo =
 												<Button size="small" onClick={() => action?.status?.onChange(row)}><Switch color="success" checked={action.status.checked(row)}></Switch></Button>
 											)}
 											{action.delete && (
-												<Button size="small" color="error" onClick={() => action?.delete?.onChange(row)}><Delete fontSize="small" /></Button>
+												<Button size="small" color="error" onClick={() => handleDeleteClick(row)}><Delete fontSize="small" /></Button>
 											)}
 										</TableCell>
 									)}
-									<TableCell>
-									</TableCell>
 								</TableRow>
 							))
 						)}
@@ -130,6 +160,16 @@ export function DataTable<T extends object>({ columns, data, className, titulo =
 				</Table>
 			</Box>
 			<Loading isLoading={loading} />
+
+			<ConfirmModal
+				open={confirmOpen}
+				setOpen={setConfirmOpen}
+				title={modalTitle}
+				description={selectedRow ? (typeof action?.delete?.confirmDelete === 'object' && action!.delete!.confirmDelete!.description ? action!.delete!.confirmDelete!.description!(selectedRow) : `Deseja realmente excluir ${(selectedRow as any)?.name ?? 'este item'}?`) : 'Deseja realmente excluir este item?'}
+				confirmText={modalConfirmText}
+				cancelText={modalCancelText}
+				onConfirm={handleConfirm}
+			/>
 		</TableContainer>
 	);
 }
