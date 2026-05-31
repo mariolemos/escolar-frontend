@@ -17,12 +17,13 @@ export default function Form() {
             register,
             errors,
             control,
+            loading,
             isSubmitting,
             open
         }
     } = useForm();
     return (
-        <FormComponent onSubmit={salvar} titulo="Formulário de exemplo" isSubmitting={isSubmitting}>
+        <FormComponent onSubmit={salvar} titulo="Formulário de exemplo" isSubmitting={isSubmitting || loading}>
 
             <Box
                 sx={{
@@ -35,7 +36,7 @@ export default function Form() {
                         error={!!errors.nome}
                         helperText={errors.nome?.message}
                         id="outlined-error"
-                        label="Nome"
+                        label={control._formValues.nome ? "" : "Nome completo"}
                         placeholder="Nome completo"
                         defaultValue=""
                         fullWidth
