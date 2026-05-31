@@ -31,8 +31,9 @@ export default function Modal({ titulo, children, open, setOpen, buttonAcao }: I
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
                 role="alertdialog"
+                sx={{ '& .MuiDialog-paper': { width: '80%', maxHeight: 435, height: '50%' } }} 
             >
-                <DialogTitle id="alert-dialog-title">
+                <DialogTitle id="alert-dialog-title" sx={{ fontSize: '1.5rem', fontWeight: 'bold' , textAlign: 'center' }}>
                     {titulo}
                 </DialogTitle>
                 <DialogContent>

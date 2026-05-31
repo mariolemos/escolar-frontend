@@ -28,12 +28,7 @@ export default function Exemplo() {
                         nome: "novo",
                         icon: <AddIcon sx={{ marginRight: 1 }} />,
                         redirect: "/exemplo/form"
-                    },
-                    {
-                        nome: "novo",
-                        icon: <AddIcon sx={{ marginRight: 1 }} />,
-                        redirect: "/exemplo/form"
-                    },
+                    },                    
                 ]}
                 action={{
                     edit: {
