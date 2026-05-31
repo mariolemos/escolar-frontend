@@ -165,7 +165,7 @@ export function DataTable<T extends object>({ columns, data, className, titulo =
 				open={confirmOpen}
 				setOpen={setConfirmOpen}
 				title={modalTitle}
-				description={selectedRow ? (typeof action?.delete?.confirmDelete === 'object' && action!.delete!.confirmDelete!.description ? action!.delete!.confirmDelete!.description!(selectedRow) : `Deseja realmente excluir ${(selectedRow as any)?.name ?? 'este item'}?`) : 'Deseja realmente excluir este item?'}
+				description={'Deseja realmente excluir este item?'}
 				confirmText={modalConfirmText}
 				cancelText={modalCancelText}
 				onConfirm={handleConfirm}
