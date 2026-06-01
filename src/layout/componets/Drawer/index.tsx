@@ -10,9 +10,12 @@ import ListItemText from '@mui/material/ListItemText';
 import ArticleIcon from '@mui/icons-material/Article';
 import useDrawer from './useDrawer';
 import Link from 'next/link';
+import { useSession } from 'next-auth/react';
 
 
 export default function DrawerComponet() {
+
+    const { data: session } = useSession();
 
     const {
         action: {
@@ -23,6 +26,8 @@ export default function DrawerComponet() {
             menuList
         }
     } = useDrawer();
+
+    if (!session) return null;
 
     const DrawerList = (
         <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
