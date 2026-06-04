@@ -22,6 +22,7 @@ export default function useFormExempo() {
 
     const [isSubmitting, setIsSubmitting] = useState(false);
     const { showToast } = useToast();
+    const [open, setOpen] = useState(false);
     const { query } = useRouter();
 
 
@@ -80,13 +81,15 @@ export default function useFormExempo() {
     return {
         action: {
             salvar: handleSubmit(salvar),
+            setOpen
         },
         data: {
             register,
             errors,
             control,
             loading,
-            isSubmitting
+            isSubmitting,
+            open
         }
     }
 }

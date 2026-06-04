@@ -32,4 +32,19 @@ export async function apiPost<T>(path: string, data: any): Promise<T> {
   return response.json();
 }
 
-// Adicione outros métodos (PUT, DELETE) conforme necessário.
+export async function apiPut<T>(path: string, data: any): Promise<T> {
+  const url = buildUrl(path);
+  const response = await fetch(url, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  });
+  if (!response.ok) {
+    throw new Error(`Erro ao enviar dados: ${response.statusText}`);
+  }
+  return response.json();
+}
+
+// Adicione outros métodos (DELETE) conforme necessário.

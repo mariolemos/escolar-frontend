@@ -1,3 +1,4 @@
+import React from 'react';
 import DataTable from "@/layout/componets/DataTable";
 import useExemplo, { IExemplo } from "./useExemplo";
 import AddIcon from '@mui/icons-material/Add';
@@ -28,12 +29,7 @@ export default function Exemplo() {
                         nome: "novo",
                         icon: <AddIcon sx={{ marginRight: 1 }} />,
                         redirect: "/exemplo/form"
-                    },
-                    {
-                        nome: "novo",
-                        icon: <AddIcon sx={{ marginRight: 1 }} />,
-                        redirect: "/exemplo/form"
-                    },
+                    },                    
                 ]}
                 action={{
                     edit: {
@@ -44,9 +40,11 @@ export default function Exemplo() {
                         checked: (t: IExemplo) => t.ativo
                     },
                     delete: {
-                        onChange: (t: IExemplo) => del(t)
+                        onChange: (t: IExemplo) => del(t),
+                        confirmDelete: true
                     },
                 }}
+                
             />
         </>
     )
