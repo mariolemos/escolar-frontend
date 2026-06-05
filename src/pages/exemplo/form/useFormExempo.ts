@@ -24,6 +24,15 @@ export default function useFormExempo() {
     const { showToast } = useToast();
     const [open, setOpen] = useState(false);
     const { query } = useRouter();
+    const [loading, setLoading] = useState<boolean>(false);
+
+     useEffect(() => {
+        if (query.id) {
+            // Aqui você pode fazer uma chamada para a API para buscar os dados do exemplo com base no ID e preencher o formulário
+            console.log("ID do exemplo para edição:", query.id);
+            buscar(Number(query.id));
+        }
+    }, [query.id]);
 
 
     // Função para garantir que nascimento seja Date
@@ -36,10 +45,7 @@ export default function useFormExempo() {
                     : new Date(data.nascimento))
                 : undefined,
         };
-    };
-
-    const [loading, setLoading] = useState<boolean>(false);
-
+    };  
 
     const buscar = async (id: number) => {
         setLoading(true);
@@ -56,13 +62,7 @@ export default function useFormExempo() {
 
     }
 
-    useEffect(() => {
-        if (query.id) {
-            // Aqui você pode fazer uma chamada para a API para buscar os dados do exemplo com base no ID e preencher o formulário
-            console.log("ID do exemplo para edição:", query.id);
-            buscar(Number(query.id));
-        }
-    }, [query.id]);
+   
 
     const salvar = (data: ExemploFormSchema) => {
         setIsSubmitting(true);

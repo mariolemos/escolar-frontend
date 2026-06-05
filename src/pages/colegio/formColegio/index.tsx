@@ -11,20 +11,16 @@ import Link from "next/dist/client/link";
 
 export default function FormColegio() {
   const {
-    action: {},
-    data: { isSubmitting },
+    action: { salvar, setOpen },
+    data: { register, errors, control, loading, isSubmitting, open },
   } = useFormColegio();
-
-  function salvar(): void {
-    throw new Error("Function not implemented.");
-  }
 
   return (
     <>
       <FormComponent
         onSubmit={salvar}
         titulo="Formulário de Cadastro Colégio"
-        isSubmitting={isSubmitting}
+        isSubmitting={isSubmitting || loading}
       >
         <Box
           sx={{
@@ -33,28 +29,36 @@ export default function FormColegio() {
           }}
         >
           <TextField
-            // error={!!errors.nome}
-            // helperText={errors.nome?.message}
+            error={!!errors.nome}
+            helperText={errors.nome?.message}
             id="outlined-error"
             label="Nome"
             placeholder="Nome completo"
             defaultValue=""
             fullWidth
-            // {...register("nome")}
+            {...register("nome")}
           />
-          <TextField
-            // error={!!errors.rg}
-            // helperText={errors.rg?.message}
-            id="outlined-error-helper-text"
-            label="Horário"
-            placeholder="00.000.000-0"
-            defaultValue=""
-            fullWidth
-            // {...register("rg")}
+
+          <Controller
+            name="horario"
+            control={control}
+            render={({ field }) => (
+              <TextFieldMask
+                {...field}
+                error={!!errors.horario}
+                helperText={errors.horario?.message}
+                id="outlined-error-helper-text"
+                label="Horário"
+                placeholder="06:45"
+                fullWidth
+                mask="99:99"
+                {...register("horario")}
+              />
+            )}
           />
 
           <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-            <Link href="/exemplo" passHref>
+            <Link href="/colegio" passHref>
               <Button
                 variant="contained"
                 color="inherit"

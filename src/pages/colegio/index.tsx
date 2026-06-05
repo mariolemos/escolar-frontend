@@ -1,34 +1,38 @@
 import DataTable from "@/layout/componets/DataTable";
-import useColegio from "./useColegio";
-import AddIcon from '@mui/icons-material/Add';
+import useColegio, { IColegio } from "./useColegio";
+import AddIcon from "@mui/icons-material/Add";
 
 export default function Colegio() {
   const {
-    action: {
-      
-    },
-    data: {      
-      listColegio,
-      columns,
-      buscarColegio,
-      loading, 
-    },
+    action: { edit, del, status},
+    data: { listColegio, columns, loading },
   } = useColegio();
   return (
-    <>      
+    <>
       <DataTable
-      titulo="Lis de Colégios"
-      buttonList={[
-                    {
-                        nome: "novo",
-                        icon: <AddIcon sx={{ marginRight: 1 }} />,
-                        redirect: "/colegio/formColegio"
-                    },                    
-                ]}
-        // data={listColegio}
-        data={buscarColegio}
-        loading={loading}
+        titulo="Lista de Colégios"
         columns={columns}
+        data={listColegio}
+        loading={loading}
+        buttonList={[
+          {
+            nome: "novo",
+            icon: <AddIcon sx={{ marginRight: 1 }} />,
+            redirect: "/colegio/formColegio",
+          },
+        ]}                      
+        action={{
+          edit: {
+            onChange: (t: IColegio) => edit(t),
+          },
+          status: {
+            onChange: (t: IColegio) => status(t),
+            checked: (t: IColegio) => t.ativo,
+          },
+          delete: {
+            onChange: (t: IColegio) => del(t),
+          },
+        }}
       />
     </>
   );

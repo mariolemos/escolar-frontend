@@ -1,32 +1,102 @@
+import { useToast } from "@/components/Toast";
 import { apiGet } from "@/services/api";
+import router from "next/router";
 import { useEffect, useState } from "react";
+
+export interface IResponsavel {
+  id: number;
+  nome: string;
+  nascimento: Date;
+  cpf: string;
+  parentesco: string;
+  ativo: boolean;
+}
 
 const useResponsavel = () => {
 
   const [listResponsavel, setListResponsavel] = useState([]);
+  const [buscarResponsavel, setBuscarResponsavel] = useState([]);
   const [loading, setLoading] = useState<boolean>(false);
-
-  useEffect(() => {
-    buscarResponsaveis();
-  }, []);
-
-  const buscarResponsaveis = async () => {
-    const response = await apiGet<[]>("/responsavel");
-    console.log(response);
-    setListResponsavel(response);
-  };
-
+  const { showToast} = useToast();
   const columns = [
     { key: "id", label: "ID" },
     { key: "nome", label: "NOME" },
     { key: "cpf", label: " CPF" },
     { key: "parentesco", label: "Parentesco" },
-  ];
+    
+  ];  
+
+  useEffect(() => {
+    buscarResponsaveis();
+  }, []);
+
+  /**
+   *
+   * @param t
+   * Logica para ir na API fazer a ação de deletar
+   */
+  const del = (t: IResponsavel) => {
+    console.log("delete", t);
+  };
+
+  /**
+   *
+   * @param t
+   * Logica para ir na API fazer a ação de editar
+   */
+  // const edit = async (t: IColegio) => {
+  //   const response = await apiGet<[]>('/colegio/id');
+  //     console.log("edit", t)
+  //     setBuscrColegio(response);
+  //     router.push({
+  //         pathname: `/colegio/formColegio`,
+  //         query: { id: t.id }
+  //     });
+  // }
+  const edit = (t: IResponsavel) => {
+    console.log("edit", t);
+    router.push({
+      pathname: `/responsavel/formResponsavel`,
+      query: { id: t.id },
+    });
+  };
+
+  // /**
+  //  * @param t
+  //  * Logica para ir na API fazer a ação de mudar o status, no exemplo estou apenas invertendo o valor de ativo para simular a mudança de status
+  //  */
+  const status = (t: IResponsavel) => {
+    setListResponsavel((prev) =>
+      prev.map((item) => {
+        if (item.id === t.id) {
+          return {
+            ...item,
+            ativo: !item.ativo,
+          };
+        }
+        return item;
+      }),
+    );
+    console.log("status", t);
+  };
+
+  const buscarResponsaveis = async () => {
+    const response = await apiGet<[]>("/responsavel");
+    console.log(response);
+    setListResponsavel(response);
+  };  
 
   return {
-    action: {},
+    action: {
+      buscarResponsaveis,
+      setListResponsavel,
+      del,
+      status,
+      edit,
+    },
     data: {
       listResponsavel,
+      buscarResponsaveis,
       columns,
       loading,
     },

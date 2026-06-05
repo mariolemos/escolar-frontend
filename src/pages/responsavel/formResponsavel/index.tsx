@@ -99,7 +99,7 @@ export default function FormResponsavel() {
           />
         </Box>
         <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-          <Link href="/exemplo" passHref>
+          <Link href="/responsavel" passHref>
             <Button variant="contained" color="inherit" sx={{ marginRight: 2 }}>
               Voltar
             </Button>
