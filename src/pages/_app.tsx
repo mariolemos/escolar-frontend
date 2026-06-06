@@ -3,6 +3,7 @@ import Footer from "@/layout/componets/Footer";
 import { ToastProvider } from "@/components/Toast";
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
+import 'leaflet/dist/leaflet.css';
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
