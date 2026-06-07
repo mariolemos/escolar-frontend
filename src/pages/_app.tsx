@@ -6,6 +6,7 @@ import type { AppProps } from "next/app";
 import { SessionProvider, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
+import 'leaflet/dist/leaflet.css';
 
 function AuthGate({ children }: { children: React.ReactNode }) {
   const { data: session, status } = useSession();
@@ -13,6 +14,7 @@ function AuthGate({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     if (status === "loading") return;
+    if (session?.accessToken) localStorage.setItem('accessToken', session.accessToken);
     if (!session && router.pathname !== "/login") {
       router.push("/login");
     }

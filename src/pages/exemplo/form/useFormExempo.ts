@@ -21,6 +21,7 @@ export default function useFormExempo() {
     });
 
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [loading, setLoading] = useState<boolean>(false);
     const { showToast } = useToast();
     const [open, setOpen] = useState(false);
     const { query } = useRouter();
@@ -38,7 +39,6 @@ export default function useFormExempo() {
         };
     };
 
-    const [loading, setLoading] = useState<boolean>(false);
 
 
     const buscar = async (id: number) => {
