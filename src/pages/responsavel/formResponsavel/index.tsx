@@ -19,7 +19,7 @@ export default function FormResponsavel() {
       <FormComponent
         onSubmit={salvar}
         titulo="Formulário de Cadastro Responsável"
-        isSubmitting={isSubmitting}
+        isSubmitting={isSubmitting || loading}
       >
         <Box
           sx={{
@@ -38,6 +38,7 @@ export default function FormResponsavel() {
             placeholder="Nome completo"
             defaultValue=""
             fullWidth
+            focused={true}
             {...register("nome")}
           />
           <Box sx={{ flex: 1, width: "40%", m: 1 }}>
@@ -84,6 +85,7 @@ export default function FormResponsavel() {
             placeholder="00.000.000-0"
             defaultValue=""
             fullWidth
+            focused={true}
             {...register("rg")}
           />
           <TextField
@@ -95,6 +97,7 @@ export default function FormResponsavel() {
             placeholder="Nome completo"
             defaultValue=""
             fullWidth
+            focused={true}
             {...register("parentesco")}
           />
         </Box>

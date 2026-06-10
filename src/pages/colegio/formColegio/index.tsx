@@ -36,6 +36,7 @@ export default function FormColegio() {
             placeholder="Nome completo"
             defaultValue=""
             fullWidth
+            focused={true}
             {...register("nome")}
           />
 

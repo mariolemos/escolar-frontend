@@ -2,6 +2,7 @@ import { useToast } from "@/components/Toast";
 import { apiGet } from "@/services/api";
 import router from "next/router";
 import { useEffect, useState } from "react";
+import { IColegio } from "../colegio/useColegio";
 
 export interface IResponsavel {
   id: number;
@@ -10,21 +11,19 @@ export interface IResponsavel {
   cpf: string;
   parentesco: string;
   ativo: boolean;
+  rg: string;
 }
 
 const useResponsavel = () => {
-
-  const [listResponsavel, setListResponsavel] = useState([]);
-  const [buscarResponsavel, setBuscarResponsavel] = useState([]);
+  const [listResponsavel, setListResponsavel] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const { showToast} = useToast();
+  const { showToast } = useToast();
   const columns = [
     { key: "id", label: "ID" },
     { key: "nome", label: "NOME" },
     { key: "cpf", label: " CPF" },
     { key: "parentesco", label: "Parentesco" },
-    
-  ];  
+  ];
 
   useEffect(() => {
     buscarResponsaveis();
@@ -44,12 +43,12 @@ const useResponsavel = () => {
    * @param t
    * Logica para ir na API fazer a ação de editar
    */
-  // const edit = async (t: IColegio) => {
-  //   const response = await apiGet<[]>('/colegio/id');
+  // const edit = async (t: IResponsavel) => {
+  //   const response = await apiGet<[]>('/responsavel/id');
   //     console.log("edit", t)
-  //     setBuscrColegio(response);
+  //     setBuscarResponsavel(response);
   //     router.push({
-  //         pathname: `/colegio/formColegio`,
+  //         pathname: `/responsavel/formResponsavel`,
   //         query: { id: t.id }
   //     });
   // }
@@ -84,7 +83,7 @@ const useResponsavel = () => {
     const response = await apiGet<[]>("/responsavel");
     console.log(response);
     setListResponsavel(response);
-  };  
+  };
 
   return {
     action: {
@@ -95,8 +94,7 @@ const useResponsavel = () => {
       edit,
     },
     data: {
-      listResponsavel,
-      buscarResponsaveis,
+      listResponsavel,      
       columns,
       loading,
     },

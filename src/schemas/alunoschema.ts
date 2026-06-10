@@ -41,7 +41,13 @@ export const alunoFormSchema = z.object({
           nomeMae: z.string()
             .min(1, "Nome é obrigatório")
             .max(100, "Nome deve ter no máximo 100 caracteres"),
-          convenioMedico: z.string().optional(),      
+          convenioMedico: z.string().optional(),
+          responsavelId: z.string()
+            .min(1, "Responsavel é obrigatório")
+            .max(3, "Respponsavel deve ter no máximo 3 caracteres"),
+            colegioId: z.string()
+            .min(1, "Coelgio é obrigatório")
+            .max(3, "Colegio deve ter no máximo 3 caracteres"),      
 });
 
 export type AlunoFormSchema = z.infer<typeof alunoFormSchema>;
@@ -56,4 +62,6 @@ export const alunoFormDefaultValues: AlunoFormSchema = {
     nomePai: "",
     nomeMae: "",
     nascimento: new Date(),
+    responsavelId: "",
+    colegioId: "",    
 };

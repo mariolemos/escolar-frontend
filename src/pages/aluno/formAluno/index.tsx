@@ -19,7 +19,7 @@ export default function AlunoForm() {
       <FormComponent
         onSubmit={salvar}
         titulo="Formulário de Cadastro Aluno"
-        isSubmitting={isSubmitting}        
+        isSubmitting={isSubmitting || loading}        
       >
         <Box
           sx={{
@@ -35,12 +35,12 @@ export default function AlunoForm() {
             helperText={errors.nome?.message}
             id="outlined-error"
             label="Nome"
-            placeholder="Nome completo"
             defaultValue=""
             fullWidth
             {...register("nome")}
+            focused={true}
           />
-          <Box sx={{ width: "20%",  m: 1, display: "flex" }}>
+          <Box sx={{ width: "20%", m: 1, display: "flex" }}>
             <Controller
               name="nascimento"
               control={control}
@@ -71,6 +71,7 @@ export default function AlunoForm() {
                   placeholder="000.000.000-00"
                   fullWidth
                   mask="999.999.999-99"
+                  focused={true}
                 />
               )}
             />
@@ -84,76 +85,99 @@ export default function AlunoForm() {
             placeholder="00.000.000-0"
             defaultValue=""
             fullWidth
+            focused={true}
             {...register("rg")}
           />
           <TextField
-          sx={{ width: "32%", m: 1, display: "flex"}}
+            sx={{ width: "31%", m: 1, display: "flex" }}
+            error={!!errors.responsavelId}
+            helperText={errors.responsavelId?.message}
+            id="outlined-error"
+            label="Responsável"
+            defaultValue=""
+            fullWidth
+            focused={true}
+            {...register("responsavelId")}
+          />
+          <TextField
+            sx={{ width: "31%", m: 1, display: "flex" }}
+            error={!!errors.colegioId}
+            helperText={errors.colegioId?.message}
+            id="outlined-error"
+            label="Colégio"
+            defaultValue=""
+            fullWidth
+            focused={true}
+            {...register("colegioId")}
+          />
+          <TextField
+            sx={{ width: "32%", m: 1, display: "flex" }}
             error={!!errors.turno}
             helperText={errors.turno?.message}
             id="outlined-error"
             label="Turno"
-            placeholder="Nome completo"
             defaultValue=""
             fullWidth
+            focused={true}
             {...register("turno")}
           />
           <TextField
-          sx={{ width: "32%", m: 1, display: "flex"}}
+            sx={{ width: "32%", m: 1, display: "flex" }}
             error={!!errors.serie}
             helperText={errors.serie?.message}
             id="outlined-error"
             label="Série"
-            placeholder="Nome completo"
             defaultValue=""
             fullWidth
+            focused={true}
             {...register("serie")}
           />
           <TextField
-          sx={{ width: "30%", m: 1, display: "flex"}}
+            sx={{ width: "30%", m: 1, display: "flex" }}
             error={!!errors.turma}
             helperText={errors.turma?.message}
             id="outlined-error"
             label="Turma"
-            placeholder="Nome completo"
             defaultValue=""
             fullWidth
+            focused={true}
             {...register("turma")}
           />
           <TextField
-          sx={{ width: "32%", m: 1, display: "flex"}}
+            sx={{ width: "32%", m: 1, display: "flex" }}
             error={!!errors.nomePai}
             helperText={errors.nomePai?.message}
             id="outlined-error"
             label="Nome do Pai"
-            placeholder="Nome completo"
             defaultValue=""
             fullWidth
+            focused={true}
             {...register("nomePai")}
           />
           <TextField
-          sx={{ width: "32%", m: 1, display: "flex"}}
+            sx={{ width: "47%", m: 1, display: "flex" }}
             error={!!errors.nomeMae}
             helperText={errors.nomeMae?.message}
             id="outlined-error"
             label="Nome da Mãe"
-            placeholder="Nome completo"
             defaultValue=""
             fullWidth
+            focused={true}
             {...register("nomeMae")}
           />
           <TextField
-          sx={{ width: "30%", m: 1, display: "flex"}}
+            sx={{ width: "47%", m: 1, display: "flex" }}
             error={!!errors.convenioMedico}
             helperText={errors.convenioMedico?.message}
             id="outlined-error"
             label="Convênio Médico"
-            placeholder="Nome completo"
             defaultValue=""
             fullWidth
+            focused={true}
             {...register("convenioMedico")}
           />
           <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-            <Link href="/exemplo" passHref>
+            <Link href="/aluno" passHref>
               <Button
                 variant="contained"
                 color="inherit"

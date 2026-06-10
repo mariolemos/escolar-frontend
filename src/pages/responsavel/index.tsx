@@ -24,14 +24,12 @@ export default function Responsavel() {
         ]}
         action={{
             edit: {
-                onChange: (t: IResponsavel) => edit(t)                
+                onChange: (t: IResponsavel) => edit(t),                
             },
-            // status: {
-            //     onChange: (t: IResponsavel) => status(t),
-            //     checked(t) {
-                    
-            //     },
-            // }
+            status: {
+                onChange: (t: IResponsavel) => status(t),
+                checked: (t: IResponsavel) => t.ativo,          
+            },
             delete: { onChange: (t: IResponsavel) => del(t)}
         }}
       />

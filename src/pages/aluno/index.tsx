@@ -1,27 +1,40 @@
-import DataTable from "@/layout/componets/DataTable"
-import useAluno from "./useAluno"
-import AddIcon from '@mui/icons-material/Add';
+import DataTable from "@/layout/componets/DataTable";
+import useAluno, { IAluno } from "./useAluno";
+import AddIcon from "@mui/icons-material/Add";
 
 export default function Aluno() {
-    const {
-        action: {},
-        data: {listarAluno, load, columns}
-    } = useAluno ();
+  const {
+    action: { del, edit, status },
+    data: { listarAluno, columns, loading },
+  } = useAluno();
 
-    return (
-        <>
-        <DataTable
-        loading={load}
-        buttonList={[
-                    {
-                        nome: "novo",
-                        icon: <AddIcon sx={{ marginRight: 1 }} />,
-                        redirect: "/aluno/form"
-                    },                    
-                ]}
+  return (
+    <>
+      <DataTable
         titulo="Lista de Alunos"
+        columns={columns}
+        loading={loading}
         data={listarAluno}
-        columns={columns}/>        
-        </>
-    )
+        buttonList={[
+          {
+            nome: "novo",
+            icon: <AddIcon sx={{ marginRight: 1 }} />,
+            redirect: "/aluno/formAluno",
+          },
+        ]}
+        action={{
+          edit: {
+            onChange: (t: IAluno) => edit(t),
+          },
+          status: {
+            onChange: (t: IAluno) => status(t),
+            checked: (t: IAluno) => t.ativo,
+          },
+          delete: {
+            onChange: (t: IAluno) => del(t),
+          },
+        }}
+      />
+    </>
+  );
 }

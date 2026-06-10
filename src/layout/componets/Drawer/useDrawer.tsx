@@ -1,6 +1,7 @@
 import { useState } from "react";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
+import { redirect } from "next/dist/server/api-utils";
 
 export interface DrawerComponetProps {
   menuList: Array<{
@@ -15,7 +16,7 @@ export default function Drawer() {
 
   const toggleDrawer = (newOpen: boolean) => () => {
     setOpen(newOpen);
-  };
+  };  
 
   const menuList: DrawerComponetProps["menuList"] = [
     { text: "Inbox", icon: <InboxIcon />, href: "/exemplo" },

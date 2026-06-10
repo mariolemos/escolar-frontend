@@ -10,8 +10,9 @@ import { useEffect, useState } from "react";
 import { ExemploFormSchema } from "@/schemas/exemploSchema";
 import { useToast } from "@/components/Toast";
 import { useRouter } from "next/router";
-import { apiGet } from "@/services/api";
+import { apiGet, apiPost, apiPut } from "@/services/api";
 import { IExemplo } from "@/pages/exemplo/useExemplo";
+import { IResponsavel } from "../useResponsavel";
 
 export default function useFormResponsavel() {
   const {
@@ -46,8 +47,12 @@ export default function useFormResponsavel() {
   const buscar = async (id: number) => {
     setLoading(true);
     try {
-      const response = await apiGet<IExemplo>(`/users/${id}`);
-      setValue("nome", response.name);
+      const response = await apiGet<IResponsavel>(`/responsavel/${id}`);
+      setValue("nome", response.nome);
+      setValue("nascimento", response.nascimento);
+      setValue("cpf", response.cpf);
+      setValue("rg" , response.rg)
+      setValue("parentesco", response.parentesco);               
       console.log(response);
     } catch (error) {
       showToast("Erro ao carregar os dados!", "error");
@@ -65,9 +70,16 @@ export default function useFormResponsavel() {
     }
   }, [query.id]);
   
-  const salvar = (data: ExemploFormSchema) => {
+  const salvar = async (data: ResponsavelFormSchema) => {
     setIsSubmitting(true);
+    let response;
     try {
+      if(query.id) {
+        const resposne = await apiPut<IResponsavel>(`/responsavel/${query.id}`, data);
+      }else {
+        const resposne = await apiPost<IResponsavel>("/responsavel", data);
+      }
+      
       const parsedData = parseNascimento(data);
       console.log("Dados do formulário:", parsedData);
       showToast("Formulário salvo com sucesso!", "success");

@@ -6,9 +6,10 @@ interface FormComponentProps {
     titulo: string;
     isSubmitting: boolean;
     children: React.ReactNode;
+    loading?: boolean;
 }
 
-export default function FormComponent({ onSubmit, titulo, isSubmitting, children }: FormComponentProps) {
+export default function FormComponent({ onSubmit, titulo, isSubmitting, children, loading }: FormComponentProps) {
     return (
         <form onSubmit={onSubmit}>
             <Box sx={{
