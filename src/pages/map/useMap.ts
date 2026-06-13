@@ -16,7 +16,7 @@ export const useMap = () => {
         const intervalId = window.setInterval(() => {
             console.log('[useMap] intervalo: invocando buscarLocalizacao');
             buscarLocalizacao();
-        }, 9000);
+        }, 2000);
 
         return () => {
             clearInterval(intervalId);
@@ -27,7 +27,7 @@ export const useMap = () => {
         console.log('[useMap] buscarLocalizacao chamado');
         try {
             const vehicleId = '03993940-239a-4233-a67b-132ecf98861d';
-            const responste = await apiGet<ILocationResponse>(`http://localhost:8081/api/location/${vehicleId}`);
+            const responste = await apiGet<ILocationResponse>(`${process.env.NEXT_PUBLIC_BASE_URL}/location/${vehicleId}`);
             console.log('[useMap] resposta recebida:', responste);
             setPosition([responste.latitude, responste.longitude]);
         } catch (error) {
