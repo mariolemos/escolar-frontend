@@ -6,6 +6,7 @@ import { Controller } from "react-hook-form";
 import Link from "next/link";
 import FormComponent from "@/components/FormComponent";
 import Modal from "@/components/Modal";
+import SelectComponent from "@/components/SelectComponet";
 
 export default function Form() {
     const {
@@ -19,7 +20,8 @@ export default function Form() {
             control,
             loading,
             isSubmitting,
-            open
+            open,
+            optionsResponsavel,
         }
     } = useForm();
     return (
@@ -87,6 +89,22 @@ export default function Form() {
                             defaultValue=""
                             fullWidth
                             {...register("rg")}
+                        />
+                    </Box>
+                    <Box sx={{ flex: 1, marginTop: 1 }}>
+                        <Controller
+                            name="responsavel"
+                            control={control}
+                            render={({ field }) => (
+                                <SelectComponent
+                                    options={optionsResponsavel}
+                                    name="Responsável"
+                                    error={!!errors.responsavel}
+                                    helperText={errors.responsavel?.message}
+                                    value={field.value ?? ''}
+                                    onChange={(v) => field.onChange(v)}
+                                />
+                            )}
                         />
                     </Box>
                 </Box>

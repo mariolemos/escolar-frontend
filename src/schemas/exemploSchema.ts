@@ -26,6 +26,8 @@ export const exemploFormSchema = z.object({
   rg: z.string()
     .min(1, "RG é obrigatório")
     .max(10, "RG deve ter no máximo 10 caracteres"),
+  responsavel: z.string()
+    .min(1, "Responsável é obrigatório"),
 });
 
 export type ExemploFormSchema = z.infer<typeof exemploFormSchema>;
@@ -34,4 +36,5 @@ export const exemploFormDefaultValues: ExemploFormSchema = {
   nome: "",
   cpf: "",
   rg: "",
+  responsavel: "",
 };
