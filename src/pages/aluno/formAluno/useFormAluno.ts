@@ -3,18 +3,15 @@ import {
   AlunoFormSchema,
   alunoFormSchema,
 } from "@/schemas/alunoschema";
-import {
-  colegioFormDefaultValues,
-  colegioFormSchema,
-} from "@/schemas/colegioSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useToast } from "@/components/Toast";
 import { useRouter } from "next/router";
 import { apiGet, apiPost, apiPut } from "@/services/api";
-import { IExemplo } from "@/pages/exemplo/useExemplo";
 import { IAluno } from "../useAluno";
+import useResponsavel from "@/pages/responsavel/useResponsavel";
+import useColegio from "@/pages/colegio/useColegio";
 
 export const useAlunoForm = () => {
   const {
@@ -22,18 +19,50 @@ export const useAlunoForm = () => {
     register,
     control,
     setValue,
+    watch,
     formState: { errors },
   } = useForm<AlunoFormSchema>({
     resolver: zodResolver(alunoFormSchema),
     defaultValues: alunoFormDefaultValues,
   });
+  
+  const {
+      action: { },
+      data: { listResponsavel },
+    } = useResponsavel();
+  
+    const {
+      action: {},
+      data: { listColegio },
+    } = useColegio();
+  
+
+  const turno = [
+    {
+      id: 1,
+      nome: "Matutino",
+    },
+    {
+      id: 2,
+      nome: "Vespertino",
+    },
+    {
+      id: 3,
+      nome: "Noturno",
+    },
+    {
+      id: 4,
+      nome: "Integral",
+    },
+  ];
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { showToast } = useToast();
   const { query } = useRouter();
-  const [loading, setLoading] = useState<boolean>(false);
+  const [ loading, setLoading] = useState<boolean>(false);  
 
-  useEffect(() => {
+  useEffect(() => { 
+      
     if (query.id) {
       // Aqui você pode fazer uma chamada para a API para buscar os dados do exemplo com base no ID e preencher o formulário
       console.log("ID do exemplo para edição:", query.id);
@@ -45,10 +74,10 @@ export const useAlunoForm = () => {
   const parseNascimento = (data: AlunoFormSchema) => {
     return {
       ...data,
-      nascimento: data.nascimento
-        ? data.nascimento instanceof Date
-          ? data.nascimento
-          : new Date(data.nascimento)
+      nascimento: data.dataNascimento
+        ? data.dataNascimento instanceof Date
+          ? data.dataNascimento
+          : new Date(data.dataNascimento)
         : undefined,
     };
   };
@@ -58,7 +87,7 @@ export const useAlunoForm = () => {
     try {
       const response = await apiGet<IAluno>(`/aluno/${id}`);
       setValue("nome", response.nome);
-      setValue("nascimento", response.nascimento);
+      setValue("dataNascimento", response.dataNascimento);
       setValue("cpf", response.cpf);
       setValue("rg", response.rg);
       setValue("turno", response.turno);
@@ -67,8 +96,9 @@ export const useAlunoForm = () => {
       setValue("nomePai", response.nomePai);
       setValue("nomeMae", response.nomeMae);
       setValue("convenioMedico", response.convenioMedico);
-      setValue("colegioId", response.colegio);
-      setValue("responsavelId", response.responsavel);
+      setValue("colegioId", response.colegioId);
+      setValue("responsavelId", response.responsavelId);
+      console.log(watch("dataNascimento"));
       console.log(response);
     } catch (error) {
       showToast("Erro ao carregar os dados!", "error");
@@ -76,6 +106,7 @@ export const useAlunoForm = () => {
     } finally {
       setLoading(false);
     }
+
   };
 
   const salvar = async (data: AlunoFormSchema) => {
@@ -102,6 +133,7 @@ export const useAlunoForm = () => {
     action: {
       buscar,
       salvar: handleSubmit(salvar),
+      watch,
     },
     data: {
       register,
@@ -109,6 +141,9 @@ export const useAlunoForm = () => {
       control,
       isSubmitting,
       loading,
+      turno,
+      listResponsavel,
+      listColegio,
     },
   };
 };

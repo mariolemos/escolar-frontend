@@ -25,6 +25,9 @@ export default function FormColegio() {
         <Box
           sx={{
             width: "50%",
+            border: "ridge",
+            borderRadius: "1rex",
+            padding: "30px",
             "& .MuiTextField-root": { m: 1, width: "100%" },
           }}
         >
@@ -52,18 +55,19 @@ export default function FormColegio() {
                 label="Horário"
                 placeholder="06:45"
                 fullWidth
+                focused={true}
                 mask="99:99"
                 {...register("horario")}
               />
             )}
           />
 
-          <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+          <Box sx={{ display: "flex", justifyContent: "flex-end",  paddingTop: "10px" }}>
             <Link href="/colegio" passHref>
               <Button
                 variant="contained"
                 color="inherit"
-                sx={{ marginRight: 2 }}
+                sx={{ marginRight: 2, }}
               >
                 Voltar
               </Button>

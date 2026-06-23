@@ -7,7 +7,7 @@ import { useEffect, useState } from "react"
 export interface IAluno {
     id: number;
     nome: string;
-    nascimento: Date;
+    dataNascimento: Date;
     cpf: string;
     rg: string;
     turno: string;
@@ -17,8 +17,8 @@ export interface IAluno {
     nomeMae: string;
     convenioMedico: string;
     ativo: boolean;
-    responsavel: string;
-    colegio: string;
+    responsavelId: string;
+    colegioId: string;
 }
 
 const useAluno = () => {
@@ -53,16 +53,7 @@ const useAluno = () => {
    *
    * @param t
    * Logica para ir na API fazer a ação de editar
-   */
-  // const edit = async (t: IColegio) => {
-  //   const response = await apiGet<[]>('/colegio/id');
-  //     console.log("edit", t)
-  //     setBuscrColegio(response);
-  //     router.push({
-  //         pathname: `/colegio/formColegio`,
-  //         query: { id: t.id }
-  //     });
-  // }
+   */ 
   const edit = (t: IAluno) => {
     console.log("edit", t);
     router.push({
@@ -116,7 +107,7 @@ const useAluno = () => {
        listarAluno,
        load,
        columns,
-       loading,        
+       loading,               
     }}
 }
 

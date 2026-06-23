@@ -17,8 +17,7 @@ const useColegio = () => {
   const { showToast } = useToast();
   const columns = [
     { key: "id", label: "Id" },
-    { key: "nome", label: "nome" },
-    { key: "horario", label: "horario" },
+    { key: "nome", label: "nome" },    
   ];
 
   useEffect(() => {

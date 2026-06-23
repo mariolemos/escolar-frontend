@@ -43,15 +43,7 @@ const useResponsavel = () => {
    * @param t
    * Logica para ir na API fazer a ação de editar
    */
-  // const edit = async (t: IResponsavel) => {
-  //   const response = await apiGet<[]>('/responsavel/id');
-  //     console.log("edit", t)
-  //     setBuscarResponsavel(response);
-  //     router.push({
-  //         pathname: `/responsavel/formResponsavel`,
-  //         query: { id: t.id }
-  //     });
-  // }
+
   const edit = (t: IResponsavel) => {
     console.log("edit", t);
     router.push({
@@ -83,6 +75,7 @@ const useResponsavel = () => {
     const response = await apiGet<[]>("/responsavel");
     console.log(response);
     setListResponsavel(response);
+    return response;
   };
 
   return {
@@ -94,7 +87,7 @@ const useResponsavel = () => {
       edit,
     },
     data: {
-      listResponsavel,      
+      listResponsavel,
       columns,
       loading,
     },

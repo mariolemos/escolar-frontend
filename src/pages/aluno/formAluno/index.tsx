@@ -7,19 +7,22 @@ import TextField from "@mui/material/TextField";
 import TextFieldMask from "@/components/TextFieldMask";
 import { Controller } from "react-hook-form";
 import DatePickerField from "@/components/DatePickerField";
+import useResponsavel from "@/pages/responsavel/useResponsavel";
+import useColegio from "@/pages/colegio/useColegio";
 
 export default function AlunoForm() {
   const {
-    action: { buscar, salvar },
-    data: { register, errors, loading, control, isSubmitting },
+    action: { buscar, salvar, watch },
+    data: { register, errors, loading, control, isSubmitting, turno, listResponsavel,
+      listColegio, },
   } = useAlunoForm();
-
+  
   return (
     <>
       <FormComponent
         onSubmit={salvar}
         titulo="Formulário de Cadastro Aluno"
-        isSubmitting={isSubmitting || loading}        
+        isSubmitting={isSubmitting || loading}
       >
         <Box
           sx={{
@@ -27,10 +30,13 @@ export default function AlunoForm() {
             m: 1,
             display: "flex",
             flexWrap: "wrap",
+            border: "ridge",
+            borderRadius: "1rex",
+            padding: "30px",
           }}
         >
           <TextField
-            sx={{ width: "40%", m: 1, display: "flex" }}
+            sx={{ width: "54%", m: 1, display: "flex" }}
             error={!!errors.nome}
             helperText={errors.nome?.message}
             id="outlined-error"
@@ -42,13 +48,13 @@ export default function AlunoForm() {
           />
           <Box sx={{ width: "20%", m: 1, display: "flex" }}>
             <Controller
-              name="nascimento"
+              name="dataNascimento"
               control={control}
               render={({ field }) => (
                 <DatePickerField
                   label="Nascimento"
-                  error={!!errors.nascimento}
-                  helperText={errors.nascimento?.message}
+                  error={!!errors.dataNascimento}
+                  helperText={errors.dataNascimento?.message}
                   value={field.value ?? null}
                   onChange={(date: Date | null) =>
                     field.onChange(date ?? undefined)
@@ -77,7 +83,7 @@ export default function AlunoForm() {
             />
           </Box>
           <TextField
-            sx={{ width: "12%", m: 1, display: "flex" }}
+            sx={{ width: "24%", m: 1, display: "flex" }}
             error={!!errors.rg}
             helperText={errors.rg?.message}
             id="outlined-error-helper-text"
@@ -89,7 +95,7 @@ export default function AlunoForm() {
             {...register("rg")}
           />
           <TextField
-            sx={{ width: "31%", m: 1, display: "flex" }}
+            sx={{ width: "35%", m: 1, display: "flex" }}
             error={!!errors.responsavelId}
             helperText={errors.responsavelId?.message}
             id="outlined-error"
@@ -97,19 +103,50 @@ export default function AlunoForm() {
             defaultValue=""
             fullWidth
             focused={true}
+            slotProps={{
+              inputLabel: { shrink: true },
+              select: {
+                native: true,
+              },
+            }}
+            
+            select
             {...register("responsavelId")}
-          />
+          >           
+           
+            {listResponsavel &&
+              listResponsavel.map((option) => (
+                <option key={option.id} value={option.id} selected={watch("responsavelId") == option.id}>
+                  {option.nome}
+                </option>
+              ))}
+          </TextField>
           <TextField
-            sx={{ width: "31%", m: 1, display: "flex" }}
+            sx={{ width: "35%", m: 1, display: "flex" }}
             error={!!errors.colegioId}
             helperText={errors.colegioId?.message}
             id="outlined-error"
             label="Colégio"
             defaultValue=""
             fullWidth
+            select
             focused={true}
+            slotProps={{
+              inputLabel: { shrink: true },
+              select: {
+                native: true,
+              },
+            }}
             {...register("colegioId")}
-          />
+          >            
+            {listColegio &&
+              listColegio.map((option) => (
+                <option key={option.id} value={option.id} selected={watch("colegioId") == option.id}>
+                  {option.nome}
+                </option>
+                
+              ))}
+          </TextField>
           <TextField
             sx={{ width: "32%", m: 1, display: "flex" }}
             error={!!errors.turno}
@@ -118,9 +155,22 @@ export default function AlunoForm() {
             label="Turno"
             defaultValue=""
             fullWidth
+            select
             focused={true}
+            slotProps={{
+              inputLabel: { shrink: true },
+              select: {
+                native: true,
+              },
+            }}
             {...register("turno")}
-          />
+          >
+            {turno.map((option) => (
+              <option key={option.id} value={option.nome}>
+                {option.nome}
+              </option>
+            ))}
+          </TextField>
           <TextField
             sx={{ width: "32%", m: 1, display: "flex" }}
             error={!!errors.serie}
@@ -144,7 +194,7 @@ export default function AlunoForm() {
             {...register("turma")}
           />
           <TextField
-            sx={{ width: "32%", m: 1, display: "flex" }}
+            sx={{ width: "35%", m: 1, display: "flex" }}
             error={!!errors.nomePai}
             helperText={errors.nomePai?.message}
             id="outlined-error"
@@ -155,7 +205,7 @@ export default function AlunoForm() {
             {...register("nomePai")}
           />
           <TextField
-            sx={{ width: "47%", m: 1, display: "flex" }}
+            sx={{ width: "35%", m: 1, display: "flex" }}
             error={!!errors.nomeMae}
             helperText={errors.nomeMae?.message}
             id="outlined-error"
@@ -166,7 +216,7 @@ export default function AlunoForm() {
             {...register("nomeMae")}
           />
           <TextField
-            sx={{ width: "47%", m: 1, display: "flex" }}
+            sx={{ width: "24%", m: 1, display: "flex" }}
             error={!!errors.convenioMedico}
             helperText={errors.convenioMedico?.message}
             id="outlined-error"
@@ -176,7 +226,7 @@ export default function AlunoForm() {
             focused={true}
             {...register("convenioMedico")}
           />
-          <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+          <Box sx={{ display: "flex", justifyContent: "flex-end", width: "98%", paddingTop: "10Px" }}>
             <Link href="/aluno" passHref>
               <Button
                 variant="contained"
