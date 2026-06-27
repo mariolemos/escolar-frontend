@@ -4,9 +4,13 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { apiPostLogin } from "../../../services/api";
 
 interface ILoginResponse {
-  token: string;
-  nome: string;
-  username: string;
+  success: true,
+  data: {
+    token: string,
+    expiresInToken: string,
+    nome: string,
+    username: string
+  }
 }
 
 export const authOptions: AuthOptions = {
@@ -21,17 +25,31 @@ export const authOptions: AuthOptions = {
         if (!credentials) return null;
         const { cpf, senha } = credentials as { cpf?: string; senha?: string };
         try {
-          const data = await apiPostLogin<ILoginResponse>("auth/login", { cpf, password: senha });
-          if (!data || !data.token) return null;
+          const response = await apiPostLogin<any>("auth/login", { cpf, password: senha });
+          console.log('Resposta do login:', response);
+
+          // apiPostLogin retorna ApiResult<T>. O backend pode devolver o payload em
+          // diferentes níveis (por exemplo: { token } ou { data: { token } }).
+          if (!response || !response.success) return null;
+
+          const payload = response.data;
+          // Tentar extrair token flexivelmente
+          const tokenValue = (payload && ((payload.token) ?? (payload.data && payload.data.token))) ?? null;
+          if (!tokenValue) return null;
+
+          const username = (payload && (payload.username ?? payload.data?.username)) ?? "";
+          const nome = (payload && (payload.nome ?? payload.data?.nome)) ?? "";
+
           return {
-            id: data.username ?? "",
-            name: data.nome ?? "",
-            username: data.username ?? "",
-            token: data.token,
+            id: username,
+            name: nome,
+            username,
+            token: tokenValue,
           };
         } catch (err) {
           console.error("Authorize error:", err);
-          return null;
+          const message = (err as any)?.message || 'Erro ao autenticar';
+          throw new Error(message);
         }
       },
     }),

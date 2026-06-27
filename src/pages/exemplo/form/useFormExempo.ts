@@ -44,7 +44,13 @@ export default function useFormExempo() {
     const buscar = async (id: number) => {
         setLoading(true);
         try {
-            const response = await apiGet<IExemplo>(`https://jsonplaceholder.typicode.com/users/${id}`);
+            const result = await apiGet<IExemplo>(`https://jsonplaceholder.typicode.com/users/${id}`);
+            if (!result.success) {
+                showToast(result.message || 'Erro ao carregar os dados!', 'error');
+                console.log('Erro na API:', result);
+                return;
+            }
+            const response = result.data;
             setValue("nome", response.name);
             console.log(response);
         } catch (error) {

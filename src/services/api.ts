@@ -1,5 +1,6 @@
 // src/services/api.ts
 // Estrutura base para integração com uma API REST usando fetch
+import { handleErrorResponse, normalizeAndRethrow } from './errorHandler';
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || '';
 
@@ -31,16 +32,32 @@ function buildHeaders(contentType = 'application/json') {
   return headers;
 }
 
-export async function apiGet<T>(path: string): Promise<T> {
+export type ApiResult<T> =
+  | { success: true; data: T }
+  | { success: false; status: number; message: string; body?: any };
+
+export async function apiGet<T>(path: string): Promise<ApiResult<T>> {
   const url = buildUrl(path);
   const response = await fetch(url, { headers: buildHeaders() });
+
   if (!response.ok) {
-    throw new Error(`Erro ao buscar dados: ${response.statusText}`);
+    // try parse error body
+    let errorBody: any = null;
+    try {
+      errorBody = await response.json();
+    } catch (e) {
+      console.warn('Não foi possível parsear o corpo de erro como JSON:', e);
+      // ignore parse error
+    }
+    const message = (errorBody && (errorBody.message || errorBody.error)) || response.statusText || `Request failed with status ${response.status}`;
+    return { success: false, status: response.status, message, body: errorBody };
   }
-  return response.json();
+
+  const data = await response.json();
+  return { success: true, data };
 }
 
-export async function apiPost<T>(path: string, data: any): Promise<T> {
+export async function apiPost<T>(path: string, data: any): Promise<ApiResult<T>> {
   const url = buildUrl(path);
   try {
     const response = await fetch(url, {
@@ -48,21 +65,34 @@ export async function apiPost<T>(path: string, data: any): Promise<T> {
       headers: buildHeaders('application/json'),
       body: JSON.stringify(data),
     });
-    if (!response.ok) {
-      throw new Error(`Erro ao enviar dados: ${response.statusText}`);
-    }
-    return response.json();
 
-  } catch (err) {
+    if (!response.ok) {
+      let errorBody: any = null;
+      try {
+        errorBody = await response.json();
+      } catch (e) {
+        console.warn('Não foi possível parsear o corpo de erro como JSON:', e);
+      }
+      const message = (errorBody && (errorBody.message || errorBody.error)) || response.statusText || `Request failed with status ${response.status}`;
+      return { success: false, status: response.status, message, body: errorBody };
+    }
+
+    const dataResp = await response.json();
+    return { success: true, data: dataResp };
+
+  } catch (err: any) {
     console.error('Erro na requisição POST:', err);
-    throw err;
+    const message = err?.message || 'Erro na requisição POST';
+    return { success: false, status: 0, message, body: err };
   }
 }
 
 
-export async function apiPostLogin<T>(path: string, data: any): Promise<T> {
+export async function apiPostLogin<T>(path: string, data: any): Promise<ApiResult<T>> {
   const url = buildUrl(path);
+  console.log('Enviando dados para login:', url);
   try {
+    console.log('Dados enviados para login:', data);
     const response = await fetch(url, {
       method: 'POST',
       headers: {
@@ -70,28 +100,55 @@ export async function apiPostLogin<T>(path: string, data: any): Promise<T> {
       },
       body: JSON.stringify(data),
     });
-    if (!response.ok) {
-      throw new Error(`Erro ao enviar dados: ${response.statusText}`);
-    }
-    return response.json();
 
-  } catch (err) {
-    console.error('Erro na requisição POST:', err);
-    throw err;
+    if (!response.ok) {
+      let errorBody: any = null;
+      try {
+        errorBody = await response.json();
+      } catch (e) {
+        console.warn('Não foi possível parsear o corpo de erro como JSON:', e);
+      }
+      const message = (errorBody && (errorBody.message || errorBody.error)) || response.statusText || `Request failed with status ${response.status}`;
+      return { success: false, status: response.status, message, body: errorBody };
+    }
+
+    const dataResp = await response.json();
+    return { success: true, data: dataResp };
+
+  } catch (err: any) {
+    console.error('Erro na requisição POST (login):', err);
+    const message = err?.message || 'Erro na requisição POST (login)';
+    return { success: false, status: 0, message, body: err };
   }
 }
 
-export async function apiPut<T>(path: string, data: any): Promise<T> {
+export async function apiPut<T>(path: string, data: any): Promise<ApiResult<T>> {
   const url = buildUrl(path);
-  const response = await fetch(url, {
-    method: 'PUT',
-    headers: buildHeaders('application/json'),
-    body: JSON.stringify(data),
-  });
-  if (!response.ok) {
-    throw new Error(`Erro ao enviar dados: ${response.statusText}`);
+  try {
+    const response = await fetch(url, {
+      method: 'PUT',
+      headers: buildHeaders('application/json'),
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      let errorBody: any = null;
+      try {
+        errorBody = await response.json();
+      } catch (e) {
+        console.warn('Não foi possível parsear o corpo de erro como JSON:', e);
+      }
+      const message = (errorBody && (errorBody.message || errorBody.error)) || response.statusText || `Request failed with status ${response.status}`;
+      return { success: false, status: response.status, message, body: errorBody };
+    }
+
+    const dataResp = await response.json();
+    return { success: true, data: dataResp };
+  } catch (err: any) {
+    console.error('Erro na requisição PUT:', err);
+    const message = err?.message || 'Erro na requisição PUT';
+    return { success: false, status: 0, message, body: err };
   }
-  return response.json();
 }
 
 // Adicione outros métodos (DELETE) conforme necessário.

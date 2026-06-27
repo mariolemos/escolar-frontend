@@ -32,6 +32,7 @@ export const useLogin = () => {
             } as any);
 
             if (res && (res as any).error) {
+                showToast((res as any).error, "error");
                 return;
             }
             console.log(res);
