@@ -6,6 +6,7 @@ import { Controller } from "react-hook-form";
 import Link from "next/link";
 import FormComponent from "@/components/FormComponent";
 import Modal from "@/components/Modal";
+import SelectComponent from "@/components/SelectComponet";
 
 export default function Form() {
     const {
@@ -19,11 +20,16 @@ export default function Form() {
             control,
             loading,
             isSubmitting,
-            open
+            open,
+            optionsResponsavel,
         }
     } = useForm();
     return (
-        <FormComponent onSubmit={salvar} titulo="Formulário de exemplo" isSubmitting={isSubmitting || loading}>
+        <FormComponent 
+        onSubmit={salvar} 
+        titulo="Formulário de exemplo" 
+        subTitulo={["Exemplo /", "Novo"]}
+        isSubmitting={isSubmitting || loading}>
 
             <Box
                 sx={{
@@ -89,27 +95,22 @@ export default function Form() {
                             {...register("rg")}
                         />
                     </Box>
-                </Box>
-                <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-                    <Button variant="outlined" onClick={() => setOpen(true)}>
-                        Abrir modal
-                    </Button>
-                    <Modal
-                        titulo="titulo"
-                        open={open}
-                        setOpen={setOpen}
-                        buttonAcao={() => alert("Função para execultar alguma ação")}
-                    >
-                        <>Conteudo</>
-                    </Modal>
-                    <Link href="/exemplo" passHref>
-                        <Button variant="contained" color="inherit" sx={{ marginRight: 2 }}>
-                            Voltar
-                        </Button>
-                    </Link>
-                    <Button variant="contained" color="primary" type="submit">
-                        Salvar
-                    </Button>
+                    <Box sx={{ flex: 1, marginTop: 1 }}>
+                        <Controller
+                            name="responsavel"
+                            control={control}
+                            render={({ field }) => (
+                                <SelectComponent
+                                    options={optionsResponsavel}
+                                    name="Responsável"
+                                    error={!!errors.responsavel}
+                                    helperText={errors.responsavel?.message}
+                                    value={field.value ?? ''}
+                                    onChange={(v) => field.onChange(v)}
+                                />
+                            )}
+                        />
+                    </Box>
                 </Box>
             </Box>
         </FormComponent>
