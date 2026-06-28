@@ -10,6 +10,7 @@ import ListItemText from '@mui/material/ListItemText';
 import ArticleIcon from '@mui/icons-material/Article';
 import useDrawer from './useDrawer';
 import Link from 'next/link';
+import { theme } from '@/layout/globalStyles/theme';
 
 
 export default function DrawerComponet() {
@@ -25,18 +26,18 @@ export default function DrawerComponet() {
     } = useDrawer();
 
     const DrawerList = (
-        <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
-            <h2 style={{ textAlign: 'center', padding: '16px' }}>Gestão escolar</h2>
+        <Box sx={{ width: 250, backgroundColor: theme.color.primary, height: '100%' }} role="presentation" onClick={toggleDrawer(false)}>
+            <h2 style={{ textAlign: 'center', padding: '16px', color: theme.color.white }}>Gestão escolar</h2>
             <Divider />
             <List>
                 {menuList.map((item, index) => (
                     <Link key={index} href={item.href || ""} style={{ textDecoration: 'none', color: 'inherit' }}>
                         <ListItem key={item.text} disablePadding>
                             <ListItemButton>
-                                <ListItemIcon>
+                                <ListItemIcon sx={{ color: theme.color.white }}>
                                     {item.icon}
                                 </ListItemIcon>
-                                <ListItemText primary={item.text} />
+                                <ListItemText primary={item.text} sx={{ color: theme.color.white }} />
                             </ListItemButton>
                         </ListItem>
                     </Link>

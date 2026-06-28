@@ -24,6 +24,19 @@ export default function useFormExempo() {
     const { showToast } = useToast();
     const [open, setOpen] = useState(false);
     const { query } = useRouter();
+    const [optionsResponsavel, setOptionsResponsavel] = useState<Array<{ label: string; value: string }>>([]);
+
+    const buscarResponsaveis = async () => {
+        // Simulação de busca de responsáveis (pode ser substituída por uma chamada real à API)
+        // Exemplo:
+        // const response = await apiGet('/api/responsaveis');
+        // setOptionsResponsavel(response.data);
+        setOptionsResponsavel([
+            { label: "Responsável 1", value: "1" },
+            { label: "Responsável 2", value: "2" },
+            { label: "Responsável 3", value: "3" },
+        ]);
+    }
 
 
     // Função para garantir que nascimento seja Date
@@ -57,6 +70,7 @@ export default function useFormExempo() {
     }
 
     useEffect(() => {
+        buscarResponsaveis();
         if (query.id) {
             // Aqui você pode fazer uma chamada para a API para buscar os dados do exemplo com base no ID e preencher o formulário
             console.log("ID do exemplo para edição:", query.id);
@@ -89,7 +103,8 @@ export default function useFormExempo() {
             control,
             loading,
             isSubmitting,
-            open
+            open,
+            optionsResponsavel,
         }
     }
 }
