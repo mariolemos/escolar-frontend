@@ -2,6 +2,7 @@ import { useToast } from "@/components/Toast";
 import { apiGet } from "@/services/api";
 import router from "next/router";
 import { useEffect, useState } from "react";
+import useResponsavel from "../responsavel/useResponsavel";
 
 export interface IContrato {
   id: number;
@@ -12,22 +13,24 @@ export interface IContrato {
   dataFinal: Date;
   ativo: boolean;
 }
+
 const useContrato = () => {
   const [listContrato, setListContrato] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const { showToast } = useToast();
+
   const columns = [
     { key: "id", label: "id" },
-    { key: "responsavelId", label: "Responsavel" },
+    { key: "nomeResponsavel", label: "Responsavel" },
     { key: "valorContratual", label: "Valor Contratado" },
     { key: "dataInicial", label: "Ínicio" },
     { key: "dataFinal", label: "Final" },
-    { key: "status", label: "Status" },
+    { key: "ativo", label: "Status" },
   ];
 
   useEffect(() => {
     buscarContrato();
-  }, [])
+  }, []);
 
   /**
    *
@@ -72,7 +75,7 @@ const useContrato = () => {
   };
 
   return {
-    action: { edit, status, del},
+    action: { edit, status, del },
     data: {
       listContrato,
       loading,

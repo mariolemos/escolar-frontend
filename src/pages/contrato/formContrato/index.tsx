@@ -27,21 +27,10 @@ export default function formContrato() {
     <>
       <FormComponent
         onSubmit={salvar}
+        subTitulo={["Contrato /", "Novo"]}
         titulo="Formulário de Cadastro Contrato"
         isSubmitting={isSubmitting || loading}
-      >
-        <Box
-          sx={{
-            width: "50%",
-            m: 1,
-            display: "flex",
-            flexWrap: "wrap",
-            border: "ridge",
-            borderRadius: "1rex",
-            padding: "30px",
-            // "& .MuiTextField-root": { m: 1, width: "100%" },
-          }}
-        >
+      >        
           <TextField
             sx={{ width: "40%", m: 1, display: "flex" }}
             error={!!errors.responsavelId}
@@ -124,22 +113,8 @@ export default function formContrato() {
                 />
               )}
             />
-          </Box>
-          <Box sx={{ display: "flex", justifyContent: "flex-end", width: "96%", paddingTop: "10px" }}>
-            <Link href="/contrato" passHref>
-              <Button
-                variant="contained"
-                color="inherit"
-                sx={{ marginRight: 2 }}
-              >
-                Voltar
-              </Button>
-            </Link>
-            <Button variant="contained" color="primary" type="submit">
-              Salvar
-            </Button>
-          </Box>
-        </Box>
+          </Box>          
+        
       </FormComponent>
     </>
   );

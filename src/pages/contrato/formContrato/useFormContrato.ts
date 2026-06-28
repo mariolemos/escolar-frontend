@@ -74,7 +74,8 @@ export default function useFormContrato() {
           setValue("valorContratual", response.valorContratual);
           setValue("dataInicial", response.dataInicial);
           setValue("dataFinal", response.dataFinal);
-          setValue("responsavelId", response.responsavelId) ;               
+          setValue("responsavelId", response.responsavelId); 
+          setValue("ativo", response.ativo);
           console.log(response);
         } catch (error) {
           showToast("Erro ao carregar os dados!", "error");
@@ -92,7 +93,7 @@ export default function useFormContrato() {
             if (query.id) {
               const response = await apiPut<IContrato>(`/contrato/${query.id}` , data);
             } else {
-              const response = await apiPost<IContrato>("/contrato", data);
+              const response = await apiPost<IContrato>("/contrato", data);              
             }
             const parsedDataInicial = parseDataInicial(data);
             

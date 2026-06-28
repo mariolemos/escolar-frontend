@@ -84,8 +84,7 @@ const useColegio = () => {
     action: {
       buscarColegios,
       setListColegio,
-      del,
-      status,
+      del,      
       edit,
     },
     data: {
