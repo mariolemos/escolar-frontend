@@ -9,7 +9,6 @@ interface FormComponentProps {
     subTitulo?: Array<string>;
     isSubmitting: boolean;
     children: React.ReactNode;
-    voltarPara?: string;
 
 }
 
