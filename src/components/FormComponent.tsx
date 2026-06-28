@@ -6,13 +6,14 @@ import { useRouter } from "next/router";
 interface FormComponentProps {
     onSubmit: (e?: React.FormEvent) => void;
     titulo: string;
+    subTitulo?: Array<string>;
     isSubmitting: boolean;
     children: React.ReactNode;
     voltarPara?: string;
 
 }
 
-export default function FormComponent({ onSubmit, titulo, isSubmitting, children }: FormComponentProps) {
+export default function FormComponent({ onSubmit, titulo, subTitulo, isSubmitting, children }: FormComponentProps) {
     const router = useRouter();
     return (
         <Container maxWidth={'lg'} sx={{
@@ -40,9 +41,21 @@ export default function FormComponent({ onSubmit, titulo, isSubmitting, children
                     }}>
                         <h3>{titulo}</h3>
                     </div>
+                    <div style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'flex-start',
+                        width: '100%',
+                        marginBottom: 16,
+                        marginLeft: 11,
+                    }}>
+                        {subTitulo && subTitulo.map((item, index) => (
+                            <span key={index} style={{ marginRight: 8 }}>{item}</span>
+                        ))}
+                    </div>
                     {children}
 
-                    <Divider flexItem  sx={{ marginTop: '0.9rem', marginBottom: '0.9rem' }} />
+                    <Divider flexItem sx={{ marginTop: '0.9rem', marginBottom: '0.9rem' }} />
                     <div style={{ display: 'flex', justifyContent: 'flex-end', width: '100%', gap: 8, marginTop: 16 }}>
                         <Button
                             backgroundColor="white"

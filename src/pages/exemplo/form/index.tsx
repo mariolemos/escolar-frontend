@@ -25,7 +25,11 @@ export default function Form() {
         }
     } = useForm();
     return (
-        <FormComponent onSubmit={salvar} titulo="Formulário de exemplo" isSubmitting={isSubmitting || loading}>
+        <FormComponent 
+        onSubmit={salvar} 
+        titulo="Formulário de exemplo" 
+        subTitulo={["Exemplo /", "Novo"]}
+        isSubmitting={isSubmitting || loading}>
 
             <Box
                 sx={{
