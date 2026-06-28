@@ -1,19 +1,24 @@
-import React from 'react';
 import DrawerComponet from '../Drawer';
-import { Divider } from '@mui/material';
+import { Avatar, Divider, ListItemButton, ListItemIcon } from '@mui/material';
+import { theme } from '@/layout/globalStyles/theme';
+import ExpandLess from '@mui/icons-material/ExpandLess';
+import ExpandMore from '@mui/icons-material/ExpandMore';
+import { useState } from 'react';
 
 
 const HEADER_HEIGHT = 60;
 
 const Head: React.FC = () => {
+    const [open, setOpen] = useState(false);
+
     return (
         <>
             <header
                 style={{
                     width: '100%',
                     padding: '1rem',
-                    background: '#3ba8ff',
-                    borderBottom: '1px solid #fff',
+                    background: theme.color.primary,
+                    borderBottom: `1px solid ${theme.color.white}`,
                     textAlign: 'center',
                     fontWeight: 'bold',
                     fontSize: '1.5rem',
@@ -23,7 +28,24 @@ const Head: React.FC = () => {
                     zIndex: 1000,
                 }}
             >
-                Escolar App
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', marginLeft: '4rem', marginTop: '0.6rem' }}>
+                        <span style={{ color: theme.color.white }}>Gestão Escolar</span>
+                    </div>
+                    <div>
+
+                        <ListItemButton onClick={() => setOpen(!open)} sx={{ color: theme.color.white }}>
+                            <Avatar
+                                src=""
+                                sx={{ width: 30, height: 30 }}
+                            />
+                            <span style={{ color: theme.color.white, marginLeft: '0.5rem', textTransform: 'capitalize', fontSize: '1.1rem' }}>
+                                usuario
+                            </span>
+                            {open ? <ExpandLess /> : <ExpandMore />}
+                        </ListItemButton>
+                    </div>
+                </div>
                 <div
                     style={{
                         position: 'fixed',
@@ -36,7 +58,6 @@ const Head: React.FC = () => {
             </header>
             {/* Spacer para empurrar o conteúdo para baixo do header fixo */}
             <div style={{ height: HEADER_HEIGHT }} />
-            <Divider sx={{ margin: '0.1rem 0' }} />
         </>
     );
 };

@@ -1,3 +1,4 @@
+import { theme } from '@/layout/globalStyles/theme';
 import React from 'react';
 
 const Footer: React.FC = () => {
@@ -5,11 +6,11 @@ const Footer: React.FC = () => {
     <footer style={{
       width: '100%',
       padding: '1rem',
-      background: '#f5f5f5',
-      borderTop: '1px solid #e0e0e0',
+      background: theme.color.primary,
+      borderTop: `1px solid ${theme.color.white}`,
       textAlign: 'center',
       fontSize: '1rem',
-      color: '#888',
+      color: theme.color.white,
       position: 'fixed',
       bottom: 0,
       left: 0,

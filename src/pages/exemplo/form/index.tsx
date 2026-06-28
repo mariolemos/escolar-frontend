@@ -108,27 +108,6 @@ export default function Form() {
                         />
                     </Box>
                 </Box>
-                <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-                    <Button variant="outlined" onClick={() => setOpen(true)}>
-                        Abrir modal
-                    </Button>
-                    <Modal
-                        titulo="titulo"
-                        open={open}
-                        setOpen={setOpen}
-                        buttonAcao={() => alert("Função para execultar alguma ação")}
-                    >
-                        <>Conteudo</>
-                    </Modal>
-                    <Link href="/exemplo" passHref>
-                        <Button variant="contained" color="inherit" sx={{ marginRight: 2 }}>
-                            Voltar
-                        </Button>
-                    </Link>
-                    <Button variant="contained" color="primary" type="submit">
-                        Salvar
-                    </Button>
-                </Box>
             </Box>
         </FormComponent>
     );
