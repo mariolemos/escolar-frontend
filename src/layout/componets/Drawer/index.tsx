@@ -12,9 +12,8 @@ import useDrawer from './useDrawer';
 import Link from 'next/link';
 import { theme } from '@/layout/globalStyles/theme';
 
-
 export default function DrawerComponet() {
-
+    
     const {
         action: {
             toggleDrawer
@@ -49,7 +48,7 @@ export default function DrawerComponet() {
         <div>
             <Button onClick={toggleDrawer(true)}><ArticleIcon sx={{ color: '#ffffffcc' }} fontSize='large' /></Button>
             <Drawer open={open} onClose={toggleDrawer(false)}>
-                {DrawerList}
+                {DrawerList}                
             </Drawer>
         </div>
     );

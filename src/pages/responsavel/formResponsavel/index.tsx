@@ -19,7 +19,7 @@ export default function FormResponsavel() {
       <FormComponent
         onSubmit={salvar}
         titulo="Formulário de Cadastro Responsável"
-        isSubmitting={isSubmitting}
+        isSubmitting={isSubmitting || loading}
       >
         <Box
           sx={{
@@ -27,6 +27,9 @@ export default function FormResponsavel() {
             m: 1,
             display: "flex",
             flexWrap: "wrap",
+            border: "ridge",
+            borderRadius: "1rex",
+            padding: "30px",
           }}
         >
           <TextField
@@ -38,6 +41,7 @@ export default function FormResponsavel() {
             placeholder="Nome completo"
             defaultValue=""
             fullWidth
+            focused={true}
             {...register("nome")}
           />
           <Box sx={{ flex: 1, width: "40%", m: 1 }}>
@@ -47,6 +51,7 @@ export default function FormResponsavel() {
               render={({ field }) => (
                 <DatePickerField
                   label="Nascimento"
+                  focused={true}
                   error={!!errors.nascimento}
                   helperText={errors.nascimento?.message}
                   value={field.value ?? null}
@@ -71,6 +76,7 @@ export default function FormResponsavel() {
                   placeholder="000.000.000-00"
                   fullWidth
                   mask="999.999.999-99"
+                  focused={true}
                 />
               )}
             />
@@ -84,6 +90,7 @@ export default function FormResponsavel() {
             placeholder="00.000.000-0"
             defaultValue=""
             fullWidth
+            focused={true}
             {...register("rg")}
           />
           <TextField
@@ -95,18 +102,24 @@ export default function FormResponsavel() {
             placeholder="Nome completo"
             defaultValue=""
             fullWidth
+            focused={true}
             {...register("parentesco")}
           />
-        </Box>
-        <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-          <Link href="/exemplo" passHref>
-            <Button variant="contained" color="inherit" sx={{ marginRight: 2 }}>
-              Voltar
+
+          <Box sx={{ display: "flex", justifyContent: "flex-end", width: "99%", paddingTop: "15px" }}>
+            <Link href="/responsavel" passHref>
+              <Button
+                variant="contained"
+                color="inherit"
+                sx={{ marginRight: 2 }}
+              >
+                Voltar
+              </Button>
+            </Link>
+            <Button variant="contained" color="primary" type="submit">
+              Salvar
             </Button>
-          </Link>
-          <Button variant="contained" color="primary" type="submit">
-            Salvar
-          </Button>
+          </Box>
         </Box>
       </FormComponent>
     </>

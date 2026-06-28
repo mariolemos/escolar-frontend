@@ -1,32 +1,38 @@
 import DataTable from "@/layout/componets/DataTable";
-import useResponsavel from "./useResponsavel";
-import AddIcon from '@mui/icons-material/Add';
+import useResponsavel, { IResponsavel } from "./useResponsavel";
+import AddIcon from "@mui/icons-material/Add";
 
 export default function Responsavel() {
+  const {
+    action: { edit, del, status },
+    data: { listResponsavel, columns, loading },
+  } = useResponsavel();
 
-    const {
-            action: {},
-            data: {listResponsavel,
-                 columns,
-                loading},
-
-        } = useResponsavel();
-
-    return (               
-        <>
-        <DataTable
-        buttonList={[
-                    {
-                        nome: "novo",
-                        icon: <AddIcon sx={{ marginRight: 1 }} />,
-                        redirect: "/responsavel/formResponsavel"
-                    },                    
-                ]}
-                titulo="Lista de Responsáveis"
-        data={listResponsavel}
+  return (
+    <>
+      <DataTable
+        titulo="Lista de Responsáveis"
         columns={columns}
+        data={listResponsavel}
         loading={loading}
-        />                          
-        </>
-    )
+        buttonList={[
+          {
+            nome: "novo",
+            icon: <AddIcon sx={{ marginRight: 1 }} />,
+            redirect: "/responsavel/formResponsavel",
+          },
+        ]}
+        action={{
+            edit: {
+                onChange: (t: IResponsavel) => edit(t),                
+            },
+            status: {
+                onChange: (t: IResponsavel) => status(t),
+                checked: (t: IResponsavel) => t.ativo,          
+            },
+            delete: { onChange: (t: IResponsavel) => del(t)}
+        }}
+      />
+    </>
+  );
 }

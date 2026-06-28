@@ -7,19 +7,22 @@ import TextField from "@mui/material/TextField";
 import TextFieldMask from "@/components/TextFieldMask";
 import { Controller } from "react-hook-form";
 import DatePickerField from "@/components/DatePickerField";
+import useResponsavel from "@/pages/responsavel/useResponsavel";
+import useColegio from "@/pages/colegio/useColegio";
 
 export default function AlunoForm() {
   const {
-    action: { buscar, salvar },
-    data: { register, errors, loading, control, isSubmitting },
+    action: { buscar, salvar, watch },
+    data: { register, errors, loading, control, isSubmitting, turno, listResponsavel,
+      listColegio, },
   } = useAlunoForm();
-
+  
   return (
     <>
       <FormComponent
         onSubmit={salvar}
         titulo="Formulário de Cadastro Aluno"
-        isSubmitting={isSubmitting}        
+        isSubmitting={isSubmitting || loading}
       >
         <Box
           sx={{
@@ -27,28 +30,31 @@ export default function AlunoForm() {
             m: 1,
             display: "flex",
             flexWrap: "wrap",
+            border: "ridge",
+            borderRadius: "1rex",
+            padding: "30px",
           }}
         >
           <TextField
-            sx={{ width: "40%", m: 1, display: "flex" }}
+            sx={{ width: "54%", m: 1, display: "flex" }}
             error={!!errors.nome}
             helperText={errors.nome?.message}
             id="outlined-error"
             label="Nome"
-            placeholder="Nome completo"
             defaultValue=""
             fullWidth
             {...register("nome")}
+            focused={true}
           />
-          <Box sx={{ width: "20%",  m: 1, display: "flex" }}>
+          <Box sx={{ width: "20%", m: 1, display: "flex" }}>
             <Controller
-              name="nascimento"
+              name="dataNascimento"
               control={control}
               render={({ field }) => (
                 <DatePickerField
                   label="Nascimento"
-                  error={!!errors.nascimento}
-                  helperText={errors.nascimento?.message}
+                  error={!!errors.dataNascimento}
+                  helperText={errors.dataNascimento?.message}
                   value={field.value ?? null}
                   onChange={(date: Date | null) =>
                     field.onChange(date ?? undefined)
@@ -71,12 +77,13 @@ export default function AlunoForm() {
                   placeholder="000.000.000-00"
                   fullWidth
                   mask="999.999.999-99"
+                  focused={true}
                 />
               )}
             />
           </Box>
           <TextField
-            sx={{ width: "12%", m: 1, display: "flex" }}
+            sx={{ width: "24%", m: 1, display: "flex" }}
             error={!!errors.rg}
             helperText={errors.rg?.message}
             id="outlined-error-helper-text"
@@ -84,76 +91,143 @@ export default function AlunoForm() {
             placeholder="00.000.000-0"
             defaultValue=""
             fullWidth
+            focused={true}
             {...register("rg")}
           />
           <TextField
-          sx={{ width: "32%", m: 1, display: "flex"}}
+            sx={{ width: "35%", m: 1, display: "flex" }}
+            error={!!errors.responsavelId}
+            helperText={errors.responsavelId?.message}
+            id="outlined-error"
+            label="Responsável"
+            defaultValue=""
+            fullWidth
+            focused={true}
+            slotProps={{
+              inputLabel: { shrink: true },
+              select: {
+                native: true,
+              },
+            }}
+            
+            select
+            {...register("responsavelId")}
+          >           
+           
+            {listResponsavel &&
+              listResponsavel.map((option) => (
+                <option key={option.id} value={option.id} selected={watch("responsavelId") == option.id}>
+                  {option.nome}
+                </option>
+              ))}
+          </TextField>
+          <TextField
+            sx={{ width: "35%", m: 1, display: "flex" }}
+            error={!!errors.colegioId}
+            helperText={errors.colegioId?.message}
+            id="outlined-error"
+            label="Colégio"
+            defaultValue=""
+            fullWidth
+            select
+            focused={true}
+            slotProps={{
+              inputLabel: { shrink: true },
+              select: {
+                native: true,
+              },
+            }}
+            {...register("colegioId")}
+          >            
+            {listColegio &&
+              listColegio.map((option) => (
+                <option key={option.id} value={option.id} selected={watch("colegioId") == option.id}>
+                  {option.nome}
+                </option>
+                
+              ))}
+          </TextField>
+          <TextField
+            sx={{ width: "32%", m: 1, display: "flex" }}
             error={!!errors.turno}
             helperText={errors.turno?.message}
             id="outlined-error"
             label="Turno"
-            placeholder="Nome completo"
             defaultValue=""
             fullWidth
+            select
+            focused={true}
+            slotProps={{
+              inputLabel: { shrink: true },
+              select: {
+                native: true,
+              },
+            }}
             {...register("turno")}
-          />
+          >
+            {turno.map((option) => (
+              <option key={option.id} value={option.nome}>
+                {option.nome}
+              </option>
+            ))}
+          </TextField>
           <TextField
-          sx={{ width: "32%", m: 1, display: "flex"}}
+            sx={{ width: "32%", m: 1, display: "flex" }}
             error={!!errors.serie}
             helperText={errors.serie?.message}
             id="outlined-error"
             label="Série"
-            placeholder="Nome completo"
             defaultValue=""
             fullWidth
+            focused={true}
             {...register("serie")}
           />
           <TextField
-          sx={{ width: "30%", m: 1, display: "flex"}}
+            sx={{ width: "30%", m: 1, display: "flex" }}
             error={!!errors.turma}
             helperText={errors.turma?.message}
             id="outlined-error"
             label="Turma"
-            placeholder="Nome completo"
             defaultValue=""
             fullWidth
+            focused={true}
             {...register("turma")}
           />
           <TextField
-          sx={{ width: "32%", m: 1, display: "flex"}}
+            sx={{ width: "35%", m: 1, display: "flex" }}
             error={!!errors.nomePai}
             helperText={errors.nomePai?.message}
             id="outlined-error"
             label="Nome do Pai"
-            placeholder="Nome completo"
             defaultValue=""
             fullWidth
+            focused={true}
             {...register("nomePai")}
           />
           <TextField
-          sx={{ width: "32%", m: 1, display: "flex"}}
+            sx={{ width: "35%", m: 1, display: "flex" }}
             error={!!errors.nomeMae}
             helperText={errors.nomeMae?.message}
             id="outlined-error"
             label="Nome da Mãe"
-            placeholder="Nome completo"
             defaultValue=""
             fullWidth
+            focused={true}
             {...register("nomeMae")}
           />
           <TextField
-          sx={{ width: "30%", m: 1, display: "flex"}}
+            sx={{ width: "24%", m: 1, display: "flex" }}
             error={!!errors.convenioMedico}
             helperText={errors.convenioMedico?.message}
             id="outlined-error"
             label="Convênio Médico"
-            placeholder="Nome completo"
             defaultValue=""
             fullWidth
+            focused={true}
             {...register("convenioMedico")}
           />
-          <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-            <Link href="/exemplo" passHref>
+          <Box sx={{ display: "flex", justifyContent: "flex-end", width: "98%", paddingTop: "10Px" }}>
+            <Link href="/aluno" passHref>
               <Button
                 variant="contained"
                 color="inherit"

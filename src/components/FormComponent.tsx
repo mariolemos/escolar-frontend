@@ -9,7 +9,7 @@ interface FormComponentProps {
     subTitulo?: Array<string>;
     isSubmitting: boolean;
     children: React.ReactNode;
-
+    loading?: boolean;
 }
 
 export default function FormComponent({ onSubmit, titulo, subTitulo, isSubmitting, children }: FormComponentProps) {
