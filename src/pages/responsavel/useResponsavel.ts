@@ -82,8 +82,8 @@ const useResponsavel = () => {
     action: {
       buscarResponsaveis,
       setListResponsavel,
-      del,
-      status,
+      // del,
+      // status,
       edit,
     },
     data: {

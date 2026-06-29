@@ -4,7 +4,7 @@ import AddIcon from "@mui/icons-material/Add";
 
 export default function Responsavel() {
   const {
-    action: { edit, del, status },
+    action: { edit},
     data: { listResponsavel, columns, loading },
   } = useResponsavel();
 
@@ -26,11 +26,11 @@ export default function Responsavel() {
             edit: {
                 onChange: (t: IResponsavel) => edit(t),                
             },
-            status: {
-                onChange: (t: IResponsavel) => status(t),
-                checked: (t: IResponsavel) => t.ativo,          
-            },
-            delete: { onChange: (t: IResponsavel) => del(t)}
+            // status: {
+            //     onChange: (t: IResponsavel) => status(t),
+            //     checked: (t: IResponsavel) => t.ativo,          
+            // },
+            // delete: { onChange: (t: IResponsavel) => del(t)}
         }}
       />
     </>

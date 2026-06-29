@@ -4,7 +4,7 @@ import AddIcon from "@mui/icons-material/Add";
 
 export default function Colegio() {
   const {
-    action: { edit, del, status},
+    action: { edit, del},
     data: { listColegio, columns, loading },
   } = useColegio();
   return (
@@ -24,11 +24,7 @@ export default function Colegio() {
         action={{
           edit: {
             onChange: (t: IColegio) => edit(t),
-          },
-          status: {
-            onChange: (t: IColegio) => status(t),
-            checked: (t: IColegio) => t.ativo,
-          },
+          },          
           delete: {
             onChange: (t: IColegio) => del(t),
           },
