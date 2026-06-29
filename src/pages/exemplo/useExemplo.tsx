@@ -74,7 +74,14 @@ const useExemplo = () => {
     const buscarLista = async () => {
         setLoading(true);
         try {
-            const response = await apiGet<any[]>("https://jsonplaceholder.typicode.com/users");
+            const result = await apiGet<any[]>("https://jsonplaceholder.typicode.com/users");
+            if (!result.success) {
+                showToast(result.message || 'Erro ao carregar os dados!', 'error');
+                setList([]);
+                console.log('Erro na API:', result);
+                return;
+            }
+            const response = result.data;
             const newResponse = response.map((item: any) => {
                 return {
                     ...item,

@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, useMap as useLeafletMap } from 'react-leaflet';
 import L from 'leaflet';
 
 interface IMapViewProps {
@@ -29,6 +29,19 @@ export default function MapView({
       <Marker position={position}>
         <Popup>Transporte Escolar</Popup>
       </Marker>
+      <Recenter position={position} />
     </MapContainer>
   );
+}
+
+function Recenter({ position }: { position: [number, number] }) {
+  const map = useLeafletMap();
+
+  useEffect(() => {
+    if (map && position) {
+      map.setView(position);
+    }
+  }, [map, position]);
+
+  return null;
 }
