@@ -12,10 +12,12 @@ function AuthGate({ children }: { children: React.ReactNode }) {
   const { data: session, status } = useSession();
   const router = useRouter();
 
+  const isLoginPage = !session && router.pathname !== "/login";
+
   useEffect(() => {
     if (status === "loading") return;
     if (session?.accessToken) localStorage.setItem('accessToken', session.accessToken);
-    if (!session && router.pathname !== "/login") {
+    if (isLoginPage) {
       router.push("/login");
     }
   }, [session, status, router]);
@@ -25,14 +27,17 @@ function AuthGate({ children }: { children: React.ReactNode }) {
 }
 
 export default function App({ Component, pageProps }: AppProps) {
+  const router = useRouter();
+  const isLoginRoute = router.pathname === '/login' || router.pathname.startsWith('/login');
+
   return (
     <SessionProvider session={(pageProps as any).session}>
       <ToastProvider>
-        <Head />
+        {!isLoginRoute && <Head />}
         <AuthGate>
           <Component {...pageProps} />
         </AuthGate>
-        <Footer />
+        {!isLoginRoute && <Footer />}
       </ToastProvider>
     </SessionProvider>
   );

@@ -9,10 +9,11 @@ interface FormComponentProps {
     subTitulo?: Array<string>;
     isSubmitting: boolean;
     children: React.ReactNode;
+    btnCancelar?: boolean;
 
 }
 
-export default function FormComponent({ onSubmit, titulo, subTitulo, isSubmitting, children }: FormComponentProps) {
+export default function FormComponent({ onSubmit, titulo, subTitulo, isSubmitting, children, btnCancelar = true }: FormComponentProps) {
     const router = useRouter();
     return (
         <Container maxWidth={'lg'} sx={{
@@ -56,18 +57,22 @@ export default function FormComponent({ onSubmit, titulo, subTitulo, isSubmittin
 
                     <Divider flexItem sx={{ marginTop: '0.9rem', marginBottom: '0.9rem' }} />
                     <div style={{ display: 'flex', justifyContent: 'flex-end', width: '100%', gap: 8, marginTop: 16 }}>
-                        <Button
-                            backgroundColor="white"
-                            color="black"
-                            nome='Cancelar'
-                            onClick={() => {
-                                if (typeof window !== 'undefined' && window.history.length > 1) {
-                                    router.back();
-                                    return;
-                                }
-                                router.push('/');
-                            }}
-                        />
+                        {btnCancelar && (
+                            <Button
+                                backgroundColor="white"
+                                color="black"
+                                nome='Cancelar'
+                                onClick={() => {
+                                    if (typeof window !== 'undefined' && window.history.length > 1) {
+                                        router.back();
+                                        return;
+                                    }
+                                    router.push('/');
+                                }}
+                            />
+                        )
+                        }
+
                         <Button
                             nome='Salvar'
                             type="submit"

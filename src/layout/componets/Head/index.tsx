@@ -1,5 +1,6 @@
 import DrawerComponet from '../Drawer';
-import { Avatar, Divider, ListItemButton, ListItemIcon } from '@mui/material';
+import { Avatar, Divider, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
+import { useSession, signOut } from 'next-auth/react';
 import { theme } from '@/layout/globalStyles/theme';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
@@ -10,6 +11,16 @@ const HEADER_HEIGHT = 60;
 
 const Head: React.FC = () => {
     const [open, setOpen] = useState(false);
+    const { data: session } = useSession();
+    const userName = (session as any)?.user?.name ?? (session as any)?.user?.username ?? 'usuario';
+
+    const logout = async () => {
+        try {
+            await signOut({ callbackUrl: '/login' });
+        } catch (err) {
+            console.error('Logout error:', err);
+        }
+    };
 
     return (
         <>
@@ -32,7 +43,7 @@ const Head: React.FC = () => {
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', marginLeft: '4rem', marginTop: '0.6rem' }}>
                         <span style={{ color: theme.color.white }}>Gestão Escolar</span>
                     </div>
-                    <div>
+                    <div style={{ position: 'relative' }}>
 
                         <ListItemButton onClick={() => setOpen(!open)} sx={{ color: theme.color.white }}>
                             <Avatar
@@ -40,10 +51,18 @@ const Head: React.FC = () => {
                                 sx={{ width: 30, height: 30 }}
                             />
                             <span style={{ color: theme.color.white, marginLeft: '0.5rem', textTransform: 'capitalize', fontSize: '1.1rem' }}>
-                                usuario
+                                {userName}
                             </span>
                             {open ? <ExpandLess /> : <ExpandMore />}
                         </ListItemButton>
+
+                        {open && (
+                            <div style={{ position: 'absolute', right: 0, top: '3.2rem', background: theme.color.white, color: theme.color.black, borderRadius: 6, boxShadow: '0 4px 12px rgba(0,0,0,0.15)', minWidth: 160, zIndex: 1100 }}>
+                                <ListItemButton onClick={logout}>
+                                    <ListItemText primary="Sair" />
+                                </ListItemButton>
+                            </div>
+                        )}
                     </div>
                 </div>
                 <div

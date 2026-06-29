@@ -9,6 +9,7 @@ import { useForm } from "react-hook-form";
 export const useLogin = () => {
 
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [isVisible, setIsVisible] = useState(false);
     const router = useRouter();
     const { showToast } = useToast();
 
@@ -48,10 +49,12 @@ export const useLogin = () => {
     return {
         action: {
             login: handleSubmit(login),
-            register
+            register,
+            setIsVisible
         },
         data: {
             isSubmitting,
+            isVisible,
             errors,
             control
         }

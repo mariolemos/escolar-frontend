@@ -89,7 +89,8 @@ export async function apiPost<T>(path: string, data: any): Promise<ApiResult<T>>
 
 
 export async function apiPostLogin<T>(path: string, data: any): Promise<ApiResult<T>> {
-  const url = buildUrl(path);
+  // const url = buildUrl(path);
+  const url = `https://escolar-api-ved3a.ondigitalocean.app/api/${path}`;
   console.log('Enviando dados para login:', url);
   try {
     console.log('Dados enviados para login:', data);
