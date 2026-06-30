@@ -77,7 +77,7 @@ const useColegio = () => {
   const buscarColegios = async () => {
     const response = await apiGet<[]>("/colegio");
     console.log(response);
-    setListColegio(response);
+    setListColegio(response.data);
   };
 
   return {

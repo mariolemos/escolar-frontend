@@ -86,7 +86,7 @@ const useAluno = () => {
             setLoad(true)
             const response = await apiGet<[]>("/aluno")
             console.log(response)
-            setListarAluno(response)            
+            setListarAluno(response?.data)            
         }
         catch(e) {
             console.log(e)            

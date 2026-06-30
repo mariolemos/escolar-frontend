@@ -26,12 +26,10 @@ export default function AlunoForm() {
       >
         <Box
           sx={{
-            width: "50%",
+            width: "100%",
             m: 1,
             display: "flex",
-            flexWrap: "wrap",
-            border: "ridge",
-            borderRadius: "1rex",
+            flexWrap: "wrap",           
             padding: "30px",
           }}
         >
@@ -226,20 +224,7 @@ export default function AlunoForm() {
             focused={true}
             {...register("convenioMedico")}
           />
-          <Box sx={{ display: "flex", justifyContent: "flex-end", width: "98%", paddingTop: "10Px" }}>
-            <Link href="/aluno" passHref>
-              <Button
-                variant="contained"
-                color="inherit"
-                sx={{ marginRight: 2 }}
-              >
-                Voltar
-              </Button>
-            </Link>
-            <Button variant="contained" color="primary" type="submit">
-              Salvar
-            </Button>
-          </Box>
+         
         </Box>
       </FormComponent>
     </>

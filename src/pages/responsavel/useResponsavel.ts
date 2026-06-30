@@ -74,7 +74,7 @@ const useResponsavel = () => {
   const buscarResponsaveis = async () => {
     const response = await apiGet<[]>("/responsavel");
     console.log(response);
-    setListResponsavel(response);
+    setListResponsavel(response.data);
     return response;
   };
 

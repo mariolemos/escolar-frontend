@@ -1,5 +1,5 @@
 import { useToast } from "@/components/Toast";
-import { apiGet } from "@/services/api";
+import { apiGet, apiPut } from "@/services/api";
 import router from "next/router";
 import { useEffect, useState } from "react";
 import useResponsavel from "../responsavel/useResponsavel";
@@ -53,25 +53,18 @@ const useContrato = () => {
    * @param t
    * Logica para ir na API fazer a ação de mudar o status, no exemplo estou apenas invertendo o valor de ativo para simular a mudança de status
    */
-  const status = (t: IContrato) => {
-    setListContrato((prev) =>
-      prev.map((item) => {
-        if (item.id === t.id) {
-          return {
-            ...item,
-            ativo: !item.ativo,
-          };
-        }
-        return item;
-      }),
-    );
-    console.log("status", t);
+
+  
+  const status =  async  (t: IContrato) => { 
+    const respose = await apiPut(`/contrato/inativar/${t.id}`, null)
+    buscarContrato();
+    console.log("status", t.id);
   };
 
   const buscarContrato = async () => {
     const response = await apiGet<[]>("/contrato");
     console.log(response);
-    setListContrato(response);
+    setListContrato(response?.data);
   };
 
   return {

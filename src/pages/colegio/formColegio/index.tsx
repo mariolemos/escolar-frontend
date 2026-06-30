@@ -24,9 +24,7 @@ export default function FormColegio() {
       >
         <Box
           sx={{
-            width: "50%",
-            border: "ridge",
-            borderRadius: "1rex",
+            width: "100%",
             padding: "30px",
             "& .MuiTextField-root": { m: 1, width: "100%" },
           }}
@@ -61,21 +59,6 @@ export default function FormColegio() {
               />
             )}
           />
-
-          <Box sx={{ display: "flex", justifyContent: "flex-end",  paddingTop: "10px" }}>
-            <Link href="/colegio" passHref>
-              <Button
-                variant="contained"
-                color="inherit"
-                sx={{ marginRight: 2, }}
-              >
-                Voltar
-              </Button>
-            </Link>
-            <Button variant="contained" color="primary" type="submit">
-              Salvar
-            </Button>
-          </Box>
         </Box>
       </FormComponent>
     </>

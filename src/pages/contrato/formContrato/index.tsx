@@ -30,9 +30,16 @@ export default function formContrato() {
         subTitulo={["Contrato /", "Novo"]}
         titulo="Formulário de Cadastro Contrato"
         isSubmitting={isSubmitting || loading}
-      >        
+      >
+        <Box
+          sx={{
+            width: "100%",
+            display: "flex",            
+            flexWrap: "wrap",            
+          }}
+        >
           <TextField
-            sx={{ width: "40%", m: 1, display: "flex" }}
+            sx={{ width: "50%", m: 1, display: "flex" }}
             error={!!errors.responsavelId}
             helperText={errors.responsavelId?.message}
             id="outlined-error"
@@ -80,7 +87,7 @@ export default function formContrato() {
             />
           </Box>
 
-          <Box sx={{ width: "15%", m: 1, display: "flex" }}>
+          <Box sx={{ width: "12%", m: 1, display: "flex" }}>
             <Controller
               name="dataInicial"
               control={control}
@@ -97,7 +104,7 @@ export default function formContrato() {
               )}
             />
           </Box>
-          <Box sx={{ width: "15%", m: 1, display: "flex" }}>
+          <Box sx={{ width: "12%", m: 1, display: "flex" }}>
             <Controller
               name="dataFinal"
               control={control}
@@ -113,8 +120,8 @@ export default function formContrato() {
                 />
               )}
             />
-          </Box>          
-        
+          </Box>
+        </Box>
       </FormComponent>
     </>
   );

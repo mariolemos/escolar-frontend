@@ -86,20 +86,20 @@ export const useAlunoForm = () => {
     setLoading(true);
     try {
       const response = await apiGet<IAluno>(`/aluno/${id}`);
-      setValue("nome", response.nome);
-      setValue("dataNascimento", response.dataNascimento);
-      setValue("cpf", response.cpf);
-      setValue("rg", response.rg);
-      setValue("turno", response.turno);
-      setValue("serie", response.serie);
-      setValue("turma", response.turma);
-      setValue("nomePai", response.nomePai);
-      setValue("nomeMae", response.nomeMae);
-      setValue("convenioMedico", response.convenioMedico);
-      setValue("colegioId", response.colegioId);
-      setValue("responsavelId", response.responsavelId);
+      setValue("nome", response.data.nome);
+      setValue("dataNascimento", response.data.dataNascimento);
+      setValue("cpf", response.data.cpf);
+      setValue("rg", response.data.rg);
+      setValue("turno", response.data.turno);
+      setValue("serie", response.data.serie);
+      setValue("turma", response.data.turma);
+      setValue("nomePai", response.data.nomePai);
+      setValue("nomeMae", response.data.nomeMae);
+      setValue("convenioMedico", response.data.convenioMedico);
+      setValue("colegioId", response.data.colegioId);
+      setValue("responsavelId", response.data.responsavelId);
       console.log(watch("dataNascimento"));
-      console.log(response);
+      console.log(response.data);
     } catch (error) {
       showToast("Erro ao carregar os dados!", "error");
       console.log(error);
