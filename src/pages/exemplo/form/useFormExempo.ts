@@ -85,6 +85,7 @@ export default function useFormExempo() {
     }, [query.id]);
 
     const salvar = (data: ExemploFormSchema) => {
+        console.log("Dados do formulário antes do parse:", data);
         setIsSubmitting(true);
         try {
             const parsedData = parseNascimento(data);
@@ -100,7 +101,7 @@ export default function useFormExempo() {
 
     return {
         action: {
-            salvar: handleSubmit(salvar),
+            salvar: handleSubmit(salvar,  () => console.log("Erros de validação:", errors)),
             setOpen
         },
         data: {
@@ -111,6 +112,7 @@ export default function useFormExempo() {
             isSubmitting,
             open,
             optionsResponsavel,
+            setValue,
         }
     }
 }
