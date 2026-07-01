@@ -1,5 +1,7 @@
 import { z } from "zod";
 import { isValidCPF } from "@/utils/isValidCPF";
+import { enderecoDefaultValues, enderecoSchema } from "./enderecoSchema";
+import { contatoSchema } from "./contatoSchema";
 
 export const exemploFormSchema = z.object({
   nome: z.string()
@@ -28,6 +30,8 @@ export const exemploFormSchema = z.object({
     .max(10, "RG deve ter no máximo 10 caracteres"),
   responsavel: z.string()
     .min(1, "Responsável é obrigatório"),
+  endereco: enderecoSchema,
+  // contato: z.array(contatoSchema),
 });
 
 export type ExemploFormSchema = z.infer<typeof exemploFormSchema>;
@@ -37,4 +41,6 @@ export const exemploFormDefaultValues: ExemploFormSchema = {
   cpf: "",
   rg: "",
   responsavel: "",
+  endereco: enderecoDefaultValues,
+  // contato: [],
 };

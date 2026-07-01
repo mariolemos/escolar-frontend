@@ -7,6 +7,7 @@ import Link from "next/link";
 import FormComponent from "@/components/FormComponent";
 import Modal from "@/components/Modal";
 import SelectComponent from "@/components/SelectComponet";
+import EnderecoForm from "@/layout/enderecoForm";
 
 export default function Form() {
     const {
@@ -18,18 +19,20 @@ export default function Form() {
             register,
             errors,
             control,
+            setValue,
             loading,
             isSubmitting,
             open,
             optionsResponsavel,
         }
     } = useForm();
+    
     return (
-        <FormComponent 
-        onSubmit={salvar} 
-        titulo="Formulário de exemplo" 
-        subTitulo={["Exemplo /", "Novo"]}
-        isSubmitting={isSubmitting || loading}>
+        <FormComponent
+            onSubmit={salvar}
+            titulo="Formulário de exemplo"
+            subTitulo={["Exemplo /", "Novo"]}
+            isSubmitting={isSubmitting || loading}>
 
             <Box
                 sx={{
@@ -112,7 +115,13 @@ export default function Form() {
                         />
                     </Box>
                 </Box>
-            </Box>
+            </Box>           
+            <EnderecoForm
+                register={register}
+                errors={errors.endereco}
+                control={control}
+                setValue={setValue}
+            />
         </FormComponent>
     );
 }
