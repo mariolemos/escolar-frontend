@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
 	Table,
 	TableBody,
@@ -27,16 +26,20 @@ export function DataTable<T extends object>({ columns, data, className, titulo =
 	const {
 		action: {
 			handleDeleteClick,
-			handleConfirm,
-			setConfirmOpen,
+			handleConfirmDelete,
+			setConfirmOpenDelete,
+			setConfirmOpenStatus,
+			handleConfirmStatus,
 			setRowsPerPage,
 			setPage,
+			handleInativarClick
 		},
 		data: {
 			modalCancelText,
 			modalConfirmText,
 			modalTitle,
-			confirmOpen,
+			confirmOpenDelete,
+			confirmOpenStatus,
 			rowsPerPage,
 			page,
 		}
@@ -108,13 +111,13 @@ export function DataTable<T extends object>({ columns, data, className, titulo =
 										{action && (
 											<TableCell>
 												{action.edit && (
-													<Button_M size="small" color="primary" onClick={() => action?.edit?.onChange(row)}><Edit fontSize="small" /></Button_M>
+													<Button_M disabled={action.edit.disabled?.(row)} size="small" color="primary" onClick={() => action?.edit?.onChange(row)}><Edit fontSize="small" /></Button_M>
 												)}
 												{action.status && (
-													<Button_M size="small" onClick={() => action?.status?.onChange(row)}><Switch color="success" checked={action.status.checked(row)}></Switch></Button_M>
+													<Button_M disabled={action.status.disabled?.(row)} size="small" onClick={() => handleInativarClick(row)}><Switch color="success" checked={action.status.checked(row)}></Switch></Button_M>
 												)}
 												{action.delete && (
-													<Button_M size="small" color="error" onClick={() => handleDeleteClick(row)}><Delete fontSize="small" /></Button_M>
+													<Button_M disabled={action.delete.disabled?.(row)} size="small" color="error" onClick={() => handleDeleteClick(row)}><Delete fontSize="small" /></Button_M>
 												)}
 											</TableCell>
 										)}
@@ -127,13 +130,22 @@ export function DataTable<T extends object>({ columns, data, className, titulo =
 				<Loading isLoading={loading} />
 
 				<ConfirmModal
-					open={confirmOpen}
-					setOpen={setConfirmOpen}
+					open={confirmOpenDelete}
+					setOpen={setConfirmOpenDelete}
 					title={modalTitle}
 					description={'Deseja realmente excluir este item?'}
 					confirmText={modalConfirmText}
 					cancelText={modalCancelText}
-					onConfirm={handleConfirm}
+					onConfirm={handleConfirmDelete}
+				/>
+				<ConfirmModal
+					open={confirmOpenStatus}
+					setOpen={setConfirmOpenStatus}
+					title={'Confirmar alteração de status'}
+					description={'Deseja realmente alterar o status deste item?'}
+					confirmText={'Alterar'}
+					cancelText={'Cancelar'}
+					onConfirm={handleConfirmStatus}
 				/>
 				<TablePagination
 					rowsPerPageOptions={[10, 25, 50]}
