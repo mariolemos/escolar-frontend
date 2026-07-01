@@ -59,6 +59,7 @@ const useExemplo = () => {
     * Logica para ir na API fazer a ação de mudar o status, no exemplo estou apenas invertendo o valor de ativo para simular a mudança de status
     */
     const status = (t: IExemplo) => {
+        console.log("status", t)
         setList(prev => prev.map(item => {
             if (item.id === t.id) {
                 return {
@@ -68,7 +69,6 @@ const useExemplo = () => {
             }
             return item;
         }));
-        console.log("status", t)
     }
 
     const buscarLista = async () => {

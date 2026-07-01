@@ -28,24 +28,44 @@ export const useDataTable = <T extends object>({
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(3);
 
-    const [confirmOpen, setConfirmOpen] = useState(false);
+    const [confirmOpenDelete, setConfirmOpenDelete] = useState(false);
+    const [confirmOpenStatus, setConfirmOpenStatus] = useState(false);
     const [selectedRow, setSelectedRow] = useState<T | null>(null);
+
+    const handleInativarClick = (row: T) => {
+        const confirmSetting = action?.status?.checked;
+        if (confirmSetting) {
+            setSelectedRow(row);
+            setConfirmOpenStatus(true);
+            return;
+        }
+        action?.status?.onChange(row);
+    }
+
     const handleDeleteClick = (row: T) => {
         const confirmSetting = action?.delete?.confirmDelete;
         if (confirmSetting) {
             setSelectedRow(row);
-            setConfirmOpen(true);
+            setConfirmOpenDelete(true);
             return;
         }
         action?.delete?.onChange(row);
     }
 
-    const handleConfirm = () => {
+    const handleConfirmDelete = () => {
         if (selectedRow) {
             action?.delete?.onChange(selectedRow);
             setSelectedRow(null);
         }
-        setConfirmOpen(false);
+        setConfirmOpenDelete(false);
+    }
+    const handleConfirmStatus = () => {
+        if (selectedRow) {
+            console.log('selectedRow', selectedRow);
+            action?.status?.onChange(selectedRow);
+            setSelectedRow(null);
+        }
+        setConfirmOpenStatus(false);
     }
 
     const modalTitle = typeof action?.delete?.confirmDelete === 'object' && action!.delete!.confirmDelete!.title ? action!.delete!.confirmDelete!.title : 'Confirmar exclusão';
@@ -54,16 +74,20 @@ export const useDataTable = <T extends object>({
     return {
         action: {
             handleDeleteClick,
-            handleConfirm,
-            setConfirmOpen,
+            handleConfirmDelete,
+            setConfirmOpenDelete,
+            setConfirmOpenStatus,
+            handleConfirmStatus,
             setRowsPerPage,
             setPage,
+            handleInativarClick
         },
         data: {
             modalCancelText,
             modalConfirmText,
             modalTitle,
-            confirmOpen,
+            confirmOpenDelete,
+            confirmOpenStatus,
             rowsPerPage,
             page,
         }

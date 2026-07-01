@@ -19,6 +19,7 @@ export type DataTableProps<T> = {
     action?: {
         edit?: {
             onChange: (t: T) => void;
+            disabled?: (t: T) => boolean;
         }
         delete?: {
             onChange: (t: T) => void;
@@ -27,11 +28,13 @@ export type DataTableProps<T> = {
                 description?: (row: T) => React.ReactNode;
                 confirmText?: string;
                 cancelText?: string;
-            }
+            },
+            disabled?: (t: T) => boolean;
         }
         status?: {
             onChange: (t: T) => void;
             checked: (t: T) => boolean;
+            disabled?: (t: T) => boolean;
         }
     }
     containerProps?: React.ComponentProps<typeof TableContainer>;

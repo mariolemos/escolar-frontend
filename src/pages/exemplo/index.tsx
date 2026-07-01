@@ -37,7 +37,8 @@ export default function Exemplo() {
                     },
                     status: {
                         onChange: (t: IExemplo) => status(t),
-                        checked: (t: IExemplo) => t.ativo
+                        checked: (t: IExemplo) => t.ativo,
+                        disabled: (t: IExemplo) => t.ativo
                     },
                     delete: {
                         onChange: (t: IExemplo) => del(t),
