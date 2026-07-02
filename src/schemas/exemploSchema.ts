@@ -31,7 +31,7 @@ export const exemploFormSchema = z.object({
   responsavel: z.string()
     .min(1, "Responsável é obrigatório"),
   endereco: enderecoSchema,
-  // contato: z.array(contatoSchema),
+  contato: z.array(contatoSchema),
 });
 
 export type ExemploFormSchema = z.infer<typeof exemploFormSchema>;
@@ -42,5 +42,5 @@ export const exemploFormDefaultValues: ExemploFormSchema = {
   rg: "",
   responsavel: "",
   endereco: enderecoDefaultValues,
-  // contato: [],
+  contato: [],
 };
