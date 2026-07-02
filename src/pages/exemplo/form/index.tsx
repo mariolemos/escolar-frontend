@@ -1,13 +1,12 @@
-import { Box, Button, TextField } from "@mui/material";
+import { Box, Button, Grid, TextField } from "@mui/material";
 import DatePickerField from "@/components/DatePickerField";
 import TextFieldMask from "@/components/TextFieldMask";
 import useForm from "./useFormExempo";
 import { Controller } from "react-hook-form";
-import Link from "next/link";
 import FormComponent from "@/components/FormComponent";
-import Modal from "@/components/Modal";
 import SelectComponent from "@/components/SelectComponet";
-import EnderecoForm from "@/layout/enderecoForm";
+import EnderecoForm from "@/layout/componets/EnderecoForm";
+import ContatosForm from "@/layout/componets/ContatosForm";
 
 export default function Form() {
     const {
@@ -26,7 +25,7 @@ export default function Form() {
             optionsResponsavel,
         }
     } = useForm();
-    
+
     return (
         <FormComponent
             onSubmit={salvar}
@@ -115,13 +114,20 @@ export default function Form() {
                         />
                     </Box>
                 </Box>
-            </Box>           
+            </Box>
             <EnderecoForm
                 register={register}
                 errors={errors.endereco}
                 control={control}
                 setValue={setValue}
             />
+            <ContatosForm
+                register={register}
+                errors={errors.contato}
+                control={control}
+                setValue={setValue}        
+            />
+            
         </FormComponent>
     );
 }
