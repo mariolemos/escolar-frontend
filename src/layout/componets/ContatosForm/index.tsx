@@ -39,14 +39,14 @@ export default function ContatosForm<TFieldValues extends Record<string, any> = 
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, width: '100%', marginTop: 2 }} >
             <Divider>Contatos</Divider>
 
-            <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginTop: 1 }}>
+            <Box sx={{ display: 'flex', justifyContent: 'flex-end'}}>
                 <Button
                     variant="contained"
                     size="small"
                     startIcon={<AddIcon />}
                     onClick={() => append ? append({ tipo: '', contato: '' }) : null}
                 >
-                    Adicionar
+                    
                 </Button>
             </Box>
 

@@ -18,6 +18,8 @@ export default function useFormExempo() {
     } = useForm<ExemploFormSchema>({
         resolver: zodResolver(exemploFormSchema),
         defaultValues: exemploFormDefaultValues,
+        mode: "onChange",
+        reValidateMode: "onChange",
     });
 
     const [isSubmitting, setIsSubmitting] = useState(false);
