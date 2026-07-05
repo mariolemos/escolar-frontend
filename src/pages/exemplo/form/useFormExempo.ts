@@ -38,7 +38,7 @@ export default function useFormExempo() {
             { label: "Responsável 3", value: "3" },
         ]);
     }
-    const [loading, setLoading] = useState<boolean>(false);
+    // const [loading, setLoading] = useState<boolean>(false);
 
      useEffect(() => {
         if (query.id) {

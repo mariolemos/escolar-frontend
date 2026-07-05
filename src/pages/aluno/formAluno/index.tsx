@@ -9,14 +9,24 @@ import { Controller } from "react-hook-form";
 import DatePickerField from "@/components/DatePickerField";
 import useResponsavel from "@/pages/responsavel/useResponsavel";
 import useColegio from "@/pages/colegio/useColegio";
+import EnderecoForm from "@/layout/componets/EnderecoForm";
+import ContatosForm from "@/layout/componets/ContatosForm";
 
 export default function AlunoForm() {
   const {
-    action: { buscar, salvar, watch },
-    data: { register, errors, loading, control, isSubmitting, turno, listResponsavel,
-      listColegio, },
+    action: { buscar, salvar, watch, setValue },
+    data: {
+      register,
+      errors,
+      loading,
+      control,
+      isSubmitting,
+      turno,
+      listResponsavel,
+      listColegio,
+    },
   } = useAlunoForm();
-  
+
   return (
     <>
       <FormComponent
@@ -29,7 +39,7 @@ export default function AlunoForm() {
             width: "100%",
             m: 1,
             display: "flex",
-            flexWrap: "wrap",           
+            flexWrap: "wrap",
             padding: "30px",
           }}
         >
@@ -107,14 +117,16 @@ export default function AlunoForm() {
                 native: true,
               },
             }}
-            
             select
             {...register("responsavelId")}
-          >           
-           
+          >
             {listResponsavel &&
               listResponsavel.map((option) => (
-                <option key={option.id} value={option.id} selected={watch("responsavelId") == option.id}>
+                <option
+                  key={option.id}
+                  value={option.id}
+                  selected={watch("responsavelId") == option.id}
+                >
                   {option.nome}
                 </option>
               ))}
@@ -136,13 +148,16 @@ export default function AlunoForm() {
               },
             }}
             {...register("colegioId")}
-          >            
+          >
             {listColegio &&
               listColegio.map((option) => (
-                <option key={option.id} value={option.id} selected={watch("colegioId") == option.id}>
+                <option
+                  key={option.id}
+                  value={option.id}
+                  selected={watch("colegioId") == option.id}
+                >
                   {option.nome}
                 </option>
-                
               ))}
           </TextField>
           <TextField
@@ -224,7 +239,18 @@ export default function AlunoForm() {
             focused={true}
             {...register("convenioMedico")}
           />
-         
+          <EnderecoForm
+            register={register}
+            errors={errors.endereco}
+            control={control}
+            setValue={setValue}
+          />
+          <ContatosForm
+            register={register}
+            errors={errors.contato}
+            control={control}
+            setValue={setValue}
+          />
         </Box>
       </FormComponent>
     </>

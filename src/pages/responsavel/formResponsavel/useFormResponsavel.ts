@@ -94,6 +94,7 @@ export default function useFormResponsavel() {
   return {
     action: {
       salvar: handleSubmit(salvar),
+      setValue,
     },
     data: {
       register,

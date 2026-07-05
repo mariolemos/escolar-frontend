@@ -8,10 +8,12 @@ import TextFieldMask from "@/components/TextFieldMask";
 // import Link from "@mui/material/Link";
 import Button from "@mui/material/Button";
 import Link from "next/dist/client/link";
+import EnderecoForm from "@/layout/componets/EnderecoForm";
+import ContatosForm from "@/layout/componets/ContatosForm";
 
 export default function FormColegio() {
   const {
-    action: { salvar, setOpen },
+    action: { salvar, setOpen, setValue },
     data: { register, errors, control, loading, isSubmitting, open },
   } = useFormColegio();
 
@@ -58,6 +60,18 @@ export default function FormColegio() {
                 {...register("horario")}
               />
             )}
+          />
+          <EnderecoForm
+            register={register}
+            errors={errors.endereco}
+            control={control}
+            setValue={setValue}
+          />
+          <ContatosForm
+            register={register}
+            errors={errors.contato}
+            control={control}
+            setValue={setValue}
           />
         </Box>
       </FormComponent>

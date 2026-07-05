@@ -12,7 +12,7 @@ export interface IColegio {
 }
 
 const useColegio = () => {
-  const [listColegio, setListColegio] = useState<any[]>([]);
+  const [listColegio, setListColegio] = useState<any[]>([]);  
   const [loading, setLoading] = useState<boolean>(false);
   const { showToast } = useToast();
   const columns = [
@@ -41,7 +41,7 @@ const useColegio = () => {
   // const edit = async (t: IColegio) => {
   //   const response = await apiGet<[]>('/colegio/id');
   //     console.log("edit", t)
-  //     setBuscrColegio(response);
+  //     setBuscarColegio(response);
   //     router.push({
   //         pathname: `/colegio/formColegio`,
   //         query: { id: t.id }
