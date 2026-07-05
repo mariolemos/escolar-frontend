@@ -8,6 +8,7 @@ import { Controller, useFormContext } from "react-hook-form";
 import useFormContrato from "./useFormContrato";
 import DatePickerField from "@/components/DatePickerField";
 import { green } from "@mui/material/colors";
+import { formatToCurrency } from "@/utils/formatMoeda";
 
 export default function formContrato() {
   const {
@@ -68,20 +69,32 @@ export default function formContrato() {
               ))}
           </TextField>
           <Box sx={{ width: "20%", m: 1, display: "flex" }}>
+            {/* <TextField                  
+                  error={!!errors.valorContratual}
+                  helperText={errors.valorContratual?.message}
+                  id="outlined-error-helper-text"
+                  label="Valor Contratado"
+                  placeholder="000.000.000,00"
+                  fullWidth                 
+                  focused={true}
+                  {...register("valorContratual")}
+                /> */}
+
             <Controller
               name="valorContratual"
               control={control}
               render={({ field }) => (
-                <TextFieldMask
+                <TextField
                   {...field}
                   error={!!errors.valorContratual}
                   helperText={errors.valorContratual?.message}
                   id="outlined-error-helper-text"
                   label="Valor Contratado"
                   placeholder="000.000.000,00"
-                  fullWidth
-                  mask="999.999.999,99"
+                  fullWidth                 
                   focused={true}
+                  onChange={v => field.onChange(v)}
+                  value={formatToCurrency(field.value)}
                 />
               )}
             />

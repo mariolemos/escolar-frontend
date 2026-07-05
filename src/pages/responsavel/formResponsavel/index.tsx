@@ -7,10 +7,12 @@ import Button from "@mui/material/Button";
 import { Controller } from "react-hook-form";
 import DatePickerField from "@/components/DatePickerField";
 import TextFieldMask from "@/components/TextFieldMask";
+import EnderecoForm from "@/layout/componets/EnderecoForm";
+import ContatosForm from "@/layout/componets/ContatosForm";
 
 export default function FormResponsavel() {
   const {
-    action: { salvar },
+    action: { salvar, setValue },
     data: { isSubmitting, errors, control, loading, register },
   } = useFormResponsavel();
 
@@ -26,7 +28,7 @@ export default function FormResponsavel() {
             width: "100%",
             m: 1,
             display: "flex",
-            flexWrap: "wrap",            
+            flexWrap: "wrap",
             padding: "30px",
           }}
         >
@@ -102,7 +104,19 @@ export default function FormResponsavel() {
             fullWidth
             focused={true}
             {...register("parentesco")}
-          />          
+          />
+          <EnderecoForm
+            register={register}
+            errors={errors.endereco}
+            control={control}
+            setValue={setValue}
+          />
+          <ContatosForm
+            register={register}
+            errors={errors.contato}
+            control={control}
+            setValue={setValue}
+          />
         </Box>
       </FormComponent>
     </>

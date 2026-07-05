@@ -23,7 +23,7 @@ export const useAlunoForm = () => {
     formState: { errors },
   } = useForm<AlunoFormSchema>({
     resolver: zodResolver(alunoFormSchema),
-    defaultValues: alunoFormDefaultValues,
+    defaultValues: alunoFormDefaultValues,    
   });
   
   const {
@@ -134,6 +134,7 @@ export const useAlunoForm = () => {
       buscar,
       salvar: handleSubmit(salvar),
       watch,
+      setValue,
     },
     data: {
       register,

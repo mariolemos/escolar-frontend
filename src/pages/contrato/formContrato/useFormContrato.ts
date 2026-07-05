@@ -23,6 +23,8 @@ export default function useFormContrato() {
   } = useForm<ContratoFormSchema>({
     resolver: zodResolver(contratoFormSchema),
     defaultValues: contratoFormDefaultValues,
+    mode:"onChange",
+    reValidateMode:"onChange"
   });
 
   const {
@@ -71,11 +73,11 @@ export default function useFormContrato() {
         setLoading(true);
         try {
           const response = await apiGet<IContrato>(`/contrato/${id}`);
-          setValue("valorContratual", response.valorContratual);
-          setValue("dataInicial", response.dataInicial);
-          setValue("dataFinal", response.dataFinal);
-          setValue("responsavelId", response.responsavelId); 
-          setValue("ativo", response.ativo);
+          setValue("valorContratual", response.data.valorContratual);
+          setValue("dataInicial", response.data.dataInicial);
+          setValue("dataFinal", response.data.dataFinal);
+          setValue("responsavelId", response.data.responsavelId); 
+          setValue("ativo", response.data.ativo);
           console.log(response);
         } catch (error) {
           showToast("Erro ao carregar os dados!", "error");

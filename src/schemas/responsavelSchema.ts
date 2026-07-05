@@ -1,5 +1,7 @@
 import { isValidCPF } from "@/utils/isValidCPF";
 import z from "zod";
+import { enderecoDefaultValues, enderecoSchema } from "./enderecoSchema";
+import { contatoSchema } from "./contatoSchema";
 
 export const responsavelFormSchema = z.object({
   nome: z
@@ -36,6 +38,8 @@ export const responsavelFormSchema = z.object({
     .string()
     .min(1, "Parentesco deve ser Informado")
     .max(20, "Parentesco deve conter no máximo 20 caracteres"),
+  endereco: enderecoSchema,
+  contato: z.array(contatoSchema),
 });
 
 export type ResponsavelFormSchema = z.infer<typeof responsavelFormSchema>;
@@ -46,4 +50,6 @@ export const responsavelFormDefaultValues: ResponsavelFormSchema = {
   cpf: "",
   parentesco: "",
   rg: "",
+  endereco: enderecoDefaultValues,
+    contato: [],
 };

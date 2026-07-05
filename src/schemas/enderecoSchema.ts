@@ -4,7 +4,7 @@ export const enderecoSchema = z.object({
 	cep: z.string()
 		.min(1, "CEP é obrigatório")
 		.regex(/^\d{5}-?\d{3}$/, "CEP inválido (formato: 00000-000 ou 00000000)"),
-	rua: z.string().min(1, "Rua é obrigatória").max(200, "Rua muito longa"),
+	logradouro: z.string().min(1, "Rua é obrigatória").max(200, "Rua muito longa"),
 	numero: z.string().min(1, "Número é obrigatório").max(10, "Número muito longo"),
 	complemento: z.string().optional(),
 	bairro: z.string().min(1, "Bairro é obrigatório").max(100, "Bairro muito longo"),
@@ -19,7 +19,7 @@ export type EnderecoSchema = z.infer<typeof enderecoSchema>;
 
 export const enderecoDefaultValues: EnderecoSchema = {
 	cep: "",
-	rua: "",
+	logradouro: "",
 	numero: "",
 	complemento: "",
 	bairro: "",

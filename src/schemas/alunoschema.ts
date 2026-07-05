@@ -1,5 +1,7 @@
 import { isValidCPF } from "@/utils/isValidCPF";
 import z from "zod";
+import { enderecoDefaultValues, enderecoSchema } from "./enderecoSchema";
+import { contatoSchema } from "./contatoSchema";
 
 export const alunoFormSchema = z.object({
   nome: z
@@ -61,6 +63,8 @@ export const alunoFormSchema = z.object({
     .string()
     .min(1, "Coelgio é obrigatório")
     .max(3, "Colegio deve ter no máximo 3 caracteres"),
+  endereco: enderecoSchema,
+  contato: z.array(contatoSchema),
 });
 
 export type AlunoFormSchema = z.infer<typeof alunoFormSchema>;
@@ -77,4 +81,6 @@ export const alunoFormDefaultValues: AlunoFormSchema = {
   dataNascimento: new Date(),
   responsavelId: "",
   colegioId: "",
+  endereco: enderecoDefaultValues,
+  contato: [],
 };

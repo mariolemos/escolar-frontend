@@ -1,10 +1,11 @@
+import { formatToCurrency, parseCurrencyToNumber } from "@/utils/formatMoeda";
 import z from "zod";
 
 export const contratoFormSchema = z.object({
-  valorContratual: z
+  valorContratual: z    
     .string()
-    .min(1, "Valor não pode ser vazio")
-    .max(11, "Valor não poder ser maior que 11 digitos"),
+    .refine(val => {return parseCurrencyToNumber(val)}),
+    
   dataInicial: z
     .date()
     .optional()
