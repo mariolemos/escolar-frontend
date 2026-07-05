@@ -1,5 +1,5 @@
 import { useToast } from "@/components/Toast";
-import { apiGet } from "@/services/api";
+import { apiGet, ApiResult } from "@/services/api";
 import { Key, Label } from "@mui/icons-material";
 import router from "next/router";
 import { useEffect, useState } from "react";
@@ -12,12 +12,12 @@ export interface IColegio {
 }
 
 const useColegio = () => {
-  const [listColegio, setListColegio] = useState<any[]>([]); 
+  const [listColegio, setListColegio] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const { showToast } = useToast();
   const columns = [
     { key: "id", label: "Id" },
-    { key: "nome", label: "nome" },    
+    { key: "nome", label: "nome" },
   ];
 
   useEffect(() => {
@@ -75,20 +75,22 @@ const useColegio = () => {
   };
 
   const buscarColegios = async () => {
-    const response = await apiGet<[]>("/colegio");
+    const response = await apiGet<IColegio[]>("/colegio");
     console.log(response);
-    setListColegio(response.data);
+    if (response.success) {
+      setListColegio(response.data);
+    }
   };
 
   return {
     action: {
       buscarColegios,
       setListColegio,
-      del,      
+      del,
       edit,
     },
     data: {
-      listColegio,      
+      listColegio,
       columns,
       loading,
     },

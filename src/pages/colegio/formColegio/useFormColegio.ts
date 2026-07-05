@@ -44,8 +44,10 @@ export default function useFormColegio() {
     setLoading(true);
     try {
       const response = await apiGet<IColegio>(`/colegio/${id}`);
-      setValue("nome", response.nome);
-      setValue("horario", response.horario);      
+      if (response.success) {
+        setValue("nome", response.data?.nome);
+        setValue("horario", response.data?.horario);
+      }
       console.log(response);
     } catch (error) {
       showToast("Erro ao carregar os dados!", "error");
@@ -58,17 +60,17 @@ export default function useFormColegio() {
     setIsSubmitting(true);
     let response;
     try {
-      const request  = {
+      const request = {
         ...data,
-          horario: formatHorario(data.horario),
+        horario: formatHorario(data.horario),
       }
       if (query.id) {
-        response = await apiPut<IColegio>(`/colegio/${query.id}`, 
+        response = await apiPut<IColegio>(`/colegio/${query.id}`,
           request
         );
-      }else {
-        response = await apiPost<IColegio>("/colegio", 
-         request
+      } else {
+        response = await apiPost<IColegio>("/colegio",
+          request
         );
       }
 
@@ -89,7 +91,7 @@ export default function useFormColegio() {
       control,
       loading,
       isSubmitting,
-      open,                                  
+      open,
     },
   };
 }
