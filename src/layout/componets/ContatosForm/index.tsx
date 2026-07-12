@@ -15,6 +15,11 @@ type ContatosFormProps<TFieldValues extends Record<string, any> = Record<string,
     namePrefix?: string;
 }
 
+export interface Contato {
+    tipo: string;
+    contato: string;
+}
+
 export default function ContatosForm<TFieldValues extends Record<string, any> = Record<string, any>>(
     { register, errors, control, setValue, namePrefix = 'contatos' }: ContatosFormProps<TFieldValues>
 ) {
