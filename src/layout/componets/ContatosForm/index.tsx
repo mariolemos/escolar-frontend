@@ -16,7 +16,7 @@ type ContatosFormProps<TFieldValues extends Record<string, any> = Record<string,
 }
 
 export default function ContatosForm<TFieldValues extends Record<string, any> = Record<string, any>>(
-    { register, errors, control, setValue, namePrefix = 'contato' }: ContatosFormProps<TFieldValues>
+    { register, errors, control, setValue, namePrefix = 'contatos' }: ContatosFormProps<TFieldValues>
 ) {
     const safeName = namePrefix ?? 'contato';
 
@@ -79,9 +79,9 @@ export default function ContatosForm<TFieldValues extends Record<string, any> = 
                                         render={({ field: ctlField }) => (
                                             <SelectComponent
                                                 options={[
-                                                    { value: 'email', label: 'Email' },
-                                                    { value: 'telefone', label: 'Telefone' },
-                                                    { value: 'whatsapp', label: 'WhatsApp' },
+                                                    { value: '0', label: 'Fixo' },
+                                                    { value: '1', label: 'Celular' },
+                                                    { value: '2', label: 'Email' },
                                                 ]}
                                                 name="Tipo"
                                                 error={!!getError(index, 'tipo')}

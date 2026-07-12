@@ -28,10 +28,11 @@ export const useEnderecoForm = <
             const res = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
             const data = await res.json();
             if (data && !data.erro) {
-                setValue?.(`${namePrefix}.rua` as any, data.logradouro || '');
+                setValue?.(`${namePrefix}.logradouro` as any, data.logradouro || '');
+                setValue?.(`${namePrefix}.complemento` as any, data.complemento || '');
                 setValue?.(`${namePrefix}.bairro` as any, data.bairro || '');
                 setValue?.(`${namePrefix}.cidade` as any, data.localidade || '');
-                setValue?.(`${namePrefix}.estado` as any, data.uf || '');
+                setValue?.(`${namePrefix}.estado` as any, data.uf || '');                               
             }
         } catch (error) {
             console.log('Erro ao buscar CEP', error);

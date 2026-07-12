@@ -48,11 +48,18 @@ export default function useFormResponsavel() {
     setLoading(true);
     try {
       const response = await apiGet<IResponsavel>(`/responsavel/${id}`);
-      setValue("nome", response.nome);
-      setValue("nascimento", response.nascimento);
-      setValue("cpf", response.cpf);
-      setValue("rg" , response.rg)
-      setValue("parentesco", response.parentesco);               
+      setValue("nome", response.data.nome);
+      setValue("nascimento", response.data.nascimento);
+      setValue("cpf", response.data.cpf);
+      setValue("rg" , response.data.rg)
+      setValue("parentesco", response.data.parentesco);
+      setValue("endereco.cep", response.data.endereco.cep);
+      setValue("endereco.logradouro", response.data.endereco.logradouro);
+      setValue("endereco.numero", response.data.endereco.numero);
+      setValue("endereco.complemento", response.data.endereco.complemento);
+      setValue("endereco.bairro", response.data.endereco.bairro);
+      setValue("endereco.cidade", response.data.endereco.cidade);
+      setValue("endereco.estado", response.data.endereco.estado);
       console.log(response);
     } catch (error) {
       showToast("Erro ao carregar os dados!", "error");

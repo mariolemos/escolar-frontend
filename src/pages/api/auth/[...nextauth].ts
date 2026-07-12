@@ -2,6 +2,7 @@ import NextAuth from "next-auth";
 import type { AuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { apiPostLogin } from "../../../services/api";
+import { CropDin } from "@mui/icons-material";
 
 interface ILoginResponse {
   success: true,
@@ -20,10 +21,11 @@ export const authOptions: AuthOptions = {
       credentials: {
         cpf: { label: "CPF", type: "text" },
         senha: { label: "Senha", type: "password" },
-      },
+      },      
       async authorize(credentials) {
         if (!credentials) return null;
         const { cpf, senha } = credentials as { cpf?: string; senha?: string };
+        console.log(cpf, senha)
         try {
           const response = await apiPostLogin<any>("auth/login", { cpf, password: senha });
           console.log('Resposta do login:', response);

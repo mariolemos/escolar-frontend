@@ -26,6 +26,7 @@ export const useLogin = () => {
     const login = async (data: LoginSchema) => {
         try {
             setIsSubmitting(true);
+            console.log(data)
             const res = await signIn("credentials", {
                 redirect: false,
                 cpf: data.cpf,

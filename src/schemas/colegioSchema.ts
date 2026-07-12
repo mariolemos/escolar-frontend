@@ -12,7 +12,7 @@ export const colegioFormSchema = z.object({
     .min(5, "Horário deve conter no máximo 4 caracteres")
     .max(5, "Horário deve conter no máximo 4 caracteres"),
   endereco: enderecoSchema,
-  contato: z.array(contatoSchema),
+  contatos: z.array(contatoSchema),
 });
 
 export type ColegioFormSchema = z.infer<typeof colegioFormSchema>;
@@ -21,5 +21,5 @@ export const colegioFormDefaultValues: ColegioFormSchema = {
   nome: "",
   horario: "",
   endereco: enderecoDefaultValues,
-  contato: [],
+  contatos: [],
 };

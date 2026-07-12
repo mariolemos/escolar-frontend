@@ -64,7 +64,7 @@ export const alunoFormSchema = z.object({
     .min(1, "Coelgio é obrigatório")
     .max(3, "Colegio deve ter no máximo 3 caracteres"),
   endereco: enderecoSchema,
-  contato: z.array(contatoSchema),
+  contatos: z.array(contatoSchema),
 });
 
 export type AlunoFormSchema = z.infer<typeof alunoFormSchema>;
@@ -82,5 +82,5 @@ export const alunoFormDefaultValues: AlunoFormSchema = {
   responsavelId: "",
   colegioId: "",
   endereco: enderecoDefaultValues,
-  contato: [],
+  contatos: [],
 };

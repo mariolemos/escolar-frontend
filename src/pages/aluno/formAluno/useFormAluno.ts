@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useToast } from "@/components/Toast";
 import { useRouter } from "next/router";
-import { apiGet, apiPost, apiPut } from "@/services/api";
+import { apiGet, apiPost, apiPut, ApiResult } from "@/services/api";
 import { IAluno } from "../useAluno";
 import useResponsavel from "@/pages/responsavel/useResponsavel";
 import useColegio from "@/pages/colegio/useColegio";
@@ -19,6 +19,7 @@ export const useAlunoForm = () => {
     register,
     control,
     setValue,
+    reset,
     watch,
     formState: { errors },
   } = useForm<AlunoFormSchema>({
@@ -86,6 +87,9 @@ export const useAlunoForm = () => {
     setLoading(true);
     try {
       const response = await apiGet<IAluno>(`/aluno/${id}`);
+      if(!response.success) {
+        return;
+      }
       setValue("nome", response.data.nome);
       setValue("dataNascimento", response.data.dataNascimento);
       setValue("cpf", response.data.cpf);
@@ -98,6 +102,21 @@ export const useAlunoForm = () => {
       setValue("convenioMedico", response.data.convenioMedico);
       setValue("colegioId", response.data.colegioId);
       setValue("responsavelId", response.data.responsavelId);
+      // setValue("endereco.cep", response.data.endereco.cep);
+      // setValue("endereco.logradouro", response.data.endereco.logradouro);
+      // setValue("endereco.numero", response.data.endereco.numero);
+      // setValue("endereco.complemento", response.data.endereco.complemento);
+      // setValue("endereco.bairro", response.data.endereco.bairro);
+      // setValue("endereco.cidade", response.data.endereco.cidade);
+      // setValue("endereco.estado", response.data.endereco.estado);
+      reset({
+        ...response.data,
+      //  contatos: response.data?.contatos?.map(c => {
+      //   tipo: c.tipo,
+      //   contato: c.contato,
+      //  })
+      }) 
+
       console.log(watch("dataNascimento"));
       console.log(response.data);
     } catch (error) {

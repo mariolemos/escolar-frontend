@@ -39,7 +39,7 @@ export const responsavelFormSchema = z.object({
     .min(1, "Parentesco deve ser Informado")
     .max(20, "Parentesco deve conter no máximo 20 caracteres"),
   endereco: enderecoSchema,
-  contato: z.array(contatoSchema),
+  contatos: z.array(contatoSchema),
 });
 
 export type ResponsavelFormSchema = z.infer<typeof responsavelFormSchema>;
@@ -51,5 +51,5 @@ export const responsavelFormDefaultValues: ResponsavelFormSchema = {
   parentesco: "",
   rg: "",
   endereco: enderecoDefaultValues,
-    contato: [],
+    contatos: [],
 };

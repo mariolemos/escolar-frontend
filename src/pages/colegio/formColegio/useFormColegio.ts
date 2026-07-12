@@ -1,4 +1,3 @@
-
 import {
   colegioFormDefaultValues,
   colegioFormSchema,
@@ -13,6 +12,8 @@ import { useRouter } from "next/router";
 import { apiGet, apiPost, apiPut } from "@/services/api";
 import { IColegio } from "../useColegio";
 import { formatHorario } from "@/utils/format";
+import { number } from "zod";
+import { map } from "leaflet";
 
 export default function useFormColegio() {
   const {
@@ -47,13 +48,14 @@ export default function useFormColegio() {
       setValue("nome", response.data.nome);
       setValue("horario", response.data.horario);
       setValue("endereco.cep", response.data.endereco.cep);
-      setValue("endereco.rua", response.data.endereco.rua);
+      setValue("endereco.logradouro", response.data.endereco.logradouro);
       setValue("endereco.numero", response.data.endereco.numero);
       setValue("endereco.complemento", response.data.endereco.complemento);
       setValue("endereco.bairro", response.data.endereco.bairro);
       setValue("endereco.cidade", response.data.endereco.cidade);
-      setValue("endereco.estado", response.data.endereco.estado);      
-      console.log(response);
+      setValue("endereco.estado", response.data.endereco.estado);
+      // setValue(`contatos.${id}`, response.data.contatos.contato);
+      console.log("+++++", response);
     } catch (error) {
       showToast("Erro ao carregar os dados!", "error");
       console.log(error);
@@ -67,16 +69,12 @@ export default function useFormColegio() {
     try {
       const request = {
         ...data,
-          horario: formatHorario(data.horario),           
-      }
+        horario: formatHorario(data.horario),
+      };
       if (query.id) {
-        response = await apiPut<IColegio>(`/colegio/${query.id}`,
-          request
-        );
+        response = await apiPut<IColegio>(`/colegio/${query.id}`, request);
       } else {
-        response = await apiPost<IColegio>("/colegio",
-          request
-        );
+        response = await apiPost<IColegio>("/colegio", request);
       }
 
       showToast("Formulário salvo com sucesso!", "success");
@@ -89,7 +87,14 @@ export default function useFormColegio() {
   };
 
   return {
-    action: { salvar: handleSubmit(salvar), setOpen, setValue },
+    action: {
+      salvar: handleSubmit(salvar, (erro) => {
+        console.log(erro);
+      }),
+      setOpen,
+      setValue,
+    },
+
     data: {
       register,
       errors,

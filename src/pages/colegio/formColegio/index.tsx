@@ -69,7 +69,7 @@ export default function FormColegio() {
           />
           <ContatosForm
             register={register}
-            errors={errors.contato}
+            errors={errors.contatos}
             control={control}
             setValue={setValue}
           />

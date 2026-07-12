@@ -113,7 +113,7 @@ export default function FormResponsavel() {
           />
           <ContatosForm
             register={register}
-            errors={errors.contato}
+            errors={errors.contatos}
             control={control}
             setValue={setValue}
           />

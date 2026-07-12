@@ -63,18 +63,18 @@ export default function EnderecoForm<TFieldValues extends Record<string, any> = 
 
                 <Grid>
                     <Controller
-                        name={`${namePrefix}.rua` as any}
+                        name={`${namePrefix}.logradouro` as any}
                         control={control}
                         render={({ field }) => (
                             <TextField
-                                id="outlined-rua"
+                                id="outlined-logradouro"
                                 label="Rua"
                                 placeholder="Nome da rua"
                                 fullWidth
                                 size="small"
                                 margin="dense"
-                                error={!!((errors as any)?.[namePrefix]?.rua ?? (errors as any)?.rua)}
-                                helperText={(((errors as any)?.[namePrefix]?.rua?.message) ?? ((errors as any)?.rua?.message)) as any}
+                                error={!!((errors as any)?.[namePrefix]?.logradouro ?? (errors as any)?.logradouro)}
+                                helperText={(((errors as any)?.[namePrefix]?.logradouro.message) ?? ((errors as any)?.logradouro?.message)) as any}
                                 {...field}
                             />
                         )}
