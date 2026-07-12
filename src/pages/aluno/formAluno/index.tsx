@@ -43,17 +43,24 @@ export default function AlunoForm() {
             padding: "30px",
           }}
         >
-          <TextField
-            sx={{ width: "54%", m: 1, display: "flex" }}
-            error={!!errors.nome}
-            helperText={errors.nome?.message}
-            id="outlined-error"
-            label="Nome"
-            defaultValue=""
-            fullWidth
-            {...register("nome")}
-            focused={true}
-          />
+          <Box sx={{ width: "54%", m: 1, display: "flex" }}>
+            <Controller
+              name="nome"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  sx={{ width: "100%", display: "flex" }}
+                  error={!!errors.nome}
+                  helperText={errors.nome?.message}
+                  id="outlined-error"
+                  label="Nome"
+                  fullWidth
+                  focused={true}
+                />
+              )}
+            />
+          </Box>
           <Box sx={{ width: "20%", m: 1, display: "flex" }}>
             <Controller
               name="dataNascimento"
@@ -90,155 +97,216 @@ export default function AlunoForm() {
               )}
             />
           </Box>
-          <TextField
-            sx={{ width: "24%", m: 1, display: "flex" }}
-            error={!!errors.rg}
-            helperText={errors.rg?.message}
-            id="outlined-error-helper-text"
-            label="RG"
-            placeholder="00.000.000-0"
-            defaultValue=""
-            fullWidth
-            focused={true}
-            {...register("rg")}
-          />
-          <TextField
-            sx={{ width: "35%", m: 1, display: "flex" }}
-            error={!!errors.responsavelId}
-            helperText={errors.responsavelId?.message}
-            id="outlined-error"
-            label="Responsável"
-            defaultValue=""
-            fullWidth
-            focused={true}
-            slotProps={{
-              inputLabel: { shrink: true },
-              select: {
-                native: true,
-              },
-            }}
-            select
-            {...register("responsavelId")}
-          >
-            {listResponsavel &&
-              listResponsavel.map((option) => (
-                <option
-                  key={option.id}
-                  value={option.id}
-                  selected={watch("responsavelId") == option.id}
+          <Box sx={{ width: "24%", m: 1, display: "flex" }}>
+            <Controller
+              name="rg"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  sx={{ width: "100%", display: "flex" }}
+                  error={!!errors.rg}
+                  helperText={errors.rg?.message}
+                  id="outlined-error-helper-text"
+                  label="RG"
+                  placeholder="00.000.000-0"
+                  fullWidth
+                  focused={true}
+                />
+              )}
+            />
+          </Box>
+          <Box sx={{ width: "35%", m: 1, display: "flex" }}>
+            <Controller
+              name="responsavelId"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  value={field.value ?? ""}
+                  onChange={(e) => field.onChange(e.target.value)}
+                  sx={{ width: "100%", display: "flex" }}
+                  error={!!errors.responsavelId}
+                  helperText={errors.responsavelId?.message}
+                  id="outlined-error"
+                  label="Responsável"
+                  fullWidth
+                  focused={true}
+                  slotProps={{
+                    inputLabel: { shrink: true },
+                    select: {
+                      native: true,
+                    },
+                  }}
+                  select
                 >
-                  {option.nome}
-                </option>
-              ))}
-          </TextField>
-          <TextField
-            sx={{ width: "35%", m: 1, display: "flex" }}
-            error={!!errors.colegioId}
-            helperText={errors.colegioId?.message}
-            id="outlined-error"
-            label="Colégio"
-            defaultValue=""
-            fullWidth
-            select
-            focused={true}
-            slotProps={{
-              inputLabel: { shrink: true },
-              select: {
-                native: true,
-              },
-            }}
-            {...register("colegioId")}
-          >
-            {listColegio &&
-              listColegio.map((option) => (
-                <option
-                  key={option.id}
-                  value={option.id}
-                  selected={watch("colegioId") == option.id}
+                  {listResponsavel &&
+                    listResponsavel.map((option) => (
+                      <option key={option.id} value={option.id}>
+                        {option.nome}
+                      </option>
+                    ))}
+                </TextField>
+              )}
+            />
+          </Box>
+          <Box sx={{ width: "35%", m: 1, display: "flex" }}>
+            <Controller
+              name="colegioId"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  value={field.value ?? ""}
+                  onChange={(e) => field.onChange(e.target.value)}
+                  sx={{ width: "100%", display: "flex" }}
+                  error={!!errors.colegioId}
+                  helperText={errors.colegioId?.message}
+                  id="outlined-error"
+                  label="Colégio"
+                  fullWidth
+                  select
+                  focused={true}
+                  slotProps={{
+                    inputLabel: { shrink: true },
+                    select: {
+                      native: true,
+                    },
+                  }}
                 >
-                  {option.nome}
-                </option>
-              ))}
-          </TextField>
-          <TextField
-            sx={{ width: "32%", m: 1, display: "flex" }}
-            error={!!errors.turno}
-            helperText={errors.turno?.message}
-            id="outlined-error"
-            label="Turno"
-            defaultValue=""
-            fullWidth
-            select
-            focused={true}
-            slotProps={{
-              inputLabel: { shrink: true },
-              select: {
-                native: true,
-              },
-            }}
-            {...register("turno")}
-          >
-            {turno.map((option) => (
-              <option key={option.id} value={option.nome}>
-                {option.nome}
-              </option>
-            ))}
-          </TextField>
-          <TextField
-            sx={{ width: "32%", m: 1, display: "flex" }}
-            error={!!errors.serie}
-            helperText={errors.serie?.message}
-            id="outlined-error"
-            label="Série"
-            defaultValue=""
-            fullWidth
-            focused={true}
-            {...register("serie")}
-          />
-          <TextField
-            sx={{ width: "30%", m: 1, display: "flex" }}
-            error={!!errors.turma}
-            helperText={errors.turma?.message}
-            id="outlined-error"
-            label="Turma"
-            defaultValue=""
-            fullWidth
-            focused={true}
-            {...register("turma")}
-          />
-          <TextField
-            sx={{ width: "35%", m: 1, display: "flex" }}
-            error={!!errors.nomePai}
-            helperText={errors.nomePai?.message}
-            id="outlined-error"
-            label="Nome do Pai"
-            defaultValue=""
-            fullWidth
-            focused={true}
-            {...register("nomePai")}
-          />
-          <TextField
-            sx={{ width: "35%", m: 1, display: "flex" }}
-            error={!!errors.nomeMae}
-            helperText={errors.nomeMae?.message}
-            id="outlined-error"
-            label="Nome da Mãe"
-            defaultValue=""
-            fullWidth
-            focused={true}
-            {...register("nomeMae")}
-          />
-          <TextField
-            sx={{ width: "24%", m: 1, display: "flex" }}
-            error={!!errors.convenioMedico}
-            helperText={errors.convenioMedico?.message}
-            id="outlined-error"
-            label="Convênio Médico"
-            defaultValue=""
-            fullWidth
-            focused={true}
-            {...register("convenioMedico")}
-          />
+                  {listColegio &&
+                    listColegio.map((option) => (
+                      <option key={option.id} value={option.id}>
+                        {option.nome}
+                      </option>
+                    ))}
+                </TextField>
+              )}
+            />
+          </Box>
+          <Box sx={{ width: "32%", m: 1, display: "flex" }}>
+            <Controller
+              name="turno"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  value={field.value ?? ""}
+                  onChange={(e) => field.onChange(e.target.value)}
+                  sx={{ width: "100%", display: "flex" }}
+                  error={!!errors.turno}
+                  helperText={errors.turno?.message}
+                  id="outlined-error"
+                  label="Turno"
+                  fullWidth
+                  select
+                  focused={true}
+                  slotProps={{
+                    inputLabel: { shrink: true },
+                    select: {
+                      native: true,
+                    },
+                  }}
+                >
+                  {turno.map((option) => (
+                    <option key={option.id} value={option.nome}>
+                      {option.nome}
+                    </option>
+                  ))}
+                </TextField>
+              )}
+            />
+          </Box>
+          <Box sx={{ width: "32%", m: 1, display: "flex" }}>
+            <Controller
+              name="serie"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  sx={{ width: "100%", display: "flex" }}
+                  error={!!errors.serie}
+                  helperText={errors.serie?.message}
+                  id="outlined-error"
+                  label="Série"
+                  fullWidth
+                  focused={true}
+                />
+              )}
+            />
+          </Box>
+          <Box sx={{ width: "30%", m: 1, display: "flex" }}>
+            <Controller
+              name="turma"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  sx={{ width: "100%", display: "flex" }}
+                  error={!!errors.turma}
+                  helperText={errors.turma?.message}
+                  id="outlined-error"
+                  label="Turma"
+                  fullWidth
+                  focused={true}
+                />
+              )}
+            />
+          </Box>
+          <Box sx={{ width: "35%", m: 1, display: "flex" }}>
+            <Controller
+              name="nomePai"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  sx={{ width: "100%", display: "flex" }}
+                  error={!!errors.nomePai}
+                  helperText={errors.nomePai?.message}
+                  id="outlined-error"
+                  label="Nome do Pai"
+                  fullWidth
+                  focused={true}
+                />
+              )}
+            />
+          </Box>
+          <Box sx={{ width: "35%", m: 1, display: "flex" }}>
+            <Controller
+              name="nomeMae"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  sx={{ width: "100%", display: "flex" }}
+                  error={!!errors.nomeMae}
+                  helperText={errors.nomeMae?.message}
+                  id="outlined-error"
+                  label="Nome da Mãe"
+                  fullWidth
+                  focused={true}
+                />
+              )}
+            />
+          </Box>
+          <Box sx={{ width: "24%", m: 1, display: "flex" }}>
+            <Controller
+              name="convenioMedico"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  sx={{ width: "100%", display: "flex" }}
+                  error={!!errors.convenioMedico}
+                  helperText={errors.convenioMedico?.message}
+                  id="outlined-error"
+                  label="Convênio Médico"
+                  fullWidth
+                  focused={true}
+                />
+              )}
+            />
+          </Box>
           <EnderecoForm
             register={register}
             errors={errors.endereco}
