@@ -14,6 +14,7 @@ import { IColegio } from "../useColegio";
 import { formatHorario } from "@/utils/format";
 import { number } from "zod";
 import { map } from "leaflet";
+import { Contato } from "@/layout/componets/ContatosForm";
 
 export default function useFormColegio() {
   const {
@@ -21,6 +22,7 @@ export default function useFormColegio() {
     register,
     control,
     setValue,
+    reset,
     formState: { errors },
   } = useForm<ColegioFormSchema>({
     resolver: zodResolver(colegioFormSchema),
@@ -46,15 +48,15 @@ export default function useFormColegio() {
     try {
       const response = await apiGet<IColegio>(`/colegio/${id}`);
       setValue("nome", response.data.nome);
-      setValue("horario", response.data.horario);
-      setValue("endereco.cep", response.data.endereco.cep);
-      setValue("endereco.logradouro", response.data.endereco.logradouro);
-      setValue("endereco.numero", response.data.endereco.numero);
-      setValue("endereco.complemento", response.data.endereco.complemento);
-      setValue("endereco.bairro", response.data.endereco.bairro);
-      setValue("endereco.cidade", response.data.endereco.cidade);
-      setValue("endereco.estado", response.data.endereco.estado);
-      // setValue(`contatos.${id}`, response.data.contatos.contato);
+      setValue("horario", response.data.horario);      
+      reset({
+        ...response.data,
+        contatos: response.data.contatos.map((c: Contato) => ({
+          tipo: c.tipoId,
+          contato: c.contato,          
+        }))                
+      });
+
       console.log("+++++", response);
     } catch (error) {
       showToast("Erro ao carregar os dados!", "error");

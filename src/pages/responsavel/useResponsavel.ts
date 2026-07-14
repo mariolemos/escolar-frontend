@@ -3,6 +3,7 @@ import { apiGet } from "@/services/api";
 import router from "next/router";
 import { useEffect, useState } from "react";
 import { IColegio } from "../colegio/useColegio";
+import { Contato } from "@/layout/componets/ContatosForm";
 
 export interface IResponsavel {
   id: number;
@@ -12,6 +13,7 @@ export interface IResponsavel {
   parentesco: string;
   ativo: boolean;
   rg: string;
+  contatos: Array<Contato>
 }
 
 const useResponsavel = () => {

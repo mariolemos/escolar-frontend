@@ -1,5 +1,6 @@
 import Loading from "@/components/Loading";
 import { useToast } from "@/components/Toast";
+import { Contato } from "@/layout/componets/ContatosForm";
 import { apiGet } from "@/services/api";
 import router from "next/router";
 import { useEffect, useState } from "react"
@@ -19,6 +20,7 @@ export interface IAluno {
     ativo: boolean;
     responsavelId: string;
     colegioId: string;
+    contatos: Array<Contato>
 }
 
 const useAluno = () => {

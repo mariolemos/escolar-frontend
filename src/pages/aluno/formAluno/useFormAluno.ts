@@ -12,6 +12,7 @@ import { apiGet, apiPost, apiPut, ApiResult } from "@/services/api";
 import { IAluno } from "../useAluno";
 import useResponsavel from "@/pages/responsavel/useResponsavel";
 import useColegio from "@/pages/colegio/useColegio";
+import { Contato } from "@/layout/componets/ContatosForm";
 
 export const useAlunoForm = () => {
   const {
@@ -24,19 +25,18 @@ export const useAlunoForm = () => {
     formState: { errors },
   } = useForm<AlunoFormSchema>({
     resolver: zodResolver(alunoFormSchema),
-    defaultValues: alunoFormDefaultValues,    
+    defaultValues: alunoFormDefaultValues,
   });
-  
+
   const {
-      action: { },
-      data: { listResponsavel },
-    } = useResponsavel();
-  
-    const {
-      action: {},
-      data: { listColegio },
-    } = useColegio();
-  
+    action: {},
+    data: { listResponsavel },
+  } = useResponsavel();
+
+  const {
+    action: {},
+    data: { listColegio },
+  } = useColegio();
 
   const turno = [
     {
@@ -60,10 +60,9 @@ export const useAlunoForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { showToast } = useToast();
   const { query } = useRouter();
-  const [ loading, setLoading] = useState<boolean>(false);  
+  const [loading, setLoading] = useState<boolean>(false);
 
-  useEffect(() => { 
-      
+  useEffect(() => {
     if (query.id) {
       // Aqui você pode fazer uma chamada para a API para buscar os dados do exemplo com base no ID e preencher o formulário
       console.log("ID do exemplo para edição:", query.id);
@@ -87,35 +86,17 @@ export const useAlunoForm = () => {
     setLoading(true);
     try {
       const response = await apiGet<IAluno>(`/aluno/${id}`);
-      if(!response.success) {
+      if (!response.success) {
         return;
       }
-      setValue("nome", response.data.nome);
-      setValue("dataNascimento", response.data.dataNascimento);
-      setValue("cpf", response.data.cpf);
-      setValue("rg", response.data.rg);
-      setValue("turno", response.data.turno);
-      setValue("serie", response.data.serie);
-      setValue("turma", response.data.turma);
-      setValue("nomePai", response.data.nomePai);
-      setValue("nomeMae", response.data.nomeMae);
-      setValue("convenioMedico", response.data.convenioMedico);
-      setValue("colegioId", response.data.colegioId);
-      setValue("responsavelId", response.data.responsavelId);
-      // setValue("endereco.cep", response.data.endereco.cep);
-      // setValue("endereco.logradouro", response.data.endereco.logradouro);
-      // setValue("endereco.numero", response.data.endereco.numero);
-      // setValue("endereco.complemento", response.data.endereco.complemento);
-      // setValue("endereco.bairro", response.data.endereco.bairro);
-      // setValue("endereco.cidade", response.data.endereco.cidade);
-      // setValue("endereco.estado", response.data.endereco.estado);
+
       reset({
         ...response.data,
-      //  contatos: response.data?.contatos?.map(c => {
-      //   tipo: c.tipo,
-      //   contato: c.contato,
-      //  })
-      }) 
+        contatos: response.data?.contatos.map((c: Contato) => ({
+          tipo: c.tipoId,
+          contato: c.contato,
+        })),
+      });
 
       console.log(watch("dataNascimento"));
       console.log(response.data);
@@ -125,7 +106,6 @@ export const useAlunoForm = () => {
     } finally {
       setLoading(false);
     }
-
   };
 
   const salvar = async (data: AlunoFormSchema) => {
@@ -133,7 +113,7 @@ export const useAlunoForm = () => {
     let response;
     try {
       if (query.id) {
-        const response = await apiPut<IAluno>(`/aluno/${query.id}` , data);
+        const response = await apiPut<IAluno>(`/aluno/${query.id}`, data);
       } else {
         const response = await apiPost<IAluno>("/aluno", data);
       }

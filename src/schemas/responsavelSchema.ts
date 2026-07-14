@@ -51,5 +51,5 @@ export const responsavelFormDefaultValues: ResponsavelFormSchema = {
   parentesco: "",
   rg: "",
   endereco: enderecoDefaultValues,
-    contatos: [],
+  contatos: [],
 };

@@ -1,4 +1,5 @@
 import { useToast } from "@/components/Toast";
+import { Contato } from "@/layout/componets/ContatosForm";
 import { apiGet, ApiResult } from "@/services/api";
 import { Key, Label } from "@mui/icons-material";
 import router from "next/router";
@@ -9,6 +10,7 @@ export interface IColegio {
   nome: string;
   horario: string;
   ativo: boolean;
+  contatos: Array<Contato>;
 }
 
 const useColegio = () => {
