@@ -31,16 +31,22 @@ export default function FormColegio() {
             "& .MuiTextField-root": { m: 1, width: "100%" },
           }}
         >
-          <TextField
-            error={!!errors.nome}
-            helperText={errors.nome?.message}
-            id="outlined-error"
-            label="Nome"
-            placeholder="Nome completo"
-            defaultValue=""
-            fullWidth
-            focused={true}
-            {...register("nome")}
+          <Controller
+            name="nome"
+            control={control}
+            render={({ field }) => (
+              <TextField
+                error={!!errors.nome}
+                helperText={errors.nome?.message}
+                id="outlined-error"
+                label="Nome"
+                placeholder="Nome completo"
+                defaultValue=""
+                fullWidth
+                focused={true}
+                {...register("nome")}
+              />
+            )}
           />
 
           <Controller

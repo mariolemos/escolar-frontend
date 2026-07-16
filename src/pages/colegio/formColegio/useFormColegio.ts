@@ -47,8 +47,8 @@ export default function useFormColegio() {
     setLoading(true);
     try {
       const response = await apiGet<IColegio>(`/colegio/${id}`);
-      setValue("nome", response.data.nome);
-      setValue("horario", response.data.horario);      
+      // setValue("nome", response.data.nome);
+      // setValue("horario", response.data.horario);      
       reset({
         ...response.data,
         contatos: response.data.contatos.map((c: Contato) => ({

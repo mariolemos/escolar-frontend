@@ -20,7 +20,7 @@ export interface IAluno {
     ativo: boolean;
     responsavelId: string;
     colegioId: string;
-    contatos: Array<Contato>
+    contatos: Array<Contato>;
 }
 
 const useAluno = () => {

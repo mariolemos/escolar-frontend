@@ -32,18 +32,24 @@ export default function FormResponsavel() {
             padding: "30px",
           }}
         >
-          <TextField
-            sx={{ width: "50%", display: "flex", m: 1 }}
-            error={!!errors.nome}
-            helperText={errors.nome?.message}
-            id="outlined-error"
-            label="Nome"
-            placeholder="Nome completo"
-            defaultValue=""
-            fullWidth
-            focused={true}
-            {...register("nome")}
-          />
+          <Box sx={{ width: "54%", m: 1, display: "flex" }}>
+            <Controller
+              name="nome"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  sx={{ width: "100%", display: "flex" }}
+                  error={!!errors.nome}
+                  helperText={errors.nome?.message}
+                  id="outlined-error"
+                  label="Nome"
+                  fullWidth
+                  focused={true}
+                />
+              )}
+            />
+          </Box>
           <Box sx={{ flex: 1, width: "40%", m: 1 }}>
             <Controller
               name="nascimento"
@@ -81,30 +87,44 @@ export default function FormResponsavel() {
               )}
             />
           </Box>
-          <TextField
-            sx={{ width: "100%", m: 1 }}
-            error={!!errors.rg}
-            helperText={errors.rg?.message}
-            id="outlined-error-helper-text"
-            label="RG"
-            placeholder="00.000.000-0"
-            defaultValue=""
-            fullWidth
-            focused={true}
-            {...register("rg")}
-          />
-          <TextField
-            sx={{ width: "100%", m: 1 }}
-            error={!!errors.parentesco}
-            helperText={errors.parentesco?.message}
-            id="outlined-error"
-            label="Parentesco"
-            placeholder="Nome completo"
-            defaultValue=""
-            fullWidth
-            focused={true}
-            {...register("parentesco")}
-          />
+          <Box sx={{ width: "24%", m: 1, display: "flex" }}>
+            <Controller
+              name="rg"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  sx={{ width: "100%", display: "flex" }}
+                  error={!!errors.rg}
+                  helperText={errors.rg?.message}
+                  id="outlined-error-helper-text"
+                  label="RG"
+                  placeholder="00.000.000-0"
+                  fullWidth
+                  focused={true}
+                />
+              )}
+            />
+          </Box>
+          <Box sx={{ width: "24%", m: 1, display: "flex" }}>
+            <Controller
+              name="parentesco"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  sx={{ width: "100%", display: "flex" }}
+                  error={!!errors.parentesco}
+                  helperText={errors.parentesco?.message}
+                  id="outlined-error-helper-text"
+                  label="Parentesco"
+                  placeholder="parentesco"
+                  fullWidth
+                  focused={true}
+                />
+              )}
+            />
+          </Box>
           <EnderecoForm
             register={register}
             errors={errors.endereco}

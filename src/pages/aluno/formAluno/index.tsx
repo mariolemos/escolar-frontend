@@ -68,6 +68,7 @@ export default function AlunoForm() {
               render={({ field }) => (
                 <DatePickerField
                   label="Nascimento"
+                  focused={true}
                   error={!!errors.dataNascimento}
                   helperText={errors.dataNascimento?.message}
                   value={field.value ?? null}

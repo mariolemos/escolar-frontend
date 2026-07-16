@@ -13,6 +13,7 @@ import { useRouter } from "next/router";
 import { apiGet, apiPost, apiPut, ApiResult } from "@/services/api";
 import { IExemplo } from "@/pages/exemplo/useExemplo";
 import { IResponsavel } from "../useResponsavel";
+import { Contato } from "@/layout/componets/ContatosForm";
 
 export default function useFormResponsavel() {
   const {
@@ -56,18 +57,10 @@ export default function useFormResponsavel() {
     setLoading(true);
     try {
       const response = await apiGet<IResponsavel>(`/responsavel/${id}`);
-      setValue("nome", response.data.nome);
-      setValue("nascimento", response.data.nascimento);
-      setValue("cpf", response.data.cpf);
-      setValue("rg" , response.data.rg)
-      setValue("parentesco", response.data.parentesco);
-      // setValue("endereco.cep", response.data.endereco.cep);
-      // setValue("endereco.logradouro", response.data.endereco.logradouro);
-      // setValue("endereco.numero", response.data.endereco.numero);
-      // setValue("endereco.complemento", response.data.endereco.complemento);
-      // setValue("endereco.bairro", response.data.endereco.bairro);
-      // setValue("endereco.cidade", response.data.endereco.cidade);
-      // setValue("endereco.estado", response.data.endereco.estado);
+
+      if (!response.success) {
+        return;
+      }
       reset({
         ...response.data,
         contatos: response.data?.contatos.map((c: Contato) => ({
