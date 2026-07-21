@@ -8,7 +8,7 @@ export const responsavelFormSchema = z.object({
     .string()
     .min(1, "Nome é obrigatório")
     .max(50, "Nome deve conter no máximo 50 caracteres"),
-  nascimento: z
+  dataNascimento: z
     .date()
     .optional()
     .refine((val) => val !== undefined && val !== null, {

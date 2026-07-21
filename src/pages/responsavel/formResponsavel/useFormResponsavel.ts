@@ -57,7 +57,6 @@ export default function useFormResponsavel() {
     setLoading(true);
     try {
       const response = await apiGet<IResponsavel>(`/responsavel/${id}`);
-
       if (!response.success) {
         return;
       }

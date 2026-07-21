@@ -63,7 +63,8 @@ const useContrato = () => {
 
   const buscarContrato = async () => {
     const response = await apiGet<[]>("/contrato");
-    console.log(response);
+    console.log("###", response);
+    console.log("&&&&", response.data);    
     setListContrato(response?.data);
   };
 

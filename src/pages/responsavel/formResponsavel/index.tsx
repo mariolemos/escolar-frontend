@@ -29,17 +29,16 @@ export default function FormResponsavel() {
             m: 1,
             display: "flex",
             flexWrap: "wrap",
-            padding: "30px",
           }}
         >
-          <Box sx={{ width: "54%", m: 1, display: "flex" }}>
+          <Box sx={{ m: 1, width: "100%", display: "flex", flexWrap: "wrap" }}>
             <Controller
               name="nome"
               control={control}
               render={({ field }) => (
                 <TextField
                   {...field}
-                  sx={{ width: "100%", display: "flex" }}
+                  sx={{ width: "20%", display: "flex" }}
                   error={!!errors.nome}
                   helperText={errors.nome?.message}
                   id="outlined-error"
@@ -49,26 +48,25 @@ export default function FormResponsavel() {
                 />
               )}
             />
-          </Box>
-          <Box sx={{ flex: 1, width: "40%", m: 1 }}>
-            <Controller
-              name="nascimento"
-              control={control}
-              render={({ field }) => (
-                <DatePickerField
-                  label="Nascimento"
-                  focused={true}
-                  error={!!errors.nascimento}
-                  helperText={errors.nascimento?.message}
-                  value={field.value ?? null}
-                  onChange={(date: Date | null) =>
-                    field.onChange(date ?? undefined)
-                  }
-                />
-              )}
-            />
-          </Box>
-          <Box sx={{ flex: 1, m: 1 }}>
+            <Box sx={{ width: "10%", display: "flex", m: 1 }}>
+              <Controller
+                name="dataNascimento"
+                control={control}
+                render={({ field }) => (
+                  <DatePickerField                    
+                    label="Nascimento"
+                    focused={true}
+                    error={!!errors.dataNascimento}
+                    helperText={errors.dataNascimento?.message}
+                    value={field.value ?? null}
+                    onChange={(date: Date | null) =>
+                      field.onChange(date ?? undefined)
+                    }
+                  />
+                )}
+              />
+            </Box>
+
             <Controller
               name="cpf"
               control={control}
@@ -83,18 +81,17 @@ export default function FormResponsavel() {
                   fullWidth
                   mask="999.999.999-99"
                   focused={true}
+                  sx={{ width: "15%" }}
                 />
               )}
             />
-          </Box>
-          <Box sx={{ width: "24%", m: 1, display: "flex" }}>
             <Controller
               name="rg"
               control={control}
               render={({ field }) => (
                 <TextField
                   {...field}
-                  sx={{ width: "100%", display: "flex" }}
+                  sx={{ width: "15%", display: "flex" }}
                   error={!!errors.rg}
                   helperText={errors.rg?.message}
                   id="outlined-error-helper-text"
@@ -105,15 +102,13 @@ export default function FormResponsavel() {
                 />
               )}
             />
-          </Box>
-          <Box sx={{ width: "24%", m: 1, display: "flex" }}>
             <Controller
               name="parentesco"
               control={control}
               render={({ field }) => (
                 <TextField
                   {...field}
-                  sx={{ width: "100%", display: "flex" }}
+                  sx={{ width: "15%", display: "flex" }}
                   error={!!errors.parentesco}
                   helperText={errors.parentesco?.message}
                   id="outlined-error-helper-text"

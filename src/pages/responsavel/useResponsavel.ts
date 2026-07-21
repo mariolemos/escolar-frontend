@@ -8,7 +8,7 @@ import { Contato } from "@/layout/componets/ContatosForm";
 export interface IResponsavel {
   id: number;
   nome: string;
-  nascimento: Date;
+  dataNascimento: Date;
   cpf: string;
   parentesco: string;
   ativo: boolean;

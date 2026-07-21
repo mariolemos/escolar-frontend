@@ -18,6 +18,7 @@ export default function useFormContrato() {
     register,
     control,
     setValue,
+    reset,
     watch,
     formState: { errors },
   } = useForm<ContratoFormSchema>({
@@ -79,6 +80,9 @@ export default function useFormContrato() {
           setValue("responsavelId", response.data.responsavelId); 
           setValue("ativo", response.data.ativo);
           console.log(response);
+          reset ({
+            ...response.data
+          })
         } catch (error) {
           showToast("Erro ao carregar os dados!", "error");
           console.log(error);
