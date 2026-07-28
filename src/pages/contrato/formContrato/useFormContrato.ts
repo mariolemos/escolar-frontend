@@ -101,9 +101,9 @@ export default function useFormContrato() {
             } else {
               const response = await apiPost<IContrato>("/contrato", data);              
             }
-            const parsedDataInicial = parseDataInicial(data);
-            
+            const parsedDataInicial = parseDataInicial(data);            
             const parsedDataFinal = parseDataFinal(data);
+
             console.log("Dados do formulário:", parsedDataInicial, parseDataFinal);            
             showToast("Formulário salvo com sucesso!", "success");
           } catch (error) {
@@ -115,7 +115,7 @@ export default function useFormContrato() {
         };
 
   return {
-    action: { setOpen, watch, buscar, salvar: handleSubmit(salvar) },
+    action: { setOpen, watch, buscar, salvar: handleSubmit(salvar,  () => console.log("Erros de validação:", errors)) },
     data: {
       register,
       errors,

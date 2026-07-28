@@ -4,8 +4,7 @@ import z from "zod";
 export const contratoFormSchema = z.object({
   valorContratual: z    
     .string()
-    .refine(val => {return parseCurrencyToNumber(val)}),
-    
+    .refine(val => {return parseCurrencyToNumber(val)}),          
   dataInicial: z
     .date()
     .optional()

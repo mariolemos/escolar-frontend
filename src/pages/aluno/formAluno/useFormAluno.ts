@@ -87,6 +87,8 @@ export const useAlunoForm = () => {
     try {
       const response = await apiGet<IAluno>(`/aluno/${id}`);
       if (!response.success) {
+        showToast(response.message || 'Erro ao carregar os dados!', 'error');
+        console.log('Erro na API:', response);
         return;
       }
 
@@ -131,7 +133,7 @@ export const useAlunoForm = () => {
   return {
     action: {
       buscar,
-      salvar: handleSubmit(salvar),
+      salvar: handleSubmit(salvar, () => console.log('Erros de validação:', errors)),
       watch,
       setValue,
     },

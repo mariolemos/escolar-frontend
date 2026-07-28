@@ -58,6 +58,8 @@ export default function useFormResponsavel() {
     try {
       const response = await apiGet<IResponsavel>(`/responsavel/${id}`);
       if (!response.success) {
+        showToast(response.message || 'Erro ao carregar os dados!', 'error')
+        console.log('Erro na API:', response);
         return;
       }
       reset({

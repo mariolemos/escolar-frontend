@@ -46,9 +46,7 @@ export default function useFormColegio() {
   const buscar = async (id: number) => {
     setLoading(true);
     try {
-      const response = await apiGet<IColegio>(`/colegio/${id}`);
-      // setValue("nome", response.data.nome);
-      // setValue("horario", response.data.horario);      
+      const response = await apiGet<IColegio>(`/colegio/${id}`);         
       reset({
         ...response.data,
         contatos: response.data.contatos.map((c: Contato) => ({
@@ -67,6 +65,7 @@ export default function useFormColegio() {
   };
   const salvar = async (data: ColegioFormSchema) => {
     setIsSubmitting(true);
+    console.log("ggg" , data)
     let response;
     try {
       const request = {
@@ -90,9 +89,7 @@ export default function useFormColegio() {
 
   return {
     action: {
-      salvar: handleSubmit(salvar, (erro) => {
-        console.log(erro);
-      }),
+      salvar: handleSubmit(salvar, () => console.log('Erros de validação:"', errors)),           
       setOpen,
       setValue,
     },

@@ -1,14 +1,10 @@
 import FormComponent from "@/components/FormComponent";
 import { useAlunoForm } from "./useFormAluno";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Link from "next/link";
 import TextField from "@mui/material/TextField";
 import TextFieldMask from "@/components/TextFieldMask";
 import { Controller } from "react-hook-form";
 import DatePickerField from "@/components/DatePickerField";
-import useResponsavel from "@/pages/responsavel/useResponsavel";
-import useColegio from "@/pages/colegio/useColegio";
 import EnderecoForm from "@/layout/componets/EnderecoForm";
 import ContatosForm from "@/layout/componets/ContatosForm";
 
