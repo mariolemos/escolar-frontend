@@ -3,6 +3,7 @@ import { apiGet, apiPut } from "@/services/api";
 import router from "next/router";
 import { useEffect, useState } from "react";
 import useResponsavel from "../responsavel/useResponsavel";
+import { formatToCurrency, parseCurrencyToNumber } from "@/utils/formatMoeda";
 
 export interface IContrato {
   id: number;
@@ -62,8 +63,11 @@ const useContrato = () => {
   };
 
   const buscarContrato = async () => {
-    const response = await apiGet<[]>("/contrato");       
-    setListContrato(response?.data);
+    const response = await apiGet<IContrato[]>("/contrato");       
+    setListContrato(response?.data.map((contrato: IContrato) => ({
+      ...contrato,
+      valorContratual: formatToCurrency(contrato.valorContratual)
+    })));
   };
 
   return {
@@ -78,3 +82,4 @@ const useContrato = () => {
 };
 
 export default useContrato;
+

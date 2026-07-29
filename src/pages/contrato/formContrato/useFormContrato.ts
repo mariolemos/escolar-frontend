@@ -11,6 +11,7 @@ import { useForm } from "react-hook-form";
 import useResponsavel from "@/pages/responsavel/useResponsavel";
 import { IContrato } from "../useContrato";
 import { apiGet, apiPost, apiPut } from "@/services/api";
+import { error } from "console";
 
 export default function useFormContrato() {
   const {
@@ -68,7 +69,7 @@ export default function useFormContrato() {
             : new Date(data.dataFinal)
           : undefined,
       };
-    };
+    };   
 
      const buscar = async (id: number) => {
         setLoading(true);
@@ -115,7 +116,7 @@ export default function useFormContrato() {
         };
 
   return {
-    action: { setOpen, watch, buscar, salvar: handleSubmit(salvar,  () => console.log("Erros de validação:", errors)) },
+    action: { setOpen, watch, buscar, salvar: handleSubmit(salvar,  () => console.log("Erros de validação:", errors))},
     data: {
       register,
       errors,

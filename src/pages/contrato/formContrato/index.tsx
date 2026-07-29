@@ -12,7 +12,7 @@ import { formatToCurrency } from "@/utils/formatMoeda";
 
 export default function formContrato() {
   const {
-    action: { setOpen, watch, buscar, salvar },
+    action: { setOpen, watch, buscar, salvar},
     data: {
       control,
       open,
