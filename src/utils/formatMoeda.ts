@@ -11,6 +11,8 @@ export const formatToCurrency = (value: string | number) => {
 
 // Remove o "R$" e formatações para salvar o número limpo: "R$ 12,50" -> 12.50
 export const parseCurrencyToNumber = (value: string) => {
-  const digits = value.replace(/\D/g, "");
-  return Number(digits) / 100;
+  const num = value.replace(/\D/g, "");
+  return Number(num);
+  console.log(num);  
 };
+

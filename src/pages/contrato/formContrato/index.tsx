@@ -90,11 +90,11 @@ export default function formContrato() {
                   helperText={errors.valorContratual?.message}
                   id="outlined-error-helper-text"
                   label="Valor Contratado"
-                  placeholder="000.000.000,00"
+                  // placeholder="000.000.000,00"
                   fullWidth                 
                   focused={true}
                   onChange={v => field.onChange(v)}
-                  value={formatToCurrency(field.value)}
+                  value={formatToCurrency(field.value)}                  
                 />
               )}
             />

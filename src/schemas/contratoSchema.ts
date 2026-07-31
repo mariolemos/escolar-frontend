@@ -1,11 +1,13 @@
 import { formatToCurrency, parseCurrencyToNumber } from "@/utils/formatMoeda";
 import path from "path";
-import z, { refine } from "zod";
+import z, { number, refine } from "zod";
 
 export const contratoFormSchema = z.object({
   valorContratual: z    
-    .string()
-    .refine(val => {return parseCurrencyToNumber(val)}),          
+    .string()    
+    .refine(val => {return formatToCurrency(val)})
+    .transform(val => parseCurrencyToNumber(val)),
+              
   dataInicial: z
     .coerce.date()
     .optional()
@@ -28,19 +30,7 @@ export const contratoFormSchema = z.object({
     .optional()
     .refine((val) => val !== undefined && val !== null, {
       message: "Nascimento é obrigatório",
-    }),
-    // .refine(
-    //   (val) => {
-    //     if (!val) return true;
-    //     const today = new Date();
-    //     today.setHours(0, 0, 0, 0);
-    //     return val <= today;
-    //   },
-    //   {
-    //     message:
-    //       "Nascimento deve ser uma data válida e não pode ser maior que hoje",
-    //   },
-    // )    
+    }),        
   responsavelId: z
     .string()
     .min(1, "Responsavel é obrigatório")
@@ -55,7 +45,7 @@ export const contratoFormSchema = z.object({
 export type ContratoFormSchema = z.infer<typeof contratoFormSchema>;
 
 export const contratoFormDefaultValues: ContratoFormSchema = {
-  valorContratual: "",
+  valorContratual: 0,  
   dataInicial: new Date(),
   dataFinal: new Date(),
   responsavelId: "",
