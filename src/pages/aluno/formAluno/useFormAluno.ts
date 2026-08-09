@@ -82,6 +82,17 @@ export const useAlunoForm = () => {
     };
   };
 
+  // Formatando data para inginorar o fuso horário
+
+  const dataFormatada = (dataBackEnd: any) => {
+    const dataLocal = new Date(dataBackEnd.replace(/-/g, '\/'));
+    console.log("GGGGG", dataBackEnd);
+    console.log("HHHHH", dataLocal);
+    const dataExibicao = dataLocal.toLocaleDateString('pt-BR');
+    console.log("JJJJJJ", dataExibicao);
+    return dataExibicao;
+  }
+
   const buscar = async (id: number) => {
     setLoading(true);
     try {
@@ -98,6 +109,8 @@ export const useAlunoForm = () => {
           tipo: c.tipoId,
           contato: c.contato,
         })),
+        // dataNascimento: dataFormatada(response.data.dataNascimento),
+        // dataNascimento: dataFormatada(response.data.dataNascimento),
       });
 
       console.log(watch("dataNascimento"));

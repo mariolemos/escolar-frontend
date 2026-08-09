@@ -8,7 +8,7 @@ import { useEffect, useState } from "react"
 export interface IAluno {
     id: number;
     nome: string;
-    dataNascimento: Date;
+    dataNascimento: string;
     cpf: string;
     rg: string;
     turno: string;

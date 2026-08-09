@@ -23,20 +23,19 @@ export default function FormResponsavel() {
       >
         <Box
           sx={{
-            width: "100%",
             m: 1,
+            width: "100%",
             display: "flex",
-            flexWrap: "wrap",
+            flexWrap: "wrap",            
           }}
         >
-          <Box sx={{ m: 1, width: "100%", display: "flex", flexWrap: "wrap" }}>
+          <Box sx={{ width: "32%", display: "flex", m: 1 }}>
             <Controller
               name="nome"
               control={control}
               render={({ field }) => (
                 <TextField
-                  {...field}
-                  sx={{ width: "20%", display: "flex" }}
+                  {...field}                  
                   error={!!errors.nome}
                   helperText={errors.nome?.message}
                   id="outlined-error"
@@ -46,25 +45,27 @@ export default function FormResponsavel() {
                 />
               )}
             />
-            <Box sx={{ width: "10%", display: "flex", m: 1 }}>
-              <Controller
-                name="dataNascimento"
-                control={control}
-                render={({ field }) => (
-                  <DatePickerField                    
-                    label="Nascimento"
-                    focused={true}
-                    error={!!errors.dataNascimento}
-                    helperText={errors.dataNascimento?.message}
-                    value={field.value ?? null}
-                    onChange={(date: Date | null) =>
-                      field.onChange(date ?? undefined)
-                    }
-                  />
-                )}
-              />
-            </Box>
+          </Box>
 
+          <Box sx={{ width: "15%", display: "flex", m: 1 }}>
+            <Controller
+              name="dataNascimento"
+              control={control}
+              render={({ field }) => (
+                <DatePickerField
+                  label="Nascimento"
+                  focused={true}
+                  error={!!errors.dataNascimento}
+                  helperText={errors.dataNascimento?.message}
+                  value={field.value ?? null}
+                  onChange={(date: Date | null) =>
+                    field.onChange(date ?? undefined)
+                  }
+                />
+              )}
+            />
+          </Box>
+          <Box sx={{ width: "15%", m: 1, display: "flex" }}>
             <Controller
               name="cpf"
               control={control}
@@ -78,18 +79,18 @@ export default function FormResponsavel() {
                   placeholder="000.000.000-00"
                   fullWidth
                   mask="999.999.999-99"
-                  focused={true}
-                  sx={{ width: "15%" }}
+                  focused={true}                  
                 />
               )}
             />
+          </Box>
+          <Box sx={{ width: "15%", m: 1, display: "flex" }}>
             <Controller
               name="rg"
               control={control}
               render={({ field }) => (
                 <TextField
-                  {...field}
-                  sx={{ width: "15%", display: "flex" }}
+                  {...field}                  
                   error={!!errors.rg}
                   helperText={errors.rg?.message}
                   id="outlined-error-helper-text"
@@ -100,13 +101,14 @@ export default function FormResponsavel() {
                 />
               )}
             />
+          </Box>
+          <Box sx={{width: "15%", display: "flex", m: 1}}>
             <Controller
               name="parentesco"
               control={control}
               render={({ field }) => (
                 <TextField
-                  {...field}
-                  sx={{ width: "15%", display: "flex" }}
+                  {...field}                  
                   error={!!errors.parentesco}
                   helperText={errors.parentesco?.message}
                   id="outlined-error-helper-text"
@@ -118,6 +120,7 @@ export default function FormResponsavel() {
               )}
             />
           </Box>
+          {/* </Box> */}
           <EnderecoForm
             register={register}
             errors={errors.endereco}
