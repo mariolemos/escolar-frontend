@@ -42,29 +42,29 @@ export const responsavelFormSchema = z
       .max(20, "Parentesco deve conter no máximo 20 caracteres"),
     endereco: enderecoSchema,
     contatos: z.array(contatoSchema),
-  })
-  .superRefine(async (res, num) => {
-    try {
-      const response = await apiGet(`/responsavel/consultarCpf?cpf=${res.cpf}`,
-      );
-      console.log("********", response);
-      // response.success = true;
-      console.log("###", response.success);
-      const resJson = await response.success
+  // })
+  // .superRefine(async (res, num) => {
+  //   try {
+  //     const response = await apiGet(`/responsavel/consultarCpf?cpf=${res.cpf}`,
+  //     );
+  //     console.log("********", response);
+  //     // response.success = true;
+  //     console.log("###", response.success);
+  //     const resJson = await response.success
 
-      console.log("&&&&, res, num")
-      console.log("%%%", response.success)
+  //     console.log("&&&&, res, num")
+  //     console.log("%%%", response.success)
 
-      if (!resJson) {
-        num.addIssue({
-          code: z.ZodIssueCode.custom,
-          message: "Este CPf já está cadastrado no sistema.",
-          path: ["cpf"],
-        });
-      }
-    } catch (error) {
-      console.log("mmmmmm");
-    }
+  //     if (!resJson) {
+  //       num.addIssue({
+  //         code: z.ZodIssueCode.custom,
+  //         message: "Este CPf já está cadastrado no sistema.",
+  //         path: ["cpf"],
+  //       });
+  //     }
+  //   } catch (error) {
+  //     console.log("mmmmmm");
+  //   }
   });
 
 export type ResponsavelFormSchema = z.infer<typeof responsavelFormSchema>;
