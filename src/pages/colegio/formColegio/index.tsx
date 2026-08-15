@@ -28,7 +28,7 @@ export default function FormColegio() {
             "& .MuiTextField-root": { m: 1, width: "100%" },
           }}
         >
-          <Box sx={{ width: "100%" }}>
+          {/* <Box sx={{ width: "100%" }}> */}
             <Controller
               name="nome"
               control={control}
@@ -46,8 +46,8 @@ export default function FormColegio() {
                 />
               )}
             />
-          </Box>
-          <Box>
+          {/* </Box> */}
+          {/* <Box> */}
             <Controller
               name="horario"
               control={control}
@@ -66,7 +66,7 @@ export default function FormColegio() {
                 />
               )}
             />
-          </Box>
+          {/* </Box> */}
           <EnderecoForm
             register={register}
             errors={errors.endereco}
