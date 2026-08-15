@@ -9,11 +9,8 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useToast } from "@/components/Toast";
 import { useRouter } from "next/router";
-import { apiGet, apiPost, apiPut } from "@/services/api";
-import { IColegio } from "../useColegio";
+import { useApiColegio } from '@/hooks/api';
 import { formatHorario } from "@/utils/format";
-import { number } from "zod";
-import { map } from "leaflet";
 import { Contato } from "@/layout/componets/ContatosForm";
 
 export default function useFormColegio() {
@@ -34,28 +31,35 @@ export default function useFormColegio() {
   const [open, setOpen] = useState(false);
   const { query } = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
+  const { getById, create, update } = useApiColegio();
 
   useEffect(() => {
     if (query.id) {
       // Aqui você pode fazer uma chamada para a API para buscar os dados do exemplo com base no ID e preencher o formulário
       console.log("ID do exemplo para edição:", query.id);
-      buscar(Number(query.id));
+      buscar(String(query.id));
     }
   }, [query.id]);
 
-  const buscar = async (id: number) => {
+
+  const buscar = async (id: string) => {
     setLoading(true);
     try {
-      const response = await apiGet<IColegio>(`/colegio/${id}`);         
+      const response = await getById(id);
+      if (!response || !response.success || !response.data) {
+        console.error('Erro ao buscar colégio', response);
+        return;
+      }
+
       reset({
         ...response.data,
-        contatos: response.data.contatos.map((c: Contato) => ({
-          tipo: c.tipoId,
-          contato: c.contato,          
-        }))                
+        contatos: response.data?.contatos?.map((c: Contato) => ({
+          tipo: String(c.tipoId),
+          contato: c.contato,
+        })) || [],
       });
 
-      console.log("+++++", response);
+      console.log('+++++', response);
     } catch (error) {
       showToast("Erro ao carregar os dados!", "error");
       console.log(error);
@@ -73,12 +77,12 @@ export default function useFormColegio() {
         horario: formatHorario(data.horario),
       };
       if (query.id) {
-        response = await apiPut<IColegio>(`/colegio/${query.id}`, request);
+        response = await update(String(query.id), request);
       } else {
-        response = await apiPost<IColegio>("/colegio", request);
+        response = await create(request);
       }
 
-      showToast("Formulário salvo com sucesso!", "success");
+      // useApiColegio já exibe toasts de sucesso/erro padronizados
     } catch (error) {
       console.error("Erro ao salvar formulário:", error);
       showToast("Erro ao salvar formulário. Tente novamente.", "error");

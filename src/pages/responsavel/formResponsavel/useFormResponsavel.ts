@@ -1,5 +1,4 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import Responsavel from "..";
 import { useForm } from "react-hook-form";
 import {
   responsavelFormDefaultValues,
@@ -7,12 +6,10 @@ import {
   ResponsavelFormSchema,
 } from "@/schemas/responsavelSchema";
 import { useEffect, useState } from "react";
-import { ExemploFormSchema } from "@/schemas/exemploSchema";
+import { IResponsavelResponse } from '@/hooks/api/responsavel/useApiResponsavel';
 import { useToast } from "@/components/Toast";
 import { useRouter } from "next/router";
-import { apiGet, apiPost, apiPut, ApiResult } from "@/services/api";
-import { IExemplo } from "@/pages/exemplo/useExemplo";
-import { IResponsavel } from "../useResponsavel";
+import { useApiResponsavel } from '@/hooks/api';
 import { Contato } from "@/layout/componets/ContatosForm";
 
 export default function useFormResponsavel() {
@@ -32,42 +29,39 @@ export default function useFormResponsavel() {
   const { showToast } = useToast();
   const { query } = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
+  const { getById, create, update } = useApiResponsavel();
 
   useEffect(() => {
     if (query.id) {
-      // Aqui você pode fazer uma chamada para a API para buscar os dados do exemplo com base no ID e preencher o formulário
       console.log("ID do exemplo para edição:", query.id);
-      buscar(Number(query.id));
+      buscar(String(query.id));
     }
   }, [query.id]);
 
   // Função para garantir que nascimento seja Date
-  const parseNascimento = (data: ExemploFormSchema) => {
+  const parseNascimento = (data: ResponsavelFormSchema) => {
     return {
       ...data,
-      nascimento: data.nascimento
-        ? data.nascimento instanceof Date
-          ? data.nascimento
-          : new Date(data.nascimento)
-        : undefined,
+      dataNascimento: data.dataNascimento ? new Date(data.dataNascimento) : undefined
     };
   };
 
-  const buscar = async (id: number) => {
+  const buscar = async (id: string) => {
     setLoading(true);
     try {
-      const response = await apiGet<IResponsavel>(`/responsavel/${id}`);
-      if (!response.success) {
-        showToast(response.message || 'Erro ao carregar os dados!', 'error')
-        console.log('Erro na API:', response);
+      const response = await getById(id);
+      if (!response || !response.success || !response.data) {
+        console.error('Erro ao buscar responsável', response);
         return;
       }
+
       reset({
         ...response.data,
-        contatos: response.data?.contatos.map((c: Contato) => ({
-          tipo: c.tipoId,
+        dataNascimento: response.data.dataNascimento ? new Date(response.data.dataNascimento) : undefined,
+        contatos: response.data?.contatos?.map((c: Contato) => ({
+          tipo: String(c.tipoId),
           contato: c.contato,
-        })),
+        })) || [],
       });
 
       console.log(response);
@@ -84,17 +78,14 @@ export default function useFormResponsavel() {
     let response;
     try {
       if (query.id) {
-        const resposne = await apiPut<IResponsavel>(
-          `/responsavel/${query.id}`,
-          data,
-        );
+        response = await update(String(query.id), data);
       } else {
-        const resposne = await apiPost<IResponsavel>("/responsavel", data);
+        response = await create(data);
       }
 
+      // useApiResponsavel exibe toasts padronizados; aqui apenas logamos
       const parsedData = parseNascimento(data);
       console.log("Dados do formulário:", parsedData);
-      showToast("Formulário salvo com sucesso!", "success");
     } catch (error) {
       console.error("Erro ao salvar formulário:", error);
       showToast("Erro ao salvar formulário. Tente novamente.", "error");

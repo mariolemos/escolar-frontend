@@ -6,6 +6,15 @@ interface IUseEnderecoForm<TFieldValues extends Record<string, any> = Record<str
     namePrefix?: string;
 }
 
+export interface Endereco {
+    logradouro: string;
+    complemento?: string;
+    bairro?: string;
+    cidade?: string;
+    estado?: string;
+    cep?: string;
+}
+
 export const useEnderecoForm = <
     TFieldValues extends Record<string, any> = Record<string, any>
 >(
@@ -32,7 +41,7 @@ export const useEnderecoForm = <
                 setValue?.(`${namePrefix}.complemento` as any, data.complemento || '');
                 setValue?.(`${namePrefix}.bairro` as any, data.bairro || '');
                 setValue?.(`${namePrefix}.cidade` as any, data.localidade || '');
-                setValue?.(`${namePrefix}.estado` as any, data.uf || '');                               
+                setValue?.(`${namePrefix}.estado` as any, data.uf || '');
             }
         } catch (error) {
             console.log('Erro ao buscar CEP', error);
@@ -47,8 +56,8 @@ export const useEnderecoForm = <
             buscarViaCep,
         },
         data: {
-           cepLoading,
-           UFS
+            cepLoading,
+            UFS
         }
     }
 }

@@ -1,25 +1,13 @@
 import { useToast } from "@/components/Toast";
-import { apiGet } from "@/services/api";
+import { useApiResponsavel, IResponsavelResponse } from "@/hooks/api/responsavel/useApiResponsavel";
 import router from "next/router";
 import { useEffect, useState } from "react";
-import { IColegio } from "../colegio/useColegio";
-import { Contato } from "@/layout/componets/ContatosForm";
-
-export interface IResponsavel {
-  id: number;
-  nome: string;
-  dataNascimento: Date;
-  cpf: string;
-  parentesco: string;
-  ativo: boolean;
-  rg: string;
-  contatos: Array<Contato>
-}
 
 const useResponsavel = () => {
-  const [listResponsavel, setListResponsavel] = useState<any[]>([]);
+  const [listResponsavel, setListResponsavel] = useState<IResponsavelResponse[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const { showToast } = useToast();
+  const {remove, list} = useApiResponsavel();
   const columns = [
     { key: "id", label: "ID" },
     { key: "nome", label: "NOME" },
@@ -36,8 +24,18 @@ const useResponsavel = () => {
    * @param t
    * Logica para ir na API fazer a ação de deletar
    */
-  const del = (t: IResponsavel) => {
-    console.log("delete", t);
+  const del = (t: IResponsavelResponse) => {
+    (async () => {
+      try {
+        const res = await remove(String(t.id));
+        if (res && res.success) {
+          setListResponsavel((prev) => prev.filter((item) => item.id !== t.id));
+          showToast('Responsável removido com sucesso', 'success');
+        }
+      } catch (error) {
+        console.error('Erro ao deletar responsável', error);
+      }
+    })();
   };
 
   /**
@@ -46,7 +44,7 @@ const useResponsavel = () => {
    * Logica para ir na API fazer a ação de editar
    */
 
-  const edit = (t: IResponsavel) => {
+  const edit = (t: IResponsavelResponse) => {
     console.log("edit", t);
     router.push({
       pathname: `/responsavel/formResponsavel`,
@@ -58,26 +56,20 @@ const useResponsavel = () => {
   //  * @param t
   //  * Logica para ir na API fazer a ação de mudar o status, no exemplo estou apenas invertendo o valor de ativo para simular a mudança de status
   //  */
-  const status = (t: IResponsavel) => {
-    setListResponsavel((prev) =>
-      prev.map((item) => {
-        if (item.id === t.id) {
-          return {
-            ...item,
-            ativo: !item.ativo,
-          };
-        }
-        return item;
-      }),
-    );
-    console.log("status", t);
+  const status = (t: IResponsavelResponse) => {
+    
   };
 
   const buscarResponsaveis = async () => {
-    const response = await apiGet<[]>("/responsavel");
-    console.log(response);
-    setListResponsavel(response.data);
-    return response;
+    try {
+      const response = await list();
+      if (response && response.success) {
+        setListResponsavel(response.data || []);
+      }
+      return response;
+    } catch (error) {
+      console.error('Erro ao buscar responsáveis', error);
+    }
   };
 
   return {

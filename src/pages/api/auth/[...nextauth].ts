@@ -50,8 +50,10 @@ export const authOptions: AuthOptions = {
           };
         } catch (err) {
           console.error("Authorize error:", err);
-          const message = (err as any)?.message || 'Erro ao autenticar';
-          throw new Error(message);
+          // Em vez de lançar um erro que faz o Next.js retornar uma página HTML
+          // (causando o `Unexpected token '<'` no cliente), retornar `null`
+          // indica falha na autenticação e faz o cliente receber JSON.
+          return null;
         }
       },
     }),

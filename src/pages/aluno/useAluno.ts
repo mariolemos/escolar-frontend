@@ -1,53 +1,34 @@
-import Loading from "@/components/Loading";
-import { useToast } from "@/components/Toast";
-import { Contato } from "@/layout/componets/ContatosForm";
-import { apiGet } from "@/services/api";
+import useApiAluno, { IAlunoResponse } from "@/hooks/api/aluno/useApiAluno";
 import router from "next/router";
 import { useEffect, useState } from "react"
 
-export interface IAluno {
-    id: number;
-    nome: string;
-    dataNascimento: string;
-    cpf: string;
-    rg: string;
-    turno: string;
-    serie: string;
-    turma: string;
-    nomePai: string;
-    nomeMae: string;
-    convenioMedico: string;
-    ativo: boolean;
-    responsavelId: string;
-    colegioId: string;
-    contatos: Array<Contato>;
-}
-
 const useAluno = () => {
-    const [listarAluno, setListarAluno] = useState<any[]>([]);
-    const [load, setLoad] = useState(false);
-    const [loading, setLoading] = useState<boolean>(false);
-    const { showToast } = useToast();
-    const columns = [        
-            { key: "id", label: "Id"},
-            { key: "nome", label: "nome" },
-            { key: "turno", label: "Turno"},
-            { key: "turma", label: "Turma" },
-            { key: "serie", label: "Série"},
-            { key: "ativo", label: "Status" },        
-    ]
-    
-    useEffect(() => {
-        buscarAluno();        
-    }, [])
+  const [listarAluno, setListarAluno] = useState<IAlunoResponse[]>([]);
+  const [load, setLoad] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
-    
+  const { list, remove } = useApiAluno();
+
+  const columns = [
+    { key: "id", label: "Id" },
+    { key: "nome", label: "nome" },
+    { key: "turno", label: "Turno" },
+    { key: "turma", label: "Turma" },
+    { key: "serie", label: "Série" },
+    { key: "ativo", label: "Status" },
+  ]
+
+  useEffect(() => {
+    buscarAluno();
+  }, [])
+
+
   /**
    *
    * @param t
    * Logica para ir na API fazer a ação de deletar
    */
-  const del = (t: IAluno) => {
+  const del = (t: IAlunoResponse) => {
     console.log("delete", t);
   };
 
@@ -55,8 +36,8 @@ const useAluno = () => {
    *
    * @param t
    * Logica para ir na API fazer a ação de editar
-   */ 
-  const edit = (t: IAluno) => {
+   */
+  const edit = (t: IAlunoResponse) => {
     console.log("edit", t);
     router.push({
       pathname: `/aluno/formAluno`,
@@ -68,7 +49,7 @@ const useAluno = () => {
    * @param t
    * Logica para ir na API fazer a ação de mudar o status, no exemplo estou apenas invertendo o valor de ativo para simular a mudança de status
    */
-  const status = (t: IAluno) => {
+  const status = (t: IAlunoResponse) => {
     setListarAluno((prev) =>
       prev.map((item) => {
         if (item.id === t.id) {
@@ -83,34 +64,37 @@ const useAluno = () => {
     console.log("status", t);
   };
 
-    const buscarAluno = async () => {
-        try {
-            setLoad(true)
-            const response = await apiGet<[]>("/aluno")
-            console.log(response)
-            setListarAluno(response?.data)            
-        }
-        catch(e) {
-            console.log(e)            
-        }finally{
-            setLoad(false)
-        }              
+  const buscarAluno = async () => {
+    try {
+      setLoad(true)
+      const response = await list();
+      console.log(response)
+      if (response && response.success) {
+        setListarAluno(response.data)
+      }
     }
-    
-    return {
+    catch (e) {
+      console.log(e)
+    } finally {
+      setLoad(false)
+    }
+  }
+
+  return {
     action: {
-        edit,
-        status,
-        del,
-        buscarAluno,
-        setListarAluno,
+      edit,
+      status,
+      del,
+      buscarAluno,
+      setListarAluno,
     },
     data: {
-       listarAluno,
-       load,
-       columns,
-       loading,               
-    }}
+      listarAluno,
+      load,
+      columns,
+      loading,
+    }
+  }
 }
 
 export default useAluno
