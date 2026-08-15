@@ -1,5 +1,6 @@
 import DataTable from "@/layout/componets/DataTable";
-import useColegio, { IColegio } from "./useColegio";
+import useColegio from "./useColegio";
+import type { IColegioResponse } from '@/hooks/api/colegio/useApiColegio';
 import AddIcon from "@mui/icons-material/Add";
 
 export default function Colegio() {
@@ -23,10 +24,10 @@ export default function Colegio() {
         ]}                      
         action={{
           edit: {
-            onChange: (t: IColegio) => edit(t),
+            onChange: (t: IColegioResponse) => edit(t),
           },          
           delete: {
-            onChange: (t: IColegio) => del(t),
+            onChange: (t: IColegioResponse) => del(t),
           },
         }}
       />

@@ -152,4 +152,38 @@ export async function apiPut<T>(path: string, data: any): Promise<ApiResult<T>> 
   }
 }
 
+export async function apiDelete<T>(path: string): Promise<ApiResult<T>> {
+  const url = buildUrl(path);
+  try {
+    const response = await fetch(url, {
+      method: 'DELETE',
+      headers: buildHeaders(),
+    });
+
+    if (!response.ok) {
+      let errorBody: any = null;
+      try {
+        errorBody = await response.json();
+      } catch (e) {
+        console.warn('Não foi possível parsear o corpo de erro como JSON:', e);
+      }
+      const message = (errorBody && (errorBody.message || errorBody.error)) || response.statusText || `Request failed with status ${response.status}`;
+      return { success: false, status: response.status, message, body: errorBody };
+    }
+
+    // Alguns DELETEs retornam corpo vazio
+    let dataResp: any = null;
+    try {
+      dataResp = await response.json();
+    } catch (e) {
+      dataResp = null;
+    }
+    return { success: true, data: dataResp };
+  } catch (err: any) {
+    console.error('Erro na requisição DELETE:', err);
+    const message = err?.message || 'Erro na requisição DELETE';
+    return { success: false, status: 0, message, body: err };
+  }
+}
+
 // Adicione outros métodos (DELETE) conforme necessário.

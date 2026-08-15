@@ -1,6 +1,7 @@
 import DataTable from "@/layout/componets/DataTable";
-import useAluno, { IAluno } from "./useAluno";
+import useAluno from "./useAluno";
 import AddIcon from "@mui/icons-material/Add";
+import { IAlunoResponse } from "@/hooks/api/aluno/useApiAluno";
 
 export default function Aluno() {
   const {
@@ -24,14 +25,14 @@ export default function Aluno() {
         ]}
         action={{
           edit: {
-            onChange: (t: IAluno) => edit(t),
+            onChange: (t: IAlunoResponse) => edit(t),
           },
           status: {
-            onChange: (t: IAluno) => status(t),
-            checked: (t: IAluno) => t.ativo,
+            onChange: (t: IAlunoResponse) => status(t),
+            checked: (t: IAlunoResponse) => t.ativo,
           },
           delete: {
-            onChange: (t: IAluno) => del(t),
+            onChange: (t: IAlunoResponse) => del(t),
           },
         }}
       />

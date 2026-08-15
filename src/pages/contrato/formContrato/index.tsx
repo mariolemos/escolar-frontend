@@ -1,18 +1,14 @@
 import FormComponent from "@/components/FormComponent";
-import TextFieldMask from "@/components/TextFieldMask";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import Link from "next/link";
-import { Controller, useFormContext } from "react-hook-form";
-import useFormContrato from "./useFormContrato";
+import { Controller } from "react-hook-form";
 import DatePickerField from "@/components/DatePickerField";
-import { green } from "@mui/material/colors";
 import { formatToCurrency } from "@/utils/formatMoeda";
+import useFormContrato from "./useFormContrato";
 
 export default function formContrato() {
   const {
-    action: { setOpen, watch, buscar, salvar},
+    action: { setOpen, watch, buscar, salvar },
     data: {
       control,
       open,
@@ -35,8 +31,8 @@ export default function formContrato() {
         <Box
           sx={{
             width: "100%",
-            display: "flex",            
-            flexWrap: "wrap",            
+            display: "flex",
+            flexWrap: "wrap",
           }}
         >
           <TextField
@@ -57,12 +53,18 @@ export default function formContrato() {
             select
             {...register("responsavelId")}
           >
+            <option
+              key=""
+              value=""
+            >
+              Selecione um responsável
+            </option>
             {listResponsavel &&
               listResponsavel.map((option) => (
                 <option
                   key={option.id}
                   value={option.id}
-                  selected={watch("responsavelId") == option.id}
+                  selected={String(option.id) === String(watch("responsavelId"))}
                 >
                   {option.nome}
                 </option>
@@ -91,10 +93,10 @@ export default function formContrato() {
                   id="outlined-error-helper-text"
                   label="Valor Contratado"
                   // placeholder="000.000.000,00"
-                  fullWidth                 
+                  fullWidth
                   focused={true}
                   onChange={v => field.onChange(v)}
-                  value={formatToCurrency(field.value)}                  
+                  value={formatToCurrency(field.value)}
                 />
               )}
             />

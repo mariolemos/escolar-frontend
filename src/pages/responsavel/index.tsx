@@ -1,5 +1,6 @@
 import DataTable from "@/layout/componets/DataTable";
-import useResponsavel, { IResponsavel } from "./useResponsavel";
+import useResponsavel from "./useResponsavel";
+import type { IResponsavelResponse } from "@/hooks/api/responsavel/useApiResponsavel";
 import AddIcon from "@mui/icons-material/Add";
 
 export default function Responsavel() {
@@ -24,13 +25,13 @@ export default function Responsavel() {
         ]}
         action={{
             edit: {
-                onChange: (t: IResponsavel) => edit(t),                
+                onChange: (t: IResponsavelResponse) => edit(t),
             },
             // status: {
-            //     onChange: (t: IResponsavel) => status(t),
-            //     checked: (t: IResponsavel) => t.ativo,          
+            //     onChange: (t: IResponsavelResponse) => status(t),
+            //     checked: (t: IResponsavelResponse) => t.ativo,          
             // },
-            // delete: { onChange: (t: IResponsavel) => del(t)}
+            // delete: { onChange: (t: IResponsavelResponse) => del(t)}
         }}
       />
     </>

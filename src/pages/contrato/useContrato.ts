@@ -1,25 +1,17 @@
 import { useToast } from "@/components/Toast";
-import { apiGet, apiPut } from "@/services/api";
+import { apiPut } from "@/services/api";
+import { useApiContrato } from "@/hooks/api/contrato/useApiContrato";
 import router from "next/router";
 import { useEffect, useState } from "react";
-import useResponsavel from "../responsavel/useResponsavel";
 import { formatToCurrency } from "@/utils/formatMoeda";
-
-export interface IContrato {
-  id: number;
-  responsavelId: string;
-  valorContratual: string;
-  valorMensal: string;
-  status: boolean;
-  dataInicial: string;
-  dataFinal: string;
-  ativo: boolean;
-}
+import { IContratoResponse } from "@/hooks/api/contrato/useApiContrato";
 
 const useContrato = () => {
   const [listContrato, setListContrato] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const { showToast } = useToast();
+
+  const { list } = useApiContrato();
 
   const columns = [
     { key: "id", label: "id" },
@@ -37,7 +29,7 @@ const useContrato = () => {
 
   // Converter data para o formato Brasileiro
   const convertData = (dataConvert: string) => {
-    const dataBrasileira = new Date(dataConvert).toLocaleDateString('pt-BR', { timeZone: 'UTC'});
+    const dataBrasileira = new Date(dataConvert).toLocaleDateString('pt-BR', { timeZone: 'UTC' });
     return dataBrasileira
     console.log(dataBrasileira);
   }
@@ -47,11 +39,11 @@ const useContrato = () => {
    * @param t
    * Logica para ir na API fazer a ação de deletar
    */
-  const del = (t: IContrato) => {
+  const del = (t: IContratoResponse) => {
     console.log("delete", t);
   };
 
-  const edit = (t: IContrato) => {
+  const edit = (t: IContratoResponse) => {
     console.log("edit", t);
     router.push({
       pathname: `/contrato/formContrato`,
@@ -64,21 +56,28 @@ const useContrato = () => {
    * Logica para ir na API fazer a ação de mudar o status, no exemplo estou apenas invertendo o valor de ativo para simular a mudança de status
    */
 
-  
-  const status =  async  (t: IContrato) => { 
+
+  const status = async (t: IContratoResponse) => {
     const respose = await apiPut(`/contrato/inativar/${t.id}`, null)
     buscarContrato();
     console.log("status", t.id);
   };
 
   const buscarContrato = async () => {
-    const response = await apiGet<IContrato[]>("/contrato");       
-    setListContrato(response?.data.map((contrato: IContrato) => ({
+
+    const response = await list();
+    if (!response || !response.success || !response.data) {
+      console.error("Erro ao buscar colégio", response);
+      return;
+    }
+
+
+    setListContrato(response?.data.map((contrato: IContratoResponse) => ({
       ...contrato,
       valorContratual: formatToCurrency(contrato.valorContratual),
-      dataInicial: convertData(contrato.dataInicial),
-      dataFinal: convertData(contrato.dataFinal),
-      valorMensal: formatToCurrency(contrato.valorMensal)        
+      dataInicial: convertData(contrato.dataInicial ?? ''),
+      dataFinal: convertData(contrato.dataFinal ?? ''),
+      valorMensal: formatToCurrency(contrato.valorMensal)
     })));
   };
 

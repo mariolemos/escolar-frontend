@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { apiGet } from "@/services/api";
 import { useToast } from "@/components/Toast";
 import { IExemplo } from "../useExemplo";
+import { useApiExemplo } from '@/hooks/api';
 
 
 export default function useFormExempo() {
@@ -40,11 +41,10 @@ export default function useFormExempo() {
     }
     // const [loading, setLoading] = useState<boolean>(false);
 
-     useEffect(() => {
+    useEffect(() => {
         if (query.id) {
-            // Aqui você pode fazer uma chamada para a API para buscar os dados do exemplo com base no ID e preencher o formulário
             console.log("ID do exemplo para edição:", query.id);
-            buscar(Number(query.id));
+            buscar(String(query.id));
         }
     }, [query.id]);
 
@@ -63,17 +63,19 @@ export default function useFormExempo() {
 
 
 
-    const buscar = async (id: number) => {
+    const { getById, create, update } = useApiExemplo();
+
+    const buscar = async (id: string) => {
         setLoading(true);
         try {
-            const result = await apiGet<IExemplo>(`https://jsonplaceholder.typicode.com/users/${id}`);
-            if (!result.success) {
-                showToast(result.message || 'Erro ao carregar os dados!', 'error');
+            const result = await getById<IExemplo>(id);
+            if (!result || !result.success || !result.data) {
+                showToast(result?.message || 'Erro ao carregar os dados!', 'error');
                 console.log('Erro na API:', result);
                 return;
             }
             const response = result.data;
-            setValue("nome", response.name);
+            setValue("nome", (response as any).name || response.nome || '');
             console.log(response);
         } catch (error) {
             showToast("Erro ao carregar os dados!", "error");
@@ -93,13 +95,14 @@ export default function useFormExempo() {
         }
     }, [query.id]);
 
-    const salvar = (data: ExemploFormSchema) => {
+    const salvar = async (data: ExemploFormSchema) => {
         console.log("Dados do formulário antes do parse:", data);
         setIsSubmitting(true);
         try {
             const parsedData = parseNascimento(data);
             console.log("Dados do formulário:", parsedData);
-            showToast("Formulário salvo com sucesso!", "success");
+            // exemplo: criar via API. useApiExemplo já exibe toasts
+            await create(parsedData);
         } catch (error) {
             console.error("Erro ao salvar formulário:", error);
             showToast("Erro ao salvar formulário. Tente novamente.", "error");

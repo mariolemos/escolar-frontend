@@ -1,5 +1,4 @@
 import FormComponent from "@/components/FormComponent";
-import { useAlunoForm } from "./useFormAluno";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import TextFieldMask from "@/components/TextFieldMask";
@@ -7,6 +6,7 @@ import { Controller } from "react-hook-form";
 import DatePickerField from "@/components/DatePickerField";
 import EnderecoForm from "@/layout/componets/EnderecoForm";
 import ContatosForm from "@/layout/componets/ContatosForm";
+import { useAlunoForm } from "./useFormAluno";
 
 export default function AlunoForm() {
   const {
@@ -137,6 +137,9 @@ export default function AlunoForm() {
                   }}
                   select
                 >
+                  <option key="" value="">
+                    Selecione um responsável
+                  </option>
                   {listResponsavel &&
                     listResponsavel.map((option) => (
                       <option key={option.id} value={option.id}>
@@ -171,6 +174,9 @@ export default function AlunoForm() {
                     },
                   }}
                 >
+                  <option key="" value="">
+                    Selecione um colégio
+                  </option>
                   {listColegio &&
                     listColegio.map((option) => (
                       <option key={option.id} value={option.id}>

@@ -1,55 +1,37 @@
-import { useToast } from "@/components/Toast";
-import { Contato } from "@/layout/componets/ContatosForm";
-import { apiGet, ApiResult } from "@/services/api";
-import { Key, Label } from "@mui/icons-material";
 import router from "next/router";
+import { useApiColegio } from '@/hooks/api';
+import type { IColegioResponse } from '@/hooks/api/colegio/useApiColegio';
 import { useEffect, useState } from "react";
 
-export interface IColegio {
-  id: number;
-  nome: string;
-  horario: string;
-  ativo: boolean;
-  contatos: Array<Contato>;
-}
-
 const useColegio = () => {
-  const [listColegio, setListColegio] = useState<any[]>([]);  
+  const [listColegio, setListColegio] = useState<IColegioResponse[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const { showToast } = useToast();
   const columns = [
     { key: "id", label: "Id" },
     { key: "nome", label: "nome" },
   ];
 
+  const { list, remove } = useApiColegio();
+
   useEffect(() => {
     buscarColegios();
   }, []);
 
-  /**
-   *
-   * @param t
-   * Logica para ir na API fazer a ação de deletar
-   */
-  const del = (t: IColegio) => {
-    console.log("delete", t);
+  const del = (t: IColegioResponse) => {
+    // chama API para deletar e atualiza estado em caso de sucesso
+    (async () => {
+      try {
+        const res = await remove(String(t.id));
+        if (res && res.success) {
+          setListColegio((prev) => prev.filter((i) => i.id !== t.id));
+        }
+      } catch (err) {
+        console.error('Erro ao deletar colégio', err);
+      }
+    })();
   };
 
-  /**
-   *
-   * @param t
-   * Logica para ir na API fazer a ação de editar
-   */
-  // const edit = async (t: IColegio) => {
-  //   const response = await apiGet<[]>('/colegio/id');
-  //     console.log("edit", t)
-  //     setBuscarColegio(response);
-  //     router.push({
-  //         pathname: `/colegio/formColegio`,
-  //         query: { id: t.id }
-  //     });
-  // }
-  const edit = (t: IColegio) => {
+  const edit = (t: IColegioResponse) => {
     console.log("edit", t);
     router.push({
       pathname: `/colegio/formColegio`,
@@ -57,30 +39,17 @@ const useColegio = () => {
     });
   };
 
-  /**
-   * @param t
-   * Logica para ir na API fazer a ação de mudar o status, no exemplo estou apenas invertendo o valor de ativo para simular a mudança de status
-   */
-  const status = (t: IColegio) => {
-    setListColegio((prev) =>
-      prev.map((item) => {
-        if (item.id === t.id) {
-          return {
-            ...item,
-            ativo: !item.ativo,
-          };
-        }
-        return item;
-      }),
-    );
-    console.log("status", t);
-  };
-
   const buscarColegios = async () => {
-    const response = await apiGet<IColegio[]>("/colegio");
-    console.log(response);
-    if (response.success) {
-      setListColegio(response.data);
+    setLoading(true);
+    try {
+      const res = await list();
+      if (res && res.success && res.data) {
+        setListColegio(res.data);
+      }
+    } catch (err) {
+      console.error('Erro ao buscar colégios', err);
+    } finally {
+      setLoading(false);
     }
   };
 

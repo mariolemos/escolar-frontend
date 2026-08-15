@@ -1,6 +1,5 @@
 import { formatToCurrency, parseCurrencyToNumber } from "@/utils/formatMoeda";
-import path from "path";
-import z, { number, refine } from "zod";
+import z from "zod";
 
 export const contratoFormSchema = z
   .object({
@@ -9,38 +8,41 @@ export const contratoFormSchema = z
       .refine((val) => {
         return formatToCurrency(val);
       })
-      .transform((val) => parseCurrencyToNumber(val)),
+      .transform((val) => String(parseCurrencyToNumber(val))),
 
-    dataInicial: z.coerce
+    dataInicial: z
       .date()
       .optional()
       .refine((val) => val !== undefined && val !== null, {
-        message: "Nascimento é obrigatório",
+        message: "Data inicial é obrigatória",
       })
-      .refine(
-        (val) => {
-          if (!val) return true;
-          const today = new Date();
-          today.setHours(0, 0, 0, 0);
-          return val <= today;
-        },
-        {
-          message: "Nascimento deve ser uma data",
-        },
-      ),
-    dataFinal: z.coerce
+      .refine((val) => {
+        if (!val) return true;
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        return val <= today;
+      }, {
+        message: "Data inicial deve ser uma data válida e não pode ser maior que hoje",
+      }),
+
+    dataFinal: z
       .date()
       .optional()
       .refine((val) => val !== undefined && val !== null, {
-        message: "Nascimento é obrigatório",
+        message: "Data final é obrigatória",
       }),
+
     responsavelId: z
       .string()
       .min(1, "Responsavel é obrigatório")
       .max(3, "Respponsavel deve ter no máximo 3 caracteres"),
-    ativo: z.boolean("true"),
+
+    ativo: z.boolean(),
   })
-  .refine((dados: any) => dados.dataFinal >= dados.dataInicial, {
+  .refine((dados: any) => {
+    if (!dados.dataInicial || !dados.dataFinal) return true;
+    return dados.dataFinal >= dados.dataInicial;
+  }, {
     message: "Data final não pode ser anterior a data inicial",
     path: ["dataFinal"],
   });
@@ -48,7 +50,7 @@ export const contratoFormSchema = z
 export type ContratoFormSchema = z.infer<typeof contratoFormSchema>;
 
 export const contratoFormDefaultValues: ContratoFormSchema = {
-  valorContratual: 0,
+  valorContratual: '',
   dataInicial: new Date(),
   dataFinal: new Date(),
   responsavelId: "",

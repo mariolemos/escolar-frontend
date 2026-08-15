@@ -1,164 +1,171 @@
 import {
-  alunoFormDefaultValues,
-  AlunoFormSchema,
-  alunoFormSchema,
+    alunoFormDefaultValues,
+    AlunoFormSchema,
+    alunoFormSchema,
 } from "@/schemas/alunoschema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useToast } from "@/components/Toast";
 import { useRouter } from "next/router";
-import { apiGet, apiPost, apiPut, ApiResult } from "@/services/api";
-import { IAluno } from "../useAluno";
+import { useApiAluno } from '@/hooks/api';
 import useResponsavel from "@/pages/responsavel/useResponsavel";
 import useColegio from "@/pages/colegio/useColegio";
 import { Contato } from "@/layout/componets/ContatosForm";
 
 export const useAlunoForm = () => {
-  const {
-    handleSubmit,
-    register,
-    control,
-    setValue,
-    reset,
-    watch,
-    formState: { errors },
-  } = useForm<AlunoFormSchema>({
-    resolver: zodResolver(alunoFormSchema),
-    defaultValues: alunoFormDefaultValues,
-  });
+    const {
+        handleSubmit,
+        register,
+        control,
+        setValue,
+        reset,
+        watch,
+        formState: { errors },
+    } = useForm<AlunoFormSchema>({
+        resolver: zodResolver(alunoFormSchema),
+        defaultValues: alunoFormDefaultValues,
+    });
 
-  const {
-    action: {},
-    data: { listResponsavel },
-  } = useResponsavel();
+    const {
+        action: { },
+        data: { listResponsavel },
+    } = useResponsavel();
 
-  const {
-    action: {},
-    data: { listColegio },
-  } = useColegio();
+    const {
+        action: { },
+        data: { listColegio },
+    } = useColegio();
 
-  const turno = [
-    {
-      id: 1,
-      nome: "Matutino",
-    },
-    {
-      id: 2,
-      nome: "Vespertino",
-    },
-    {
-      id: 3,
-      nome: "Noturno",
-    },
-    {
-      id: 4,
-      nome: "Integral",
-    },
-  ];
+    const turno = [
+        { id: 1, nome: "Matutino" },
+        { id: 2, nome: "Vespertino" },
+        { id: 3, nome: "Noturno" },
+        { id: 4, nome: "Integral" },
+    ];
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const { showToast } = useToast();
-  const { query } = useRouter();
-  const [loading, setLoading] = useState<boolean>(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const { showToast } = useToast();
+    const { query } = useRouter();
+    const [loading, setLoading] = useState<boolean>(false);
 
-  useEffect(() => {
-    if (query.id) {
-      // Aqui você pode fazer uma chamada para a API para buscar os dados do exemplo com base no ID e preencher o formulário
-      console.log("ID do exemplo para edição:", query.id);
-      buscar(Number(query.id));
-    }
-  }, [query.id]);
+    const { getById, create, update } = useApiAluno();
 
-  // Função para garantir que nascimento seja Date
-  const parseNascimento = (data: AlunoFormSchema) => {
-    return {
-      ...data,
-      nascimento: data.dataNascimento
-        ? data.dataNascimento instanceof Date
-          ? data.dataNascimento
-          : new Date(data.dataNascimento)
-        : undefined,
+    useEffect(() => {
+        if (query.id) {
+            console.log("ID do exemplo para edição:", query.id);
+            buscar(String(query.id));
+        }
+    }, [query.id]);
+
+    // Função para garantir que nascimento seja Date
+    const parseNascimento = (data: AlunoFormSchema) => {
+        return {
+            ...data,
+            dataNascimento: data.dataNascimento
+                ? data.dataNascimento instanceof Date
+                    ? data.dataNascimento
+                    : new Date(data.dataNascimento)
+                : undefined,
+        };
     };
-  };
 
-  // Formatando data para inginorar o fuso horário
+    // Formatando data para inginorar o fuso horário
+    const dataFormatada = (dataBackEnd: any) => {
+        const dataLocal = new Date(dataBackEnd.replace(/-/g, "/"));
+        const dataExibicao = dataLocal.toLocaleDateString("pt-BR");
+        return dataExibicao;
+    };
 
-  const dataFormatada = (dataBackEnd: any) => {
-    const dataLocal = new Date(dataBackEnd.replace(/-/g, '\/'));
-    console.log("GGGGG", dataBackEnd);
-    console.log("HHHHH", dataLocal);
-    const dataExibicao = dataLocal.toLocaleDateString('pt-BR');
-    console.log("JJJJJJ", dataExibicao);
-    return dataExibicao;
-  }
+    const buscar = async (id: string) => {
+        setLoading(true);
+        try {
+            const response = await getById(id);
+            if (!response || !response.success || !response.data) {
+                console.error("Erro ao buscar colégio", response);
+                return;
+            }
 
-  const buscar = async (id: number) => {
-    setLoading(true);
-    try {
-      const response = await apiGet<IAluno>(`/aluno/${id}`);
-      if (!response.success) {
-        showToast(response.message || 'Erro ao carregar os dados!', 'error');
-        console.log('Erro na API:', response);
-        return;
-      }
+            // Mapear dados do backend para o formato esperado pelo form
+            const mappedContatos =
+                response.data?.contatos?.map((c: Contato) => ({
+                    tipo: String(c.tipoId ?? c.tipo),
+                    contato: c.contato,
+                })) || [];
 
-      reset({
-        ...response.data,
-        contatos: response.data?.contatos.map((c: Contato) => ({
-          tipo: c.tipoId,
-          contato: c.contato,
-        })),
-        // dataNascimento: dataFormatada(response.data.dataNascimento),
-        // dataNascimento: dataFormatada(response.data.dataNascimento),
-      });
+            const dataNascimentoDate = response.data?.dataNascimento
+                ? new Date(String(response.data.dataNascimento).replace(/-/g, "/"))
+                : undefined;
 
-      console.log(watch("dataNascimento"));
-      console.log(response.data);
-    } catch (error) {
-      showToast("Erro ao carregar os dados!", "error");
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
-  };
+            const formValues: AlunoFormSchema = {
+                nome: response.data?.nome ?? alunoFormDefaultValues.nome,
+                cpf: response.data?.cpf ?? alunoFormDefaultValues.cpf,
+                rg: response.data?.rg ?? alunoFormDefaultValues.rg,
+                turno: response.data?.turno ?? alunoFormDefaultValues.turno,
+                serie: response.data?.serie ?? alunoFormDefaultValues.serie,
+                turma: response.data?.turma ?? alunoFormDefaultValues.turma,
+                nomePai: response.data?.nomePai ?? alunoFormDefaultValues.nomePai,
+                nomeMae: response.data?.nomeMae ?? alunoFormDefaultValues.nomeMae,
+                convenioMedico: response.data?.convenioMedico ?? alunoFormDefaultValues.convenioMedico,
+                responsavelId: String(response.data?.responsavelId ?? alunoFormDefaultValues.responsavelId),
+                colegioId: String(response.data?.colegioId ?? alunoFormDefaultValues.colegioId),
+                endereco: {
+                    ...alunoFormDefaultValues.endereco,
+                    ...(response.data?.endereco ?? {}),
+                },
+                contatos: mappedContatos,
+                dataNascimento: dataNascimentoDate ?? alunoFormDefaultValues.dataNascimento,
+            };
 
-  const salvar = async (data: AlunoFormSchema) => {
-    setIsSubmitting(true);
-    let response;
-    try {
-      if (query.id) {
-        const response = await apiPut<IAluno>(`/aluno/${query.id}`, data);
-      } else {
-        const response = await apiPost<IAluno>("/aluno", data);
-      }
-      const parsedData = parseNascimento(data);
-      console.log("Dados do formulário:", parsedData);
-      showToast("Formulário salvo com sucesso!", "success");
-    } catch (error) {
-      console.error("Erro ao salvar formulário:", error);
-      showToast("Erro ao salvar formulário. Tente novamente.", "error");
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+            reset(formValues);
 
-  return {
-    action: {
-      buscar,
-      salvar: handleSubmit(salvar, () => console.log('Erros de validação:', errors)),
-      watch,
-      setValue,
-    },
-    data: {
-      register,
-      errors,
-      control,
-      isSubmitting,
-      loading,
-      turno,
-      listResponsavel,
-      listColegio,
-    },
-  };
+            console.log(watch("dataNascimento"));
+            console.log(response.data);
+        } catch (error) {
+            showToast("Erro ao carregar os dados!", "error");
+            console.log(error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const salvar = async (data: AlunoFormSchema) => {
+        setIsSubmitting(true);
+        try {
+            let response;
+            if (query.id) {
+                response = await update(String(query.id), data);
+            } else {
+                response = await create(data);
+            }
+
+            const parsedData = parseNascimento(data);
+            console.log("Dados do formulário:", parsedData);
+            // useApiAluno já exibe toasts de sucesso/erro
+        } catch (error) {
+            console.error("Erro ao salvar formulário:", error);
+            showToast("Erro ao salvar formulário. Tente novamente.", "error");
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
+
+    return {
+        action: {
+            buscar,
+            salvar: handleSubmit(salvar, () => console.log("Erros de validação:", errors)),
+            watch,
+            setValue,
+        },
+        data: {
+            register,
+            errors,
+            control,
+            isSubmitting,
+            loading,
+            turno,
+            listResponsavel,
+            listColegio,
+        },
+    };
 };
