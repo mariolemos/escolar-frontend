@@ -5,33 +5,32 @@ import AddIcon from "@mui/icons-material/Add";
 
 export default function Responsavel() {
   const {
-    action: { edit},
+    action: { edit },
     data: { listResponsavel, columns, loading },
   } = useResponsavel();
 
   return (
     <>
       <DataTable
+        resource="RESPONSAVEL"
         titulo="Lista de Responsáveis"
         columns={columns}
         data={listResponsavel}
         loading={loading}
-        buttonList={[
-          {
-            nome: "novo",
-            icon: <AddIcon sx={{ marginRight: 1 }} />,
-            redirect: "/responsavel/formResponsavel",
-          },
-        ]}
+        buttonCadastro={{
+          nome: "novo",
+          icon: <AddIcon sx={{ marginRight: 1 }} />,
+          redirect: "/responsavel/formResponsavel",
+        }}
         action={{
-            edit: {
-                onChange: (t: IResponsavelResponse) => edit(t),
-            },
-            // status: {
-            //     onChange: (t: IResponsavelResponse) => status(t),
-            //     checked: (t: IResponsavelResponse) => t.ativo,          
-            // },
-            // delete: { onChange: (t: IResponsavelResponse) => del(t)}
+          edit: {
+            onChange: (t: IResponsavelResponse) => edit(t),
+          },
+          // status: {
+          //     onChange: (t: IResponsavelResponse) => status(t),
+          //     checked: (t: IResponsavelResponse) => t.ativo,          
+          // },
+          // delete: { onChange: (t: IResponsavelResponse) => del(t)}
         }}
       />
     </>

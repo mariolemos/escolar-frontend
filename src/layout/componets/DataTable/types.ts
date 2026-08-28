@@ -1,6 +1,8 @@
+import { Resource } from "@/auth/resources";
 import { TableContainer } from "@mui/material";
 
 export type DataTableProps<T> = {
+    resource: Resource;
     columns: Array<{
         key: string | keyof T;
         label: string;
@@ -9,12 +11,12 @@ export type DataTableProps<T> = {
     data: T[];
     className?: string;
     titulo?: string;
-    buttonList?: Array<{
+    buttonCadastro?: {
         nome: string;
         onChange?: React.MouseEventHandler<HTMLButtonElement | HTMLAnchorElement>;
         icon?: React.ReactNode;
         redirect?: string;
-    }>;
+    };
     loading?: boolean;
     action?: {
         edit?: {

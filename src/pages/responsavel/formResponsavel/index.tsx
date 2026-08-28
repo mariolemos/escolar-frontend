@@ -90,7 +90,7 @@ export default function FormResponsavel() {
               control={control}
               render={({ field }) => (
                 <TextField
-                  {...field}                  
+                  {...field}
                   error={!!errors.rg}
                   helperText={errors.rg?.message}
                   id="outlined-error-helper-text"
@@ -108,7 +108,7 @@ export default function FormResponsavel() {
               control={control}
               render={({ field }) => (
                 <TextField
-                  {...field}                  
+                  {...field}
                   error={!!errors.parentesco}
                   helperText={errors.parentesco?.message}
                   id="outlined-error-helper-text"

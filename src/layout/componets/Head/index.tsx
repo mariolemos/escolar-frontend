@@ -1,10 +1,11 @@
 import DrawerComponet from '../Drawer';
-import { Avatar, Divider, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
-import { useSession, signOut } from 'next-auth/react';
+import { Avatar, ListItemButton, ListItemText } from '@mui/material';
+import { useSession } from 'next-auth/react';
 import { theme } from '@/layout/globalStyles/theme';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import { useState } from 'react';
+import { useLogin } from '@/pages/login/useLogin';
 
 
 const HEADER_HEIGHT = 60;
@@ -14,13 +15,10 @@ const Head: React.FC = () => {
     const { data: session } = useSession();
     const userName = (session as any)?.user?.name ?? (session as any)?.user?.username ?? 'usuario';
 
-    const logout = async () => {
-        try {
-            await signOut({ callbackUrl: '/login' });
-        } catch (err) {
-            console.error('Logout error:', err);
-        }
-    };
+    const {
+        action: { logout },
+    } = useLogin();
+
 
     return (
         <>

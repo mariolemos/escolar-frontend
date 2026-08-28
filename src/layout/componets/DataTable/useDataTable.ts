@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { DataTableProps } from "./types";
+import { usePermission } from "@/auth/usePermission";
 
 interface propsUseDataTable<T> {
     action?: {
@@ -27,6 +28,7 @@ export const useDataTable = <T extends object>({
 }: propsUseDataTable<T>) => {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(3);
+    const { hasPermission } = usePermission();
 
     const [confirmOpenDelete, setConfirmOpenDelete] = useState(false);
     const [confirmOpenStatus, setConfirmOpenStatus] = useState(false);
@@ -80,7 +82,8 @@ export const useDataTable = <T extends object>({
             handleConfirmStatus,
             setRowsPerPage,
             setPage,
-            handleInativarClick
+            handleInativarClick,
+            hasPermission,
         },
         data: {
             modalCancelText,

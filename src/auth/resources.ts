@@ -1,0 +1,13 @@
+export const RESOURCE = {
+  PERFIL: "PERFIL",
+  PERMISSOES: "PERMISSOES",
+  RECURSO: "RECURSO",
+  RESPONSAVEL: "RESPONSAVEL",
+  ALUNO: "ALUNO",
+  USUARIO: "USUARIO",
+  COLEGIO: "COLEGIO",
+  CONTRATO: "CONTRATO",
+} as const;
+
+export type Resource =
+  (typeof RESOURCE)[keyof typeof RESOURCE];

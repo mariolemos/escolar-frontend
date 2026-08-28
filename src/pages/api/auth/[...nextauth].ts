@@ -2,7 +2,6 @@ import NextAuth from "next-auth";
 import type { AuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { apiPostLogin } from "../../../services/api";
-import { CropDin } from "@mui/icons-material";
 
 interface ILoginResponse {
   success: true,
@@ -21,7 +20,7 @@ export const authOptions: AuthOptions = {
       credentials: {
         cpf: { label: "CPF", type: "text" },
         senha: { label: "Senha", type: "password" },
-      },      
+      },
       async authorize(credentials) {
         if (!credentials) return null;
         const { cpf, senha } = credentials as { cpf?: string; senha?: string };
@@ -41,12 +40,14 @@ export const authOptions: AuthOptions = {
 
           const username = (payload && (payload.username ?? payload.data?.username)) ?? "";
           const nome = (payload && (payload.nome ?? payload.data?.nome)) ?? "";
+          const resource = (payload && (payload.resource ?? payload.data?.resource)) ?? {};
 
           return {
             id: username,
             name: nome,
             username,
             token: tokenValue,
+            resource
           };
         } catch (err) {
           console.error("Authorize error:", err);
@@ -68,8 +69,10 @@ export const authOptions: AuthOptions = {
     async jwt({ token, user }: any) {
       if (user) {
         token.user = user;
-        if ((user as any).token) token.accessToken = (user as any).token;
+        token.accessToken = user.token;
+        token.resource = user.resource;
       }
+
       return token;
     },
     async session({ session, token }: any) {

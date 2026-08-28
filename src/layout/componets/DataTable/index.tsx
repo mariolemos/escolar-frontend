@@ -21,7 +21,7 @@ import { DataTableProps } from "./types";
 import { useDataTable } from "./useDataTable";
 
 
-export function DataTable<T extends object>({ columns, data, className, titulo = "", buttonList, loading = false, action, containerProps }: DataTableProps<T>) {
+export function DataTable<T extends object>({ columns, data, className, titulo = "", buttonCadastro, resource, loading = false, action, containerProps }: DataTableProps<T>) {
 
 	const {
 		action: {
@@ -32,7 +32,8 @@ export function DataTable<T extends object>({ columns, data, className, titulo =
 			handleConfirmStatus,
 			setRowsPerPage,
 			setPage,
-			handleInativarClick
+			handleInativarClick,
+			hasPermission
 		},
 		data: {
 			modalCancelText,
@@ -69,15 +70,15 @@ export function DataTable<T extends object>({ columns, data, className, titulo =
 							<h1 style={{ margin: 0, padding: 0 }}>{titulo}</h1>
 						</div>
 						<div>
-							{buttonList?.map((button, index) => (
-								<Link href={button.redirect ?? "#"} key={index} style={{ textDecoration: 'none' }}>
+							{buttonCadastro && hasPermission(resource, 'CREATE') && (
+								<Link href={buttonCadastro.redirect ?? "#"} style={{ textDecoration: 'none' }}>
 									<Button
-										nome={button.nome}
-										onClick={button.onChange}
-										icon={button.icon}
+										nome={buttonCadastro.nome}
+										onClick={buttonCadastro.onChange}
+										icon={buttonCadastro.icon}
 									/>
 								</Link>
-							))}
+							)}
 						</div>
 					</div>
 				</Box>
@@ -88,7 +89,7 @@ export function DataTable<T extends object>({ columns, data, className, titulo =
 								{columns.map((col) => (
 									<TableCell key={String(col.key)}>{col.label}</TableCell>
 								))}
-								{action && (
+								{action && (hasPermission(resource, 'UPDATE') || hasPermission(resource, 'DELETE')) && (
 									<TableCell key="actions">Ações</TableCell>
 								)}
 							</TableRow>
@@ -108,15 +109,15 @@ export function DataTable<T extends object>({ columns, data, className, titulo =
 												{col.render ? col.render((row as any)[col.key], row) : String((row as any)[col.key])}
 											</TableCell>
 										))}
-										{action && (
+										{action && (hasPermission(resource, 'UPDATE') || hasPermission(resource, 'DELETE')) && (
 											<TableCell>
-												{action.edit && (
+												{action.edit && hasPermission(resource, 'UPDATE') && (
 													<Button_M disabled={action.edit.disabled?.(row)} size="small" color="primary" onClick={() => action?.edit?.onChange(row)}><Edit fontSize="small" /></Button_M>
 												)}
-												{action.status && (
+												{action.status && hasPermission(resource, 'UPDATE') && (
 													<Button_M disabled={action.status.disabled?.(row)} size="small" onClick={() => handleInativarClick(row)}><Switch color="success" checked={action.status.checked(row)}></Switch></Button_M>
 												)}
-												{action.delete && (
+												{action.delete && hasPermission(resource, 'DELETE') && (
 													<Button_M disabled={action.delete.disabled?.(row)} size="small" color="error" onClick={() => handleDeleteClick(row)}><Delete fontSize="small" /></Button_M>
 												)}
 											</TableCell>

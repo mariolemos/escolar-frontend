@@ -1,7 +1,7 @@
 import { useToast } from "@/components/Toast";
 import { loginDefaultValues, loginSchema, LoginSchema } from "@/schemas/loginSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { signIn } from "next-auth/react";
+import { signIn, signOut } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -23,6 +23,14 @@ export const useLogin = () => {
         defaultValues: loginDefaultValues,
     });
 
+    const logout = async () => {
+        try {
+            await signOut({ callbackUrl: '/login' });
+        } catch (err) {
+            console.error('Logout error:', err);
+        }
+    };
+
     const login = async (data: LoginSchema) => {
         try {
             setIsSubmitting(true);
@@ -34,7 +42,8 @@ export const useLogin = () => {
             } as any);
 
             if (res && (res as any).error) {
-                showToast((res as any).error, "error");
+                console.log('Erro no login:', res);
+                showToast("Usuário ou senha incorretos.", "error");
                 return;
             }
             console.log(res);
@@ -46,12 +55,13 @@ export const useLogin = () => {
             setIsSubmitting(false);
         }
     };
-    
+
     return {
         action: {
             login: handleSubmit(login),
             register,
-            setIsVisible
+            setIsVisible,
+            logout,
         },
         data: {
             isSubmitting,

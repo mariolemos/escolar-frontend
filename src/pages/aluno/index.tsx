@@ -12,17 +12,18 @@ export default function Aluno() {
   return (
     <>
       <DataTable
+        resource="ALUNO"
         titulo="Lista de Alunos"
         columns={columns}
         loading={loading}
         data={listarAluno}
-        buttonList={[
+        buttonCadastro={
           {
             nome: "novo",
             icon: <AddIcon sx={{ marginRight: 1 }} />,
             redirect: "/aluno/formAluno",
-          },
-        ]}
+          }
+        }
         action={{
           edit: {
             onChange: (t: IAlunoResponse) => edit(t),

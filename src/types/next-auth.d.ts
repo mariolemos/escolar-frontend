@@ -1,24 +1,23 @@
 import "next-auth";
-
 declare module "next-auth" {
-  interface Session {
-    accessToken?: string;
-    user?: {
-      id?: string;
-      name?: string | null;
-      username?: string;
-    };
-  }
-
   interface User {
-    token?: string;
-    username?: string;
+    id: string;
+    name: string;
+    username: string;
+    token: string;
+    resource: Record<
+      string,
+      Array<
+        "VIEW" |
+        "CREATE" |
+        "UPDATE" |
+        "DELETE"
+      >
+    >;
   }
-}
 
-declare module "next-auth/jwt" {
-  interface JWT {
-    accessToken?: string;
-    user?: any;
+  interface Session {
+    user: User;
+    accessToken: string;
   }
 }
