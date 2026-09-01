@@ -1,5 +1,6 @@
 import NextAuth from "next-auth";
 import type { AuthOptions } from "next-auth";
+import type { NextApiRequest, NextApiResponse } from "next";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { apiPostLogin } from "../../../services/api";
 
@@ -83,4 +84,11 @@ export const authOptions: AuthOptions = {
   },
 };
 
-export default NextAuth(authOptions);
+const nextAuthHandler = NextAuth(authOptions);
+
+export default function authHandler(
+  req: NextApiRequest,
+  res: NextApiResponse,
+) {
+  return nextAuthHandler(req, res);
+}
