@@ -142,6 +142,8 @@ export async function apiPostLogin<T>(path: string, data: any): Promise<ApiResul
       body: JSON.stringify(data),
     });
 
+    console.log("Response", response)
+
     if (!response.ok) {
       let errorBody: any = null;
       try {
