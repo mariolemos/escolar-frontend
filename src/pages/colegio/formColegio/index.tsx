@@ -29,15 +29,21 @@ export default function FormColegio() {
           }}
         >
           {/* <Box sx={{ width: "100%" }}> */}
-          <TextField
-            error={!!errors.nome}
-            helperText={errors.nome?.message}
-            id="nome"
-            label="Nome"
-            placeholder="Nome completo"
-            fullWidth
-            focused={true}
-            {...register("nome")}
+          <Controller
+            name="nome"
+            control={control}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                error={!!errors.nome}
+                helperText={errors.nome?.message}
+                id="nome"
+                label="Nome"
+                placeholder="Nome completo"
+                fullWidth
+                focused={true}
+              />
+            )}
           />
           {/* </Box> */}
           {/* <Box> */}
@@ -46,17 +52,15 @@ export default function FormColegio() {
             control={control}
             render={({ field }) => (
               <TextFieldMask
-                // {...field}
+                {...field}
                 error={!!errors.horario}
                 helperText={errors.horario?.message}
                 id="outlined-error-helper-text"
                 label="Horário"
                 placeholder="06:45"
                 fullWidth
-                value={field.value ?? null}
                 focused={true}
                 mask="99:99"
-                {...register("horario")}
               />
             )}
           />

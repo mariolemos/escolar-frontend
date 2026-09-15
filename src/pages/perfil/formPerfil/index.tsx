@@ -12,7 +12,7 @@ import Paper from '@mui/material/Paper';
 
 export default function FormPerfil() {
   const {
-    action: { salvar, register },
+    action: { salvar },
     data: { isSubmitting, errors, control, loading, listRecurso, listPermissao, profilesResource },
   } = useFormPerfil();
 
@@ -32,24 +32,36 @@ export default function FormPerfil() {
           }}
         >
           <Box sx={{ width: '32%', display: 'flex', m: 1 }}>
-            <TextField
-              error={!!errors.name}
-              helperText={errors.name?.message}
-              label="Nome"
-              fullWidth
-              focused={true}
-              {...register("name")}
+            <Controller
+              name="name"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  error={!!errors.name}
+                  helperText={errors.name?.message}
+                  label="Nome"
+                  fullWidth
+                  focused={true}
+                />
+              )}
             />
           </Box>
 
           <Box sx={{ width: '32%', display: 'flex', m: 1 }}>
-            <TextField
-              error={!!errors.description}
-              helperText={errors.description?.message}
-              label="Descrição"
-              fullWidth
-              focused={true}
-              {...register("description")}
+            <Controller
+              name="description"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  error={!!errors.description}
+                  helperText={errors.description?.message}
+                  label="Descrição"
+                  fullWidth
+                  focused={true}
+                />
+              )}
             />
           </Box>
 

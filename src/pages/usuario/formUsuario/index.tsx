@@ -10,7 +10,7 @@ import Switch from '@mui/material/Switch';
 
 export default function FormUsuario() {
     const {
-        action: { salvar, register },
+        action: { salvar },
         data: { isSubmitting, errors, control, loading, listPerfil },
     } = useFormUsuario();
 
@@ -30,13 +30,19 @@ export default function FormUsuario() {
                     }}
                 >
                     <Box sx={{ width: '32%', display: 'flex', m: 1 }}>
-                        <TextField
-                            error={!!errors.name}
-                            helperText={errors.name?.message}
-                            label="Nome"
-                            fullWidth
-                            focused={true}
-                            {...register("name")}
+                        <Controller
+                            name="name"
+                            control={control}
+                            render={({ field }) => (
+                                <TextField
+                                    {...field}
+                                    error={!!errors.name}
+                                    helperText={errors.name?.message}
+                                    label="Nome"
+                                    fullWidth
+                                    focused={true}
+                                />
+                            )}
                         />
                     </Box>
 
