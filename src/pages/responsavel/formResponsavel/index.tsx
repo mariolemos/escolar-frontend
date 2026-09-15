@@ -30,20 +30,14 @@ export default function FormResponsavel() {
           }}
         >
           <Box sx={{ width: "32%", display: "flex", m: 1 }}>
-            <Controller
-              name="nome"
-              control={control}
-              render={({ field }) => (
-                <TextField                                
-                  error={!!errors.nome}
-                  helperText={errors.nome?.message}
-                  id="outlined-error"
-                  label="Nome"
-                  fullWidth
-                  focused={true}
-                  {...register("nome")}
-                />
-              )}
+            <TextField
+              error={!!errors.nome}
+              helperText={errors.nome?.message}
+              id="outlined-error"
+              label="Nome"
+              fullWidth
+              focused={true}
+              {...register("nome")}
             />
           </Box>
 
@@ -85,39 +79,27 @@ export default function FormResponsavel() {
             />
           </Box>
           <Box sx={{ width: "15%", m: 1, display: "flex" }}>
-            <Controller
-              name="rg"
-              control={control}
-              render={({ field }) => (
-                <TextField                  
-                  error={!!errors.rg}
-                  helperText={errors.rg?.message}
-                  id="outlined-error-helper-text"
-                  label="RG"
-                  placeholder="00.000.000-0"
-                  fullWidth
-                  focused={true}
-                  {...register("rg")}
-                />
-              )}
+            <TextField
+              error={!!errors.rg}
+              helperText={errors.rg?.message}
+              id="outlined-error-helper-text"
+              label="RG"
+              placeholder="00.000.000-0"
+              fullWidth
+              focused={true}
+              {...register("rg")}
             />
           </Box>
           <Box sx={{width: "15%", display: "flex", m: 1}}>
-            <Controller
-              name="parentesco"
-              control={control}
-              render={({ field }) => (
-                <TextField                  
-                  error={!!errors.parentesco}
-                  helperText={errors.parentesco?.message}
-                  id="outlined-error-helper-text"
-                  label="Parentesco"
-                  placeholder="parentesco"
-                  fullWidth
-                  focused={true}
-                  {...register("parentesco")}
-                />
-              )}
+            <TextField
+              error={!!errors.parentesco}
+              helperText={errors.parentesco?.message}
+              id="outlined-error-helper-text"
+              label="Parentesco"
+              placeholder="parentesco"
+              fullWidth
+              focused={true}
+              {...register("parentesco")}
             />
           </Box>
           {/* </Box> */}

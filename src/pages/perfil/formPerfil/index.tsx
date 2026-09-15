@@ -32,36 +32,24 @@ export default function FormPerfil() {
           }}
         >
           <Box sx={{ width: '32%', display: 'flex', m: 1 }}>
-            <Controller
-              name="name"
-              control={control}
-              render={({ field }) => (
-                <TextField
-                  error={!!errors.name}
-                  helperText={errors.name?.message}
-                  label="Nome"
-                  fullWidth
-                  focused={true}
-                  {...register("name")}
-                />
-              )}
+            <TextField
+              error={!!errors.name}
+              helperText={errors.name?.message}
+              label="Nome"
+              fullWidth
+              focused={true}
+              {...register("name")}
             />
           </Box>
 
           <Box sx={{ width: '32%', display: 'flex', m: 1 }}>
-            <Controller
-              name="description"
-              control={control}
-              render={({ field }) => (
-                <TextField
-                  {...register("description")}
-                  error={!!errors.description}
-                  helperText={errors.description?.message}
-                  label="Descrição"
-                  fullWidth
-                  focused={true}
-                />
-              )}
+            <TextField
+              error={!!errors.description}
+              helperText={errors.description?.message}
+              label="Descrição"
+              fullWidth
+              focused={true}
+              {...register("description")}
             />
           </Box>
 

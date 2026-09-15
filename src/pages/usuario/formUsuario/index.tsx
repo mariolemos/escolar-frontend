@@ -30,19 +30,13 @@ export default function FormUsuario() {
                     }}
                 >
                     <Box sx={{ width: '32%', display: 'flex', m: 1 }}>
-                        <Controller
-                            name="name"
-                            control={control}
-                            render={({ field }) => (
-                                <TextField
-                                    {...register("name")}
-                                    error={!!errors.name}
-                                    helperText={errors.name?.message}
-                                    label="Nome"
-                                    fullWidth
-                                    focused={true}
-                                />
-                            )}
+                        <TextField
+                            error={!!errors.name}
+                            helperText={errors.name?.message}
+                            label="Nome"
+                            fullWidth
+                            focused={true}
+                            {...register("name")}
                         />
                     </Box>
 

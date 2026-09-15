@@ -29,23 +29,15 @@ export default function FormColegio() {
           }}
         >
           {/* <Box sx={{ width: "100%" }}> */}
-          <Controller
-            name="nome"
-            control={control}
-            render={({ field }) => (
-              <TextField
-                error={!!errors.nome}
-                helperText={errors.nome?.message}
-                id="nome"
-                label="Nome"
-                placeholder="Nome completo"
-                defaultValue=""
-                fullWidth
-                // value={field.value}
-                focused={true}
-                {...register("nome") ?? field.value}
-              />
-            )}
+          <TextField
+            error={!!errors.nome}
+            helperText={errors.nome?.message}
+            id="nome"
+            label="Nome"
+            placeholder="Nome completo"
+            fullWidth
+            focused={true}
+            {...register("nome")}
           />
           {/* </Box> */}
           {/* <Box> */}
