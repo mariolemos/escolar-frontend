@@ -29,43 +29,45 @@ export default function FormColegio() {
           }}
         >
           {/* <Box sx={{ width: "100%" }}> */}
-            <Controller
-              name="nome"
-              control={control}
-              render={({ field }) => (
-                <TextField
-                  error={!!errors.nome}
-                  helperText={errors.nome?.message}
-                  id="outlined-error"
-                  label="Nome"
-                  placeholder="Nome completo"
-                  defaultValue=""
-                  fullWidth
-                  focused={true}
-                  {...register("nome")}
-                />
-              )}
-            />
+          <Controller
+            name="nome"
+            control={control}
+            render={({ field }) => (
+              <TextField
+                error={!!errors.nome}
+                helperText={errors.nome?.message}
+                id="nome"
+                label="Nome"
+                placeholder="Nome completo"
+                defaultValue=""
+                fullWidth
+                // value={field.value}
+                focused={true}
+                {...register("nome") ?? field.value}
+              />
+            )}
+          />
           {/* </Box> */}
           {/* <Box> */}
-            <Controller
-              name="horario"
-              control={control}
-              render={({ field }) => (
-                <TextFieldMask
-                  {...field}
-                  error={!!errors.horario}
-                  helperText={errors.horario?.message}
-                  id="outlined-error-helper-text"
-                  label="Horário"
-                  placeholder="06:45"
-                  fullWidth
-                  focused={true}
-                  mask="99:99"
-                  {...register("horario")}
-                />
-              )}
-            />
+          <Controller
+            name="horario"
+            control={control}
+            render={({ field }) => (
+              <TextFieldMask
+                // {...field}
+                error={!!errors.horario}
+                helperText={errors.horario?.message}
+                id="outlined-error-helper-text"
+                label="Horário"
+                placeholder="06:45"
+                fullWidth
+                value={field.value ?? null}
+                focused={true}
+                mask="99:99"
+                {...register("horario")}
+              />
+            )}
+          />
           {/* </Box> */}
           <EnderecoForm
             register={register}

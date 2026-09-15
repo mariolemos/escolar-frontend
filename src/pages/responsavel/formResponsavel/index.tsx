@@ -34,14 +34,14 @@ export default function FormResponsavel() {
               name="nome"
               control={control}
               render={({ field }) => (
-                <TextField
-                  {...field}                  
+                <TextField                                
                   error={!!errors.nome}
                   helperText={errors.nome?.message}
                   id="outlined-error"
                   label="Nome"
                   fullWidth
                   focused={true}
+                  {...register("nome")}
                 />
               )}
             />
@@ -70,8 +70,7 @@ export default function FormResponsavel() {
               name="cpf"
               control={control}
               render={({ field }) => (
-                <TextFieldMask
-                  {...field}
+                <TextFieldMask                  
                   error={!!errors.cpf}
                   helperText={errors.cpf?.message}
                   id="outlined-error-helper-text"
@@ -79,7 +78,8 @@ export default function FormResponsavel() {
                   placeholder="000.000.000-00"
                   fullWidth
                   mask="999.999.999-99"
-                  focused={true}                  
+                  focused={true} 
+                  {...field}                 
                 />
               )}
             />
@@ -89,8 +89,7 @@ export default function FormResponsavel() {
               name="rg"
               control={control}
               render={({ field }) => (
-                <TextField
-                  {...field}
+                <TextField                  
                   error={!!errors.rg}
                   helperText={errors.rg?.message}
                   id="outlined-error-helper-text"
@@ -98,6 +97,7 @@ export default function FormResponsavel() {
                   placeholder="00.000.000-0"
                   fullWidth
                   focused={true}
+                  {...register("rg")}
                 />
               )}
             />
@@ -107,8 +107,7 @@ export default function FormResponsavel() {
               name="parentesco"
               control={control}
               render={({ field }) => (
-                <TextField
-                  {...field}
+                <TextField                  
                   error={!!errors.parentesco}
                   helperText={errors.parentesco?.message}
                   id="outlined-error-helper-text"
@@ -116,6 +115,7 @@ export default function FormResponsavel() {
                   placeholder="parentesco"
                   fullWidth
                   focused={true}
+                  {...register("parentesco")}
                 />
               )}
             />

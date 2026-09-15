@@ -56,7 +56,7 @@ export default function useFormResponsavel() {
       }
 
       reset({
-        ...response.data,
+        ...response.data, 
         dataNascimento: response.data.dataNascimento ? new Date(response.data.dataNascimento) : undefined,
         contatos: response.data?.contatos?.map((c: Contato) => ({
           tipo: String(c.tipoId),
