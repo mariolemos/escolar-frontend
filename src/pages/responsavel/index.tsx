@@ -8,7 +8,7 @@ export default function Responsavel() {
     action: { edit },
     data: { listResponsavel, columns, loading },
   } = useResponsavel();
-
+  
   return (
     <>
       <DataTable

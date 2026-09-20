@@ -9,8 +9,8 @@ export const colegioFormSchema = z.object({
     .max(50, "Nme deve conter no máximo 50 caracteres"),
   horario: z
     .string()
-    .min(5, "Horário deve conter no máximo 4 caracteres")
-    .max(5, "Horário deve conter no máximo 4 caracteres"),
+    .min(4, "Horário deve conter no máximo 4 caracteres")
+    .max(4, "Horário deve conter no máximo 4 caracteres"),
   endereco: enderecoSchema,
   contatos: z.array(contatoSchema),
 });
