@@ -2,6 +2,7 @@ import DataTable from "@/layout/componets/DataTable";
 import useAluno from "./useAluno";
 import AddIcon from "@mui/icons-material/Add";
 import { IAlunoResponse } from "@/hooks/api/aluno/useApiAluno";
+import DrawerComponet from "@/layout/componets/Drawer";
 
 export default function Aluno() {
   const {

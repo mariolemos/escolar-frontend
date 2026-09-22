@@ -64,31 +64,22 @@ const useResponsavel = () => {
   //  */
   const status = (t: IResponsavelResponse) => {};
 
-  const ordenar:any = (resp: IResponsavelResponse[]) => {    
-     resp.map((object) => {
-      return object.nome;
-    }).sort();    
+  const ordenar: any = (resp: IResponsavelResponse[]) => {
+    return resp.sort((a, b) => a.nome.localeCompare(b.nome));
   };
+  
   const buscarResponsaveis = async () => {
     try {
       const response = await list();
       if (response && response.success) {
-        let ordem = response.data
-          .map((object) => {
-            console.log(".....ordenado", response.data);
-            return object.nome;
-          })
-          .sort();
-        console.log("ordenado", ordem);
-        setListResponsavel(response.data || []);
-                   
+        setListResponsavel(ordenar(response.data) || []);
       }
       return response;
     } catch (error) {
       console.error("Erro ao buscar responsáveis", error);
     }
   };
- 
+
   return {
     action: {
       buscarResponsaveis,

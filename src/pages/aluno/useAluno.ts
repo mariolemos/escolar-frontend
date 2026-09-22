@@ -1,6 +1,6 @@
 import useApiAluno, { IAlunoResponse } from "@/hooks/api/aluno/useApiAluno";
 import router from "next/router";
-import { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
 
 const useAluno = () => {
   const [listarAluno, setListarAluno] = useState<IAlunoResponse[]>([]);
@@ -16,12 +16,11 @@ const useAluno = () => {
     { key: "turma", label: "Turma" },
     { key: "serie", label: "Série" },
     { key: "ativo", label: "Status" },
-  ]
+  ];
 
   useEffect(() => {
     buscarAluno();
-  }, [])
-
+  }, []);
 
   /**
    *
@@ -63,22 +62,24 @@ const useAluno = () => {
     );
     console.log("status", t);
   };
+  const ordenar: any = (resp: IAlunoResponse[]) => {
+    return resp.sort((a, b) => a.nome.localeCompare(b.nome));
+  };
 
   const buscarAluno = async () => {
     try {
-      setLoad(true)
+      setLoad(true);
       const response = await list();
-      console.log(response)
+      console.log(response);
       if (response && response.success) {
-        setListarAluno(response.data)
+        setListarAluno(ordenar(response.data));
       }
-    }
-    catch (e) {
-      console.log(e)
+    } catch (e) {
+      console.log(e);
     } finally {
-      setLoad(false)
+      setLoad(false);
     }
-  }
+  };
 
   return {
     action: {
@@ -93,9 +94,8 @@ const useAluno = () => {
       load,
       columns,
       loading,
-    }
-  }
-}
+    },
+  };
+};
 
-export default useAluno
-
+export default useAluno;

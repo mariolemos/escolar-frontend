@@ -39,12 +39,16 @@ const useColegio = () => {
     });
   };
 
+  const ordenar: any = (resp: IColegioResponse[]) => {
+      return resp.sort((a, b) => a.nome.localeCompare(b.nome));
+    };
+
   const buscarColegios = async () => {
     setLoading(true);
     try {
-      const res = await list();
-      if (res && res.success && res.data) {
-        setListColegio(res.data);
+      const response = await list();
+      if (response && response.success && response.data) {
+        setListColegio(ordenar(response.data));
       }
     } catch (err) {
       console.error('Erro ao buscar colégios', err);
