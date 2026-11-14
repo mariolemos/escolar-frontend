@@ -101,7 +101,7 @@ export default function useFormContrato() {
     let response;
     const payload = {
       ...data,
-      valorContratual: parseFloat(data.valorContratual.replace(/\./g, '').replace(',', '.')),
+      valorContratual: parseFloat(data.valorContratual.replace(".", '').replace(',', '.')),
     }
     try {
       if (query.id) {

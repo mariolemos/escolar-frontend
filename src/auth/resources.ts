@@ -7,6 +7,7 @@ export const RESOURCE = {
   USUARIO: "USUARIO",
   COLEGIO: "COLEGIO",
   CONTRATO: "CONTRATO",
+  MENSALIDADE: "MENSALIDADE",
 } as const;
 
 export type Resource =
