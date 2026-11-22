@@ -36,7 +36,7 @@ export default function formContrato() {
           }}
         >
           <TextField
-            sx={{ width: "50%", m: 1, display: "flex" }}
+            sx={{ width: "35%", m: 1, display: "flex" }}
             error={!!errors.responsavelId}
             helperText={errors.responsavelId?.message}
             id="outlined-error"
@@ -53,10 +53,7 @@ export default function formContrato() {
             select
             {...register("responsavelId")}
           >
-            <option
-              key=""
-              value=""
-            >
+            <option key="" value="">
               Selecione um responsável
             </option>
             {listResponsavel &&
@@ -64,7 +61,9 @@ export default function formContrato() {
                 <option
                   key={option.id}
                   value={option.id}
-                  selected={String(option.id) === String(watch("responsavelId"))}
+                  selected={
+                    String(option.id) === String(watch("responsavelId"))
+                  }
                 >
                   {option.nome}
                 </option>
@@ -95,7 +94,7 @@ export default function formContrato() {
                   // placeholder="000.000.000,00"
                   fullWidth
                   focused={true}
-                  onChange={v => field.onChange(v)}
+                  onChange={(v) => field.onChange(v)}
                   value={formatToCurrency(field.value)}
                 />
               )}
@@ -136,6 +135,24 @@ export default function formContrato() {
               )}
             />
           </Box>
+          <Box sx={{ width: "12%", m: 1, display: "flex" }}>
+            <Controller
+              name="diaPagamento"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  sx={{ width: "100%", display: "flex" }}
+                  error={!!errors.diaPagamento}
+                  helperText={errors.diaPagamento?.message}
+                  id="outlined-error"
+                  label="Dia Pagamento"
+                  fullWidth
+                  focused={true}                  
+                />
+              )}
+            />                        
+          </Box>          
         </Box>
       </FormComponent>
     </>

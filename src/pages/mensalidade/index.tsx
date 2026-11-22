@@ -20,7 +20,7 @@ export default function Mensalidade() {
         loading={loading}
         data={listarMensalidade}
         buttonCadastro={
-          {
+          {            
             nome: "novo",
             icon: <AddIcon sx={{ marginRight: 1 }} />,
             redirect: "/mensalidade/formMensalidade",

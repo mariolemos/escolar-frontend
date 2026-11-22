@@ -13,6 +13,9 @@ export interface IMensalidadeResponse {
     situacao: string;
     responsavelId: string;
     colegioId: string;
+    ativo: boolean;
+    vencimento: string;
+    mes: string;
     
 }
 
@@ -22,9 +25,11 @@ export interface IMensalidadeRequest {
     valorMensal: number;   
     situacao: string;
     responsavelId: string;
-    colegioId: string;    
+    colegioId: string;
+    ativo: boolean ;
+    vencimento?: string; 
+    mes: string;  
 }
-
 
 export const useApiMensalidade = () => {
     const { showToast } = useToast();
@@ -51,21 +56,21 @@ export const useApiMensalidade = () => {
 
     const create = async (payload: IMensalidadeRequest): Promise<ApiResult<IMensalidadeResponse>> => {
         const res = await apiPost<IMensalidadeResponse>(`${base}`, payload);
-        if (res.success) showToast('Aluno criado com sucesso', 'success');
+        if (res.success) showToast('Mensalidade criado com sucesso', 'success');
         else handleErrorToast(res);
         return res;
     };
 
     const update = async (id: string, payload: IMensalidadeRequest): Promise<ApiResult<IMensalidadeResponse>> => {
         const res = await apiPut<IMensalidadeResponse>(`${base}/${id}`, payload);
-        if (res.success) showToast('Aluno atualizado com sucesso', 'success');
+        if (res.success) showToast('Mensalidade atualizado com sucesso', 'success');
         else handleErrorToast(res);
         return res;
     };
 
     const remove = async (id: string): Promise<ApiResult<IMensalidadeResponse>> => {
         const res = await apiDelete<IMensalidadeResponse>(`${base}/${id}`);
-        if (res.success) showToast('Aluno removido com sucesso', 'success');
+        if (res.success) showToast('Mensalidade removido com sucesso', 'success');
         else handleErrorToast(res);
         return res;
     };

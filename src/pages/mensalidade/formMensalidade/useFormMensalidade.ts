@@ -61,16 +61,16 @@ export const useMensalidadeForm = () => {
     }, [query.id]);
 
     // Função para garantir que nascimento seja Date
-    const parseNascimento = (data: MensalidadeFormSchema) => {
-        return {
-            ...data,
-            dataNascimento: data.dataNascimento
-                ? data.dataNascimento instanceof Date
-                    ? data.dataNascimento
-                    : new Date(data.dataNascimento)
-                : undefined,
-        };
-    };
+    // const parseNascimento = (data: MensalidadeFormSchema) => {
+    //     return {
+    //         ...data,
+    //         dataNascimento: data.dataNascimento
+    //             ? data.dataNascimento instanceof Date
+    //                 ? data.dataNascimento
+    //                 : new Date(data.dataNascimento)
+    //             : undefined,
+    //     };
+    // };
 
     // Formatando data para inginorar o fuso horário
     const dataFormatada = (dataBackEnd: any) => {
@@ -89,35 +89,35 @@ export const useMensalidadeForm = () => {
             }
 
             // Mapear dados do backend para o formato esperado pelo form
-            const mappedContatos =
-                response.data?.contatos?.map((c: Contato) => ({
-                    tipo: String(c.tipoId ?? c.tipo),
-                    contato: c.contato,
-                })) || [];
+    //         const mappedContatos =
+    //             response.data?.contatos?.map((c: Contato) => ({
+    //                 tipo: String(c.tipoId ?? c.tipo),
+    //                 contato: c.contato,
+    //             })) || [];
 
-            const dataNascimentoDate = response.data?.dataNascimento
-                ? new Date(String(response.data.dataNascimento).replace(/-/g, "/"))
-                : undefined;
+    //         const dataNascimentoDate = response.data?.dataNascimento
+    //             ? new Date(String(response.data.dataNascimento).replace(/-/g, "/"))
+    //             : undefined;
 
-            const formValues: MensalidadeFormSchema = {
-                nome: response.data?.nome ?? mensalidadeFormDefaultValues.nome,                
-                turno: response.data?.turno ?? mensalidadeFormDefaultValues.turno,                
-                responsavelId: String(response.data?.responsavelId ?? mensalidadeFormDefaultValues.responsavelId),
-                colegioId: String(response.data?.colegioId ?? mensalidadeFormDefaultValues.colegioId),                
-                dataNascimento: dataNascimentoDate ?? mensalidadeFormDefaultValues.dataNascimento,
-            };
+    //         const formValues: MensalidadeFormSchema = {
+    //             nome: response.data?.nome ?? mensalidadeFormDefaultValues.nome,                
+    //             turno: response.data?.turno ?? mensalidadeFormDefaultValues.turno,                
+    //             responsavelId: String(response.data?.responsavelId ?? mensalidadeFormDefaultValues.responsavelId),
+    //             colegioId: String(response.data?.colegioId ?? mensalidadeFormDefaultValues.colegioId),                
+    //             dataNascimento: dataNascimentoDate ?? mensalidadeFormDefaultValues.dataNascimento,
+    //         };
 
-            reset(formValues);
+    //         reset(formValues);
 
-            console.log(watch("dataNascimento"));
-            console.log(response.data);
-        } catch (error) {
-            showToast("Erro ao carregar os dados!", "error");
-            console.log(error);
-        } finally {
-            setLoading(false);
-        }
-    };
+    //         console.log(watch("dataNascimento"));
+    //         console.log(response.data);
+    //     } catch (error) {
+    //         showToast("Erro ao carregar os dados!", "error");
+    //         console.log(error);
+    //     } finally {
+    //         setLoading(false);
+    //     }
+    // };
 
     const salvar = async (data: MensalidadeFormSchema) => {
         setIsSubmitting(true);
@@ -129,8 +129,8 @@ export const useMensalidadeForm = () => {
                 response = await create(data);
             }
 
-            const parsedData = parseNascimento(data);
-            console.log("Dados do formulário:", parsedData);
+            // const parsedData = parseNascimento(data);
+            // console.log("Dados do formulário:", parsedData);
             // useApiAluno já exibe toasts de sucesso/erro
         } catch (error) {
             console.error("Erro ao salvar formulário:", error);

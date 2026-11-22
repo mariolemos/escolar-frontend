@@ -59,17 +59,18 @@ export default function Drawer() {
       resource: RESOURCE.USUARIO,
     },
     {
-      text: "Perfil",
-      icon: <InboxIcon />,
-      href: "/perfil",
-      resource: RESOURCE.PERFIL,
-    },
-     {
       text: "Mensalidade",
       icon: <InboxIcon />,
       href: "/mensalidade",
       resource: RESOURCE.MENSALIDADE,
     },
+    {
+      text: "Perfil",
+      icon: <InboxIcon />,
+      href: "/perfil",
+      resource: RESOURCE.PERFIL,
+    },
+     
   ];
 
 

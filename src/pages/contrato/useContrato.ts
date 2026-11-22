@@ -20,6 +20,7 @@ const useContrato = () => {
     { key: "valorMensal", label: "Valor Mensal" },
     { key: "dataInicial", label: "Ínicio" },
     { key: "dataFinal", label: "Final" },
+    { key: "diaPagamento" , label: "Dia Pagamento"},
     { key: "ativo", label: "Status" },
   ];
 

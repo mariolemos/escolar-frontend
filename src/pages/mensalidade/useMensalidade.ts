@@ -16,8 +16,7 @@ const useMensalidade = () => {
     { key: "alunos", label: "Aluno" },      
     { key: "valorMensal", label: "Valor Mensal" },
     { key: "situacao", label: "Sitaução"},
-    { key: "formaPagamento", label: "Forma de Pagamento" },
-    { key: "alunos", label: "Aluno"}
+    { key: "vencimento", label: "Vencimento" },    
   ];
 
   useEffect(() => {
@@ -32,6 +31,12 @@ const useMensalidade = () => {
   const del = (t: IMensalidadeResponse) => {
     console.log("delete", t);
   };
+
+  const convertData = (dataConvert: string) => {
+    const dataBrasileira = new Date(dataConvert).toLocaleDateString('pt-BR', { timeZone: 'UTC' });
+    return dataBrasileira
+    console.log(dataBrasileira);
+  }
 
   /**
    *
@@ -65,7 +70,7 @@ const useMensalidade = () => {
     console.log("status", t);
   };
   const ordenar: any = (resp: IMensalidadeResponse[]) => {
-    return resp.sort((a, b) => a.nome.localeCompare(b.nome));
+    return resp.sort((a, b) => a.mes.localeCompare(b.mes));
   };
 
   const buscarMensalidade = async () => {
@@ -74,7 +79,11 @@ const useMensalidade = () => {
       const response = await list();
       console.log("****" , response);
       if (response && response.success) {
-        setListarMensalidade(ordenar(response.data));
+        
+        setListarMensalidade(response?.data.map((mensalidade: IMensalidadeResponse) => ({
+          ...mensalidade,
+         vencimento: convertData(mensalidade.vencimento ?? '')         
+        })));        
       }
     } catch (e) {
       console.log(e);

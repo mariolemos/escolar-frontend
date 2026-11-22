@@ -19,6 +19,7 @@ import { Delete, Edit } from "@mui/icons-material";
 import Button from "../Button";
 import { DataTableProps } from "./types";
 import { useDataTable } from "./useDataTable";
+import { blue } from "@mui/material/colors";
 
 
 export function DataTable<T extends object>({ columns, data, className, titulo = "", buttonCadastro, resource, loading = false, action, containerProps }: DataTableProps<T>) {
@@ -60,7 +61,7 @@ export function DataTable<T extends object>({ columns, data, className, titulo =
 					display: 'flex',
 					flexDirection: 'column',
 					minHeight: '100%',
-					padding: 8,
+					padding: 4,
 					...containerProps?.sx,
 				}}
 			>

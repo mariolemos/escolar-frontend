@@ -10,5 +10,6 @@ export { useApiUsuario } from './usuario/useApiUsuario';
 export { useApiPerfil } from './perfil/useApiPerfil';
 export { useApiRecurso } from './recurso/useApiRecurso';
 export { useApiPermissao } from './permissao/useApiPermissao';
+export { useApiMensalidade } from './mensalidade/useApiMensalidade';
 
 // Add new exports here as resources are added

@@ -31,7 +31,9 @@ export const contratoFormSchema = z
       .refine((val) => val !== undefined && val !== null, {
         message: "Data final é obrigatória",
       }),
-
+      diaPagamento: z
+      .string()      
+      .transform((val) => String(parseCurrencyToNumber(val))),
     responsavelId: z
       .string()
       .min(1, "Responsavel é obrigatório")
@@ -53,6 +55,7 @@ export const contratoFormDefaultValues: ContratoFormSchema = {
   valorContratual: '',
   dataInicial: new Date(),
   dataFinal: new Date(),
+  diaPagamento: 0,
   responsavelId: "",
   ativo: true,
 };

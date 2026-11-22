@@ -11,6 +11,7 @@ export interface IContratoResponse {
   responsavelId: string;
   ativo: boolean;
   valorMensal: number;
+  diaPagamento: number
 }
 
 export interface IContratoRequest {
@@ -19,6 +20,7 @@ export interface IContratoRequest {
   dataFinal?: string | Date;
   responsavelId: string;
   ativo: boolean;
+  diaPagamento: number;
 }
 
 export const useApiContrato = () => {
